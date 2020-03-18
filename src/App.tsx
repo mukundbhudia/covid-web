@@ -30,15 +30,15 @@ const App: React.FC = () => {
         <div className='row'>
           <div className="col-sm">
             <h3>Total Confirmed</h3>
-            <div className='total-cases text-danger'>{data.totalCases.confirmed}</div>
+            <div className='total-cases text-danger'>{data.totalCases.confirmed.toLocaleString()}</div>
           </div>
           <div className="col-sm">
             <h3>Total Deaths</h3>
-            <div className='total-cases text-dark'>{data.totalCases.deaths}</div>
+            <div className='total-cases text-dark'>{data.totalCases.deaths.toLocaleString()}</div>
           </div>
           <div className="col-sm">
             <h3>Total Recovered</h3>
-            <div className='total-cases text-success'>{data.totalCases.recovered}</div>
+            <div className='total-cases text-success'>{data.totalCases.recovered.toLocaleString()}</div>
           </div>
         </div>
       </div>
