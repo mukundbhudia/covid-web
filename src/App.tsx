@@ -3,26 +3,18 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-type Cases = {
-  confirmed: string
-  country: string
-  province: string
-}
+import './App.css'
 
 const COVID_TOTALS = gql`
   query {
-    casesByLocation {
-      confirmed
-      country
-      province
-    }
     totalCases {
-      totalConfirmed,
-      totalRecovered,
-      totalDeaths,
+      confirmed
+      recovered
+      deaths
+      active
     }
   }
-`;
+`
 
 const App: React.FC = () => {
   const { loading, error, data } = useQuery(COVID_TOTALS)
@@ -31,12 +23,30 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <h2>My first Apollo app <span role="img" aria-label="image">🚀</span></h2>
+      <div className='container'>
+        <h1>Coronavirus COVID-19</h1>
+      </div>
+      <div className='container'>
+        <div className='row'>
+          <div className="col-sm">
+            <h3>Total Confirmed</h3>
+            <div className='total-cases text-danger'>{data.totalCases.confirmed}</div>
+          </div>
+          <div className="col-sm">
+            <h3>Total Deaths</h3>
+            <div className='total-cases text-dark'>{data.totalCases.deaths}</div>
+          </div>
+          <div className="col-sm">
+            <h3>Total Recovered</h3>
+            <div className='total-cases text-success'>{data.totalCases.recovered}</div>
+          </div>
+        </div>
+      </div>
       <div className='container'>
       <ul>
-        {data.casesByLocation.map(({ country, province, confirmed }: Cases, index: number) => (
+        {/* {data.casesByLocation.map(({ country, province, confirmed }: Cases, index: number) => (
           <li key={index}>{country} - {province}: {confirmed}</li>
-        ))}
+        ))} */}
       </ul>
       </div>
     </div>
