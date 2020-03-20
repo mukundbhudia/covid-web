@@ -16,7 +16,7 @@ const COVID_TOTALS = gql`
   }
 `
 
-const App: React.FC = () => {
+const App = () => {
   const { loading, error, data } = useQuery(COVID_TOTALS)
   if (loading) return <p>Loading...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
