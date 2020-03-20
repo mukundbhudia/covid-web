@@ -1,4 +1,18 @@
-.total-cases {
-  font-size: 2rem;
-  font-weight: bolder;
+body {
+  margin-top: 20px;
+}
+
+canvas{
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+#chart {
+  width:100%;
+}
+
+.lastUpdatedTimeStamp {
+  font-size: 11px;
+  color: #777;
 }

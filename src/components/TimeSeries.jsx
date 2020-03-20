@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import Chart from 'chart.js'
 
-const TimeSeries = ({ data }) => {
+const TimeSeries = ({lastUpdated, globalTimeSeries}) => {
   const chartRef = React.createRef()
+
+  const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
   const allDates = []
   const confirmed = []
   const recovered = []
@@ -100,7 +102,7 @@ const TimeSeries = ({ data }) => {
     new Chart(myChartRef, chartConfig);
   }, [chartRef, chartConfig])
   
-  data.forEach(element => {
+  globalTimeSeries.forEach(element => {
     const dateFromString = new Date(element.day)
     allDates.push((dateFromString).toLocaleDateString())
     confirmed.push({x: dateFromString, y: element.confirmed})
@@ -117,10 +119,10 @@ const TimeSeries = ({ data }) => {
           ref={chartRef}
         ></canvas>
       </div>
-      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated"></span></p>
-      <button type="button" className="btn btn-sm btn-primary" id="changeScale">View logarithmic</button>
-      <button type="button" className="btn btn-sm btn-primary" id="changeChartType">View bar chart</button>
-      <button type="button" className="btn btn-sm btn-secondary" id="toggleCurrentCases">Add current cases</button>
+      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedTimeStamp}</span></p>
+      <button type="button" className="btn btn-sm btn-primary mr-1" id="changeScale">View logarithmic</button>
+      <button type="button" className="btn btn-sm btn-primary mr-1" id="changeChartType">View bar chart</button>
+      <button type="button" className="btn btn-sm btn-secondary mr-1" id="toggleCurrentCases">Add current cases</button>
       <br />
       <br/>
     </div>
