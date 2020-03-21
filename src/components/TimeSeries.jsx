@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Chart from 'chart.js'
 
 const TimeSeries = ({ lastUpdated, data }) => {
   const chartRef = React.createRef()
+  const [ dataType, setDataType ] = useState('linear')
+  const [ chartType, setChartType ] = useState('line')
 
   const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
   const allDates = []
@@ -22,7 +24,7 @@ const TimeSeries = ({ lastUpdated, data }) => {
   }
   
   const chartConfig = {
-    type: 'line',
+    type: chartType,
     data: {
       labels: allDates,
       datasets: [
@@ -80,7 +82,7 @@ const TimeSeries = ({ lastUpdated, data }) => {
         }],
         yAxes: [{
           display: true,
-          type: 'linear',
+          type: dataType,
           scaleLabel: {
             display: true,
             labelString: 'Number of cases'
@@ -96,6 +98,7 @@ const TimeSeries = ({ lastUpdated, data }) => {
 
   useEffect(() => {
     const myChartRef = chartRef.current.getContext("2d")
+    console.log('Rendering again!')
 
     new Chart(myChartRef, chartConfig);
   }, [chartRef, chartConfig])
@@ -118,9 +121,31 @@ const TimeSeries = ({ lastUpdated, data }) => {
         ></canvas>
       </div>
       <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedTimeStamp}</span></p>
-      <button type="button" className="btn btn-sm btn-primary mr-1" id="changeScale">View logarithmic</button>
-      <button type="button" className="btn btn-sm btn-primary mr-1" id="changeChartType">View bar chart</button>
-      <button type="button" className="btn btn-sm btn-secondary mr-1" id="toggleCurrentCases">Add current cases</button>
+
+      <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+        <label className={`btn btn-sm btn-secondary ${dataType === 'linear' ? 'active' : ''}`}>
+          <input type="radio" name="data-type" onClick={() => {
+            setDataType('linear')
+            chartRef.current.options.scales.yAxes[0].type = 'linear'
+          }} /> Linear
+        </label>
+        <label className={`btn btn-sm btn-secondary ${dataType === 'logarithmic' ? 'active' : ''}`}>
+          <input type="radio" name="data-type" onClick={() => {
+            setDataType('logarithmic')
+            chartRef.current.options.scales.yAxes[0].type = 'logarithmic'
+          }}/> Logarithmic
+        </label>
+      </div>
+      <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+        <label className={`btn btn-sm btn-secondary ${chartType === 'line' ? 'active' : ''}`}>
+          <input type="radio" name="chart-type" onClick={() => {setChartType('line')}}/> Line
+        </label>
+        <label className={`btn btn-sm btn-secondary ${chartType === 'bar' ? 'active' : ''}`}>
+          <input type="radio" name="chart-type" onClick={() => {setChartType('bar')}}/> Bar
+        </label>
+      </div>
+
+      <button type="button" className="btn btn-sm btn-primary" id="toggleCurrentCases">Add current cases</button>
       <br />
       <br/>
     </div>

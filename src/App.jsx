@@ -5,6 +5,7 @@ import { gql } from 'apollo-boost'
 
 import './App.css'
 import TimeSeries from './components/TimeSeries'
+import TopXBarGraph from './components/TopXBarGraph'
 
 const COVID_TOTALS = gql`
   fragment CaseFields on Cases {
@@ -22,11 +23,15 @@ const COVID_TOTALS = gql`
       ...CaseFields
       day
     }
+    topXconfirmedByCountry(limit: 10) {
+      country
+      confirmed
+    }
   }
 `
 
-const App = ({ lastUpdated, totalCases, globalTimeSeries }) => (
-  <div>
+const App = ({ lastUpdated, totalCases, globalTimeSeries, topXconfirmedByCountry }) => (
+  <>
     <div className="container-xl">
       <h3>COVID-19 global cases by day</h3>
     </div>
@@ -60,7 +65,10 @@ const App = ({ lastUpdated, totalCases, globalTimeSeries }) => (
       </div>
     </div>
     <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} />
-  </div>
+    <div className="container-xl">
+      <TopXBarGraph data={topXconfirmedByCountry} id="top10confirmed" />
+    </div>
+  </>
 )
 
 export default () => {
