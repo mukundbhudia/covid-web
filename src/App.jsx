@@ -25,7 +25,7 @@ const COVID_TOTALS = gql`
   }
 `
 
-const App = (data) => (
+const App = ({ lastUpdated, totalCases, globalTimeSeries }) => (
   <div>
     <div className="container-xl">
       <h3>COVID-19 global cases by day</h3>
@@ -36,30 +36,30 @@ const App = (data) => (
         <div className="col-sm">
           <div className="alert alert-danger" role="alert">
             <h5>Total confirmed</h5>
-            <div id="confirmedCounter" className="total-cases text-danger">{ data.totalCases.confirmed.toLocaleString() }</div>
+            <div id="confirmedCounter" className="total-cases text-danger">{ totalCases.confirmed.toLocaleString() }</div>
           </div>
         </div>
         <div className="col-sm">
           <div className="alert alert-primary" role="alert">
             <h5>Total active</h5>
-            <div id="activeCounter" className="total-cases text-primary">{ data.totalCases.active.toLocaleString() }</div>
+            <div id="activeCounter" className="total-cases text-primary">{ totalCases.active.toLocaleString() }</div>
           </div> 
         </div>
         <div className="col-sm">
           <div className="alert alert-success" role="alert">
             <h5>Total recovered</h5>
-            <div id="recoveredCounter" className="total-cases text-success">{ data.totalCases.recovered.toLocaleString() }</div>
+            <div id="recoveredCounter" className="total-cases text-success">{ totalCases.recovered.toLocaleString() }</div>
           </div>
         </div>
         <div className="col-sm">
           <div className="alert alert-dark" role="alert">
             <h5>Total deaths</h5>
-            <div id="deathsCounter" className="total-cases text-dark">{ data.totalCases.deaths.toLocaleString() }</div>
+            <div id="deathsCounter" className="total-cases text-dark">{ totalCases.deaths.toLocaleString() }</div>
           </div>
         </div>
       </div>
     </div>
-    <TimeSeries {...data} />
+    <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} />
   </div>
 )
 

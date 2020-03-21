@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Chart from 'chart.js'
 
-const TimeSeries = ({lastUpdated, globalTimeSeries}) => {
+const TimeSeries = ({ lastUpdated, data }) => {
   const chartRef = React.createRef()
 
   const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
@@ -102,7 +102,7 @@ const TimeSeries = ({lastUpdated, globalTimeSeries}) => {
     new Chart(myChartRef, chartConfig);
   }, [chartRef, chartConfig])
   
-  globalTimeSeries.forEach(element => {
+  data.forEach(element => {
     const dateFromString = new Date(element.day)
     allDates.push((dateFromString).toLocaleDateString())
     confirmed.push({x: dateFromString, y: element.confirmed})
