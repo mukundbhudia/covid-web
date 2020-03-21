@@ -114,15 +114,15 @@ const TimeSeries = ({ lastUpdated, data }) => {
   
   return (
     <div className="container-xl">
-      <div id="chart">
+      <div className="chart">
         <canvas
-          id="canvas"
+          className="canvas"
           ref={chartRef}
         ></canvas>
       </div>
       <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedTimeStamp}</span></p>
 
-      <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+      {/* <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
         <label className={`btn btn-sm btn-secondary ${dataType === 'linear' ? 'active' : ''}`}>
           <input type="radio" name="data-type" onClick={() => {
             setDataType('linear')
@@ -147,7 +147,7 @@ const TimeSeries = ({ lastUpdated, data }) => {
 
       <button type="button" className="btn btn-sm btn-primary" id="toggleCurrentCases">Add current cases</button>
       <br />
-      <br/>
+      <br/> */}
     </div>
   )
 }

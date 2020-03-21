@@ -23,17 +23,38 @@ const COVID_TOTALS = gql`
       ...CaseFields
       day
     }
-    topXconfirmedByCountry(limit: 10) {
+    topXconfirmedByCountry(limit: 5) {
       country
       confirmed
+    }
+    topXactiveByCountry(limit: 5) {
+      country
+      active
+    }
+    topXrecoveredByCountry(limit: 5) {
+      country
+      recovered
+    }
+    topXdeathsByCountry(limit: 5) {
+      country
+      deaths
     }
   }
 `
 
-const App = ({ lastUpdated, totalCases, globalTimeSeries, topXconfirmedByCountry }) => (
+const App = (
+  {
+    lastUpdated,
+    totalCases,
+    globalTimeSeries,
+    topXconfirmedByCountry,
+    topXactiveByCountry,
+    topXrecoveredByCountry,
+    topXdeathsByCountry,
+  }) => (
   <>
     <div className="container-xl">
-      <h3>COVID-19 global cases by day</h3>
+      <h3>COVID-19 Dashboard</h3>
     </div>
     <br></br>
     <div className="container-xl">
@@ -66,14 +87,26 @@ const App = ({ lastUpdated, totalCases, globalTimeSeries, topXconfirmedByCountry
     </div>
     <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} />
     <div className="container-xl">
-      <TopXBarGraph data={topXconfirmedByCountry} id="top10confirmed" />
+      <div className="row">
+        <TopXBarGraph data={topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 5 confirmed by country" chartLabel="confirmed" labelColor="red" />
+        <TopXBarGraph data={topXactiveByCountry} id="top5active" chartTitle="Top 5 active by country" chartLabel="active" labelColor="blue" />
+      </div>
+      <div className="row">
+        <TopXBarGraph data={topXrecoveredByCountry} id="top5confirmed" chartTitle="Top 5 recovered by country" chartLabel="recovered" labelColor="green" />
+        <TopXBarGraph data={topXdeathsByCountry} id="top5active" chartTitle="Top 5 deaths by country" chartLabel="deaths" labelColor="grey" />
+      </div>
     </div>
+    <footer className="footer mt-auto py-3">
+      <div className="container">
+        <span className="text-muted">Data sources: WHO, John Hopkins University</span>
+      </div>
+    </footer>
   </>
 )
 
 export default () => {
   const { loading, error, data } = useQuery(COVID_TOTALS)
-  if (loading) return <p>Loading...</p>
+  if (loading) return <p>Loading dashbord da5...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
   return <App {...data} />

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import Chart from 'chart.js'
 
-const TopXBarGraph = ({ data, id }) => {
+const TopXBarGraph = ({ data, id, chartTitle, chartLabel, labelColor }) => {
   const chartRef = React.createRef()
 
-  const confirmed = data.map(element => ({ x: element.country, y: element.confirmed }))
+  const dataArray = data.map(element => ({ x: element.country, y: element[chartLabel] }))
   const countries = data.map(element => element.country)
 
   const chartColors = {
@@ -16,6 +16,8 @@ const TopXBarGraph = ({ data, id }) => {
     purple: 'rgb(153, 102, 255)',
     grey: 'rgb(201, 203, 207)'
   }
+
+  const chartLabelColor = chartColors[labelColor]
   
   const chartConfig = {
     type: 'bar',
@@ -23,10 +25,10 @@ const TopXBarGraph = ({ data, id }) => {
       labels: countries,
       datasets: [
         {
-          label: 'Confirmed',
-          backgroundColor: chartColors.red,
-          borderColor: chartColors.red,
-          data: confirmed,
+          label: chartLabel,
+          backgroundColor: chartLabelColor,
+          borderColor: chartLabelColor,
+          data: dataArray,
           fill: false,
         },
       ]
@@ -35,7 +37,7 @@ const TopXBarGraph = ({ data, id }) => {
       responsive: true,
       title: {
         display: true,
-        text: 'Top 10 confirmed by country'
+        text: chartTitle
       },
       tooltips: {
         mode: 'index',
@@ -60,9 +62,10 @@ const TopXBarGraph = ({ data, id }) => {
             display: true,
             labelString: 'Number of cases'
           },
-          // ticks: {
-          //   beginAtZero: true,
-          // }
+          ticks: {
+            beginAtZero: true,
+            callback: value => value.toLocaleString()
+          }
         }]
       }
     }
@@ -75,8 +78,8 @@ const TopXBarGraph = ({ data, id }) => {
   }, [chartRef, chartConfig])
 
   return (
-    <div className="container-xl">
-      <div id={id}>
+    <div className="col-sm">
+      <div className="chart" id={id}>
         <canvas
           id={`canvas-${id}`}
           ref={chartRef}
