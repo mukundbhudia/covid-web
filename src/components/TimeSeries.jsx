@@ -87,9 +87,7 @@ const TimeSeries = ({ lastUpdated, data }) => {
           },
           ticks: {
             beginAtZero: true,
-            callback: function(value, index, values) {
-                return value.toLocaleString()
-            }
+            callback: value => value.toLocaleString()
           }
         }]
       }
