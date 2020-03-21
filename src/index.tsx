@@ -9,7 +9,7 @@ import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
-const uriHost = process.env.GQL_URI || 'http://localhost:4000'
+const uriHost = process.env.REACT_APP_GQL_URI || 'http://localhost:4000'
 
 const client = new ApolloClient({
   uri: `${uriHost}/graphql`,
