@@ -35,6 +35,9 @@ const TopXBarGraph = ({ data, id, chartTitle, chartLabel, labelColor }) => {
     },
     options: {
       responsive: true,
+      plugins: {
+        labels: false
+      },
       title: {
         display: true,
         text: chartTitle
