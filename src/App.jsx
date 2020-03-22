@@ -6,7 +6,8 @@ import { gql } from 'apollo-boost'
 import './App.css'
 import TimeSeries from './components/TimeSeries'
 import TopXBarGraph from './components/TopXBarGraph'
-import PieChart from './components/PieChart'
+// import PieChart from './components/PieChart'
+import ProgressBar from './components/ProgressBar'
 
 const COVID_TOTALS = gql`
   fragment CaseFields on Cases {
@@ -112,7 +113,7 @@ const App = (
 
         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div className="">
-            <h3>COVID-19 Dashboard</h3>
+            <h3>COVID-19 | Global</h3>
           </div>
           <br></br>
           <div className="">
@@ -145,7 +146,27 @@ const App = (
           </div>
           <div className="">
             <div className="row">
-              <PieChart
+              <div className="col-sm">
+                <ProgressBar
+                  data1={totalCases.confirmed}
+                  data2={totalCases.active}
+                  id="barConfirmedAndActive"
+                  chartLabel1="confirmed"
+                  chartLabel2="active"
+                />
+              </div>
+              <div className="col-sm">
+                <ProgressBar
+                  data1={totalCases.recovered}
+                  data2={totalCases.deaths}
+                  id="barRecoveredAndDeaths"
+                  chartLabel1="recovered"
+                  chartLabel2="deaths"
+                />
+              </div>
+            </div>
+            <div className="row">
+              {/* <PieChart
                 data1={totalCases.confirmed}
                 data2={totalCases.active}
                 id="pieConfirmedAndActive"
@@ -164,7 +185,7 @@ const App = (
                 chartLabel2="deaths"
                 labelColor1="green"
                 labelColor2="grey"
-              />
+              /> */}
             </div>
           </div>
           <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} />
