@@ -1,10 +1,16 @@
 import React from 'react'
-import TimeSeries from '../components/TimeSeries'
-import TopXBarGraph from '../components/TopXBarGraph'
+import {
+  useParams
+} from "react-router-dom";
+import TimeSeries from './TimeSeries'
+import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
-import ProgressBar from '../components/ProgressBar'
+import ProgressBar from './ProgressBar'
 
-const InnerPage = ({ id, title, totalCases, topXactiveByCountry, topXconfirmedByCountry, topXdeathsByCountry, topXrecoveredByCountry, lastUpdated, globalTimeSeries }) => {
+const InnerPage = ({ title, totalCases, topXactiveByCountry, topXconfirmedByCountry, topXdeathsByCountry, topXrecoveredByCountry, lastUpdated, globalTimeSeries }) => {
+  let { id } = useParams()
+  console.log(id);
+  
   return (
     <>
       <div id={id} className="">
