@@ -113,7 +113,7 @@ const TimeSeries = ({ lastUpdated, data }) => {
   })
   
   return (
-    <div className="container-xl">
+    <div className="">
       <div className="chart">
         <canvas
           className="canvas"
