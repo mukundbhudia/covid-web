@@ -86,7 +86,9 @@ const InnerPage = (pData) => {
               data2={getCasesWithCountryAndProvince.active}
               id="barConfirmedAndActive"
               chartLabel1="confirmed"
+              labelColor1="red"
               chartLabel2="active"
+              labelColor2="blue"
           />
         </div>
         <div className="col-sm">
@@ -95,7 +97,9 @@ const InnerPage = (pData) => {
               data2={getCasesWithCountryAndProvince.deaths}
               id="barRecoveredAndDeaths"
               chartLabel1="recovered"
+              labelColor1="green"
               chartLabel2="deaths"
+              labelColor2="grey"
           />
         </div>
       </div>

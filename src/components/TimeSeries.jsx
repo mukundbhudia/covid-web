@@ -98,7 +98,7 @@ const TimeSeries = ({ lastUpdated, data }) => {
 
   useEffect(() => {
     const myChartRef = chartRef.current.getContext("2d")
-    console.log('Rendering again!')
+    // console.log('Rendering again!')
 
     new Chart(myChartRef, chartConfig);
   }, [chartRef, chartConfig])

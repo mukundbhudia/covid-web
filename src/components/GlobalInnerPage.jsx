@@ -1,19 +1,13 @@
 import React from 'react'
-import {
-  useParams
-} from "react-router-dom";
 import TimeSeries from './TimeSeries'
 import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
 import ProgressBar from './ProgressBar'
 
-const InnerPage = ({ title, totalCases, topXactiveByCountry, topXconfirmedByCountry, topXdeathsByCountry, topXrecoveredByCountry, lastUpdated, globalTimeSeries }) => {
-  let { id } = useParams()
-  console.log(id);
-  
+const InnerPage = ({ title, totalCases, topXactiveByCountry, topXconfirmedByCountry, topXdeathsByCountry, topXrecoveredByCountry, lastUpdated, globalTimeSeries }) => {  
   return (
     <>
-      <div id={id} className="">
+      <div id="global-page" className="">
         <h3>COVID-19 | {title}</h3>
       </div>
       <br></br>
@@ -47,24 +41,28 @@ const InnerPage = ({ title, totalCases, topXactiveByCountry, topXconfirmedByCoun
       </div>
       <div className="">
       <div className="row">
-          <div className="col-sm">
+        <div className="col-sm">
           <ProgressBar
               data1={totalCases.confirmed}
               data2={totalCases.active}
               id="barConfirmedAndActive"
               chartLabel1="confirmed"
+              labelColor1="red"
               chartLabel2="active"
+              labelColor2="blue"
           />
-          </div>
-          <div className="col-sm">
+        </div>
+        <div className="col-sm">
           <ProgressBar
               data1={totalCases.recovered}
               data2={totalCases.deaths}
               id="barRecoveredAndDeaths"
               chartLabel1="recovered"
+              labelColor1="green"
               chartLabel2="deaths"
+              labelColor2="grey"
           />
-          </div>
+        </div>
       </div>
       <div className="row">
           {/* <PieChart

@@ -7,7 +7,7 @@ const chartColors = {
   green: 'rgb(75, 192, 192)',
   blue: 'rgb(54, 162, 235)',
   purple: 'rgb(153, 102, 255)',
-  grey: 'rgb(201, 203, 207)'
+  grey: '#b0b0b0'
 }
 
 const calcPercentageFromTwoInts = (int1, int2) => {
@@ -26,7 +26,7 @@ const ProgressBar = ({ data1, data2, id, chartTitle, chartLabel1, chartLabel2, l
       <div
         className="progress-bar"
         role="progressbar"
-        style={{width: `${percentages.percentage1}%`, backgroundColor: `${chartColors['green']}`}}
+        style={{width: `${percentages.percentage1}%`, backgroundColor: `${chartColors[labelColor1]}`}}
         aria-valuenow={percentages.percentage1}
         aria-valuemin="0"
         aria-valuemax="100"
@@ -35,7 +35,7 @@ const ProgressBar = ({ data1, data2, id, chartTitle, chartLabel1, chartLabel2, l
       <div
         className="progress-bar"
         role="progressbar"
-        style={{width: `${percentages.percentage2}%`, backgroundColor: `${chartColors['grey']}`}}
+        style={{width: `${percentages.percentage2}%`, backgroundColor: `${chartColors[labelColor2]}`}}
         aria-valuenow={percentages.percentage2}
         aria-valuemin="0"
         aria-valuemax="100"
