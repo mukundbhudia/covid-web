@@ -12,6 +12,7 @@ import { gql } from 'apollo-boost'
 import './App.css'
 import GlobalInnerPage from './components/GlobalInnerPage'
 import CountryInnerPage from './components/CountryInnerPage'
+import CountryNotFound from './components/CountryNotFound'
 
 const COVID_TOTALS = gql`
   fragment CaseFields on Cases {
@@ -155,6 +156,9 @@ const App = (
                   lastUpdated={lastUpdated}
                 />
               } />
+              <Route path="*">
+                <CountryNotFound />
+              </Route>
             </Switch>
           </div>
         </main>

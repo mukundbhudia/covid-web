@@ -6,6 +6,7 @@ import {
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
+import CountryNotFound from '../components/CountryNotFound'
 import TimeSeries from './TimeSeries'
 // import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
@@ -40,7 +41,11 @@ const InnerPage = (pData) => {
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
-  let getCasesByIdKey = data.getCasesByIdKey[0]
+  let getCasesByIdKey = data && data.getCasesByIdKey[0]
+
+  if (!getCasesByIdKey) {
+    return ( <CountryNotFound /> )
+  }
   let lastUpdated = getCasesByIdKey.lastUpdate
   let idKey = id
 
