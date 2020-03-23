@@ -11,9 +11,9 @@ import TimeSeries from './TimeSeries'
 // import PieChart from '../components/PieChart'
 import ProgressBar from './ProgressBar'
 
-const getCountry = (country) => gql`
+const getCountry = (idKey) => gql`
   query {
-    getCasesWithCountryAndProvince(country: "${country}", province: ""){
+    getCasesByIdKey(idKey: "${idKey}"){
       country
       province
       confirmed
@@ -40,14 +40,21 @@ const InnerPage = (pData) => {
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
-  let getCasesWithCountryAndProvince = data.getCasesWithCountryAndProvince[0]
-  let lastUpdated = getCasesWithCountryAndProvince.lastUpdated
-  let countryName = id
+  let getCasesByIdKey = data.getCasesByIdKey[0]
+  let lastUpdated = getCasesByIdKey.lastUpdated
+  let idKey = id
+  const genPageTitle = (country, province) => {
+    if (province) {
+      return `${country} - ${province}`
+    } else {
+      return `${country}`
+    }
+  }
 
   return (
     <>
-      <div id={countryName} className="">
-        <h3>COVID-19 | {getCasesWithCountryAndProvince.country}</h3>
+      <div id={idKey} className="">
+        <h3>{genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)}</h3>
       </div>
       <br></br>
       <div className="">
@@ -55,25 +62,25 @@ const InnerPage = (pData) => {
           <div className="col-sm">
           <div className="alert alert-danger" role="alert">
               <h5>Total confirmed</h5>
-              <div id="confirmedCounter" className="total-cases text-danger">{ getCasesWithCountryAndProvince.confirmed.toLocaleString() }</div>
+              <div id="confirmedCounter" className="total-cases text-danger">{ getCasesByIdKey.confirmed.toLocaleString() }</div>
           </div>
           </div>
           <div className="col-sm">
           <div className="alert alert-primary" role="alert">
               <h5>Total active</h5>
-              <div id="activeCounter" className="total-cases text-primary">{ getCasesWithCountryAndProvince.active.toLocaleString() }</div>
+              <div id="activeCounter" className="total-cases text-primary">{ getCasesByIdKey.active.toLocaleString() }</div>
           </div> 
           </div>
           <div className="col-sm">
           <div className="alert alert-success" role="alert">
               <h5>Total recovered</h5>
-              <div id="recoveredCounter" className="total-cases text-success">{ getCasesWithCountryAndProvince.recovered.toLocaleString() }</div>
+              <div id="recoveredCounter" className="total-cases text-success">{ getCasesByIdKey.recovered.toLocaleString() }</div>
           </div>
           </div>
           <div className="col-sm">
           <div className="alert alert-dark" role="alert">
               <h5>Total deaths</h5>
-              <div id="deathsCounter" className="total-cases text-dark">{ getCasesWithCountryAndProvince.deaths.toLocaleString() }</div>
+              <div id="deathsCounter" className="total-cases text-dark">{ getCasesByIdKey.deaths.toLocaleString() }</div>
           </div>
           </div>
       </div>
@@ -82,8 +89,8 @@ const InnerPage = (pData) => {
       <div className="row">
         <div className="col-sm">
           <ProgressBar
-              data1={getCasesWithCountryAndProvince.confirmed}
-              data2={getCasesWithCountryAndProvince.active}
+              data1={getCasesByIdKey.confirmed}
+              data2={getCasesByIdKey.active}
               id="barConfirmedAndActive"
               chartLabel1="confirmed"
               labelColor1="red"
@@ -93,8 +100,8 @@ const InnerPage = (pData) => {
         </div>
         <div className="col-sm">
           <ProgressBar
-              data1={getCasesWithCountryAndProvince.recovered}
-              data2={getCasesWithCountryAndProvince.deaths}
+              data1={getCasesByIdKey.recovered}
+              data2={getCasesByIdKey.deaths}
               id="barRecoveredAndDeaths"
               chartLabel1="recovered"
               labelColor1="green"
@@ -106,8 +113,8 @@ const InnerPage = (pData) => {
       <div className="row">
       </div>
       </div>
-      {getCasesWithCountryAndProvince.casesByDate &&
-        <TimeSeries lastUpdated={lastUpdated} data={getCasesWithCountryAndProvince.casesByDate} />
+      {getCasesByIdKey.casesByDate &&
+        <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} />
       }
       <div className="">
       </div>

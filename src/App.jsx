@@ -45,7 +45,11 @@ const COVID_TOTALS = gql`
       country
       deaths
     }
-    getAllCountries
+    casesByLocation {
+      idKey
+      country
+      province
+    }
   }
 `
 
@@ -58,7 +62,7 @@ const App = (
     topXactiveByCountry,
     topXrecoveredByCountry,
     topXdeathsByCountry,
-    getAllCountries,
+    casesByLocation,
   }) => (
   <>
   <Router>
@@ -99,43 +103,60 @@ const App = (
 
             <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>Reports by country</span>
-              <a className="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+              <a className="d-flex align-items-center text-muted" href="/" aria-label="Add a new report">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
               </a>
             </h6>
             <ul className="nav flex-column mb-2">
-              {getAllCountries.sort().map(title =>
-                <li key={title} className="nav-item">
-                  <Link className="nav-link" to={title}>
+              {casesByLocation.sort((a, b) => {
+                const countryA = a.country.toUpperCase();
+                const countryB = b.country.toUpperCase();
+
+                let comparison = 0;
+                if (countryA > countryB) {
+                  comparison = 1;
+                } else if (countryA < countryB) {
+                  comparison = -1;
+                }
+                return comparison;
+              }).map(allCases => {
+                let linkToRender = ""
+                if (allCases.province === null) {
+                  linkToRender = (<li key={allCases.idKey} className="nav-item">
+                  <Link className="nav-link" to={allCases.idKey}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    {title}
+                    {allCases.country}
                   </Link>
-                </li>
-              )}
+                </li>)
+                }
+                return linkToRender
+              })}
             </ul>
           </div>
         </nav>
 
         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
-          <Switch>
-            <Route exact path="/">
-            <GlobalInnerPage
-                title="Global"
-                totalCases={totalCases}
-                lastUpdated={lastUpdated}
-                globalTimeSeries={globalTimeSeries}
-                topXconfirmedByCountry={topXconfirmedByCountry}
-                topXactiveByCountry={topXactiveByCountry}
-                topXrecoveredByCountry={topXrecoveredByCountry}
-                topXdeathsByCountry={topXdeathsByCountry}
-              />
-            </Route>
-            <Route path="/:id" children={
-              <CountryInnerPage
-                lastUpdated={lastUpdated}
-              />
-            } />
-          </Switch>
+          <div className="container-xl">
+            <Switch>
+              <Route exact path="/">
+              <GlobalInnerPage
+                  title="Global"
+                  totalCases={totalCases}
+                  lastUpdated={lastUpdated}
+                  globalTimeSeries={globalTimeSeries}
+                  topXconfirmedByCountry={topXconfirmedByCountry}
+                  topXactiveByCountry={topXactiveByCountry}
+                  topXrecoveredByCountry={topXrecoveredByCountry}
+                  topXdeathsByCountry={topXdeathsByCountry}
+                />
+              </Route>
+              <Route path="/:id" children={
+                <CountryInnerPage
+                  lastUpdated={lastUpdated}
+                />
+              } />
+            </Switch>
+          </div>
         </main>
       </div>
     </div>
