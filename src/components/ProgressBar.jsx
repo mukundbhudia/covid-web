@@ -10,37 +10,46 @@ const chartColors = {
   grey: '#b0b0b0'
 }
 
-const calcPercentageFromTwoInts = (int1, int2) => {
-  const percentage1 = Math.floor( (int1/(int1 +int2))*100 )
-  const percentage2 = 100 - percentage1
-  return {
-    percentage1: percentage1,
-    percentage2: percentage2,
-  }
-}
+const ProgressBar = ({ dataSet }) => {
 
-const ProgressBar = ({ data1, data2, id, chartTitle, chartLabel1, chartLabel2, labelColor1, labelColor2 }) => {
-  const percentages = calcPercentageFromTwoInts(data1, data2)
+  const percentageDataSet = dataSet.map((item, i) => {
+    const total = dataSet.reduce((count, dataItem) => {
+      return count + dataItem.data
+    }, 0)
+    if (total === 0) {
+      return 0
+    } else {
+      if (i+1 === dataSet.length) {
+        item.percentage = Math.ceil((item.data/(total))*100) - 1
+      } else {
+        item.percentage = Math.ceil((item.data/(total))*100)
+      }
+      return item
+    }
+  })
+
   return (
     <div className="progress">
-      <div
-        className="progress-bar"
-        role="progressbar"
-        style={{width: `${percentages.percentage1}%`, backgroundColor: `${chartColors[labelColor1]}`}}
-        aria-valuenow={percentages.percentage1}
-        aria-valuemin="0"
-        aria-valuemax="100"
-        data-toggle="tooltip" data-placement="top" title={data1}
-      >{percentages.percentage1}%</div>
-      <div
-        className="progress-bar"
-        role="progressbar"
-        style={{width: `${percentages.percentage2}%`, backgroundColor: `${chartColors[labelColor2]}`}}
-        aria-valuenow={percentages.percentage2}
-        aria-valuemin="0"
-        aria-valuemax="100"
-        data-toggle="tooltip" data-placement="top" title={data1}
-      >{percentages.percentage2}%</div>
+      {percentageDataSet.map((dataItem, i) => {
+        if (dataItem !== 0) {
+          return (
+            <div
+              key={i}
+              className="progress-bar"
+              role="progressbar"
+              style={{width: `${dataItem.percentage}%`, backgroundColor: `${chartColors[dataItem.color]}`}}
+              aria-valuenow={dataItem.percentage}
+              aria-valuemin="0"
+              aria-valuemax="100"
+              data-toggle="tooltip" data-placement="top" title={dataItem.label}
+            >
+              {dataItem.percentage}%
+            </div>
+          )
+        } else {
+          return null
+        }
+      })}
     </div>
   )
 }

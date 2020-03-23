@@ -4,7 +4,42 @@ import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
 import ProgressBar from './ProgressBar'
 
-const InnerPage = ({ title, totalCases, topXactiveByCountry, topXconfirmedByCountry, topXdeathsByCountry, topXrecoveredByCountry, lastUpdated, globalTimeSeries }) => {  
+const InnerPage = ({
+   title,
+   totalCases,
+   topXactiveByCountry,
+   topXconfirmedByCountry,
+   topXdeathsByCountry,
+   topXrecoveredByCountry,
+   lastUpdated,
+   globalTimeSeries,
+  }) => {
+
+  const confirmedVsActiveProgressBar = [
+    {
+      data: totalCases.confirmed,
+      label: 'confirmed',
+      color: 'red',
+    },
+    {
+      data: totalCases.active,
+      label: 'active',
+      color: 'blue',
+    },
+  ]
+
+  const recoveredVsDeathsProgressBar = [
+    {
+      data: totalCases.recovered,
+      label: 'recovered',
+      color: 'green',
+    },
+    {
+      data: totalCases.deaths,
+      label: 'deaths',
+      color: 'grey',
+    },
+  ]
   return (
     <>
       <div id="global-page" className="">
@@ -42,26 +77,24 @@ const InnerPage = ({ title, totalCases, topXactiveByCountry, topXconfirmedByCoun
       <div className="">
       <div className="row">
         <div className="col-sm">
-          <ProgressBar
-              data1={totalCases.confirmed}
-              data2={totalCases.active}
-              id="barConfirmedAndActive"
-              chartLabel1="confirmed"
-              labelColor1="red"
-              chartLabel2="active"
-              labelColor2="blue"
-          />
+          <div className="card bg-light mb-3">
+            <div className="card-body">
+              <h6 className="card-title">Confirmed/Active</h6>
+              <ProgressBar
+                  dataSet={confirmedVsActiveProgressBar}
+              />
+            </div>
+          </div>
         </div>
         <div className="col-sm">
-          <ProgressBar
-              data1={totalCases.recovered}
-              data2={totalCases.deaths}
-              id="barRecoveredAndDeaths"
-              chartLabel1="recovered"
-              labelColor1="green"
-              chartLabel2="deaths"
-              labelColor2="grey"
-          />
+          <div className="card bg-light mb-3">
+            <div className="card-body">
+              <h6 className="card-title">Recoveries/Deaths</h6>
+                <ProgressBar
+                  dataSet={recoveredVsDeathsProgressBar}
+                />
+            </div>
+          </div>
         </div>
       </div>
       <div className="row">

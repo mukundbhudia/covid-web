@@ -41,8 +41,9 @@ const InnerPage = (pData) => {
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
   let getCasesByIdKey = data.getCasesByIdKey[0]
-  let lastUpdated = getCasesByIdKey.lastUpdated
+  let lastUpdated = getCasesByIdKey.lastUpdate
   let idKey = id
+
   const genPageTitle = (country, province) => {
     if (province) {
       return `${country} - ${province}`
@@ -50,6 +51,32 @@ const InnerPage = (pData) => {
       return `${country}`
     }
   }
+
+  const confirmedVsActiveProgressBar = [
+    {
+      data: getCasesByIdKey.confirmed,
+      label: 'confirmed',
+      color: 'red',
+    },
+    {
+      data: getCasesByIdKey.active,
+      label: 'active',
+      color: 'blue',
+    },
+  ]
+
+  const recoveredVsDeathsProgressBar = [
+    {
+      data: getCasesByIdKey.recovered,
+      label: 'recovered',
+      color: 'green',
+    },
+    {
+      data: getCasesByIdKey.deaths,
+      label: 'deaths',
+      color: 'grey',
+    },
+  ]
 
   return (
     <>
@@ -88,26 +115,24 @@ const InnerPage = (pData) => {
       <div className="">
       <div className="row">
         <div className="col-sm">
-          <ProgressBar
-              data1={getCasesByIdKey.confirmed}
-              data2={getCasesByIdKey.active}
-              id="barConfirmedAndActive"
-              chartLabel1="confirmed"
-              labelColor1="red"
-              chartLabel2="active"
-              labelColor2="blue"
-          />
+          <div className="card bg-light mb-3">
+            <div className="card-body">
+              <h6 className="card-title">Confirmed/Active</h6>
+              <ProgressBar
+                  dataSet={confirmedVsActiveProgressBar}
+              />
+            </div>
+          </div>
         </div>
         <div className="col-sm">
-          <ProgressBar
-              data1={getCasesByIdKey.recovered}
-              data2={getCasesByIdKey.deaths}
-              id="barRecoveredAndDeaths"
-              chartLabel1="recovered"
-              labelColor1="green"
-              chartLabel2="deaths"
-              labelColor2="grey"
-          />
+          <div className="card bg-light mb-3">
+            <div className="card-body">
+              <h6 className="card-title">Recoveries/Deaths</h6>
+                <ProgressBar
+                  dataSet={recoveredVsDeathsProgressBar}
+                />
+            </div>
+          </div>
         </div>
       </div>
       <div className="row">
