@@ -12,6 +12,7 @@ import { gql } from 'apollo-boost'
 import './App.css'
 import GlobalInnerPage from './components/GlobalInnerPage'
 import CountryInnerPage from './components/CountryInnerPage'
+import TopCasesInnerPage from './components/TopCasesInnerPage'
 import CountryNotFound from './components/CountryNotFound'
 
 const COVID_TOTALS = gql`
@@ -86,13 +87,13 @@ const App = (
                   Global <span className="sr-only">(current)</span>
                 </a>
               </li>
-              {/* <li className="nav-item">
-                <a className="nav-link" href="#">
+              <li className="nav-item">
+                <a className="nav-link" href="/top-cases">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                  Reports
+                  Top cases
                 </a>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a className="nav-link" href="#">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                   Stats
@@ -149,6 +150,12 @@ const App = (
                   topXdeathsByCountry={topXdeathsByCountry}
                 />
               </Route>
+              <Route path="/top-cases" children={
+                <TopCasesInnerPage
+                  title="Top cases globally"
+                  lastUpdated={lastUpdated}
+                />
+              } />
               <Route path="/:id" children={
                 <CountryInnerPage
                   lastUpdated={lastUpdated}

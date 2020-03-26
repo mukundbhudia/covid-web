@@ -43,7 +43,7 @@ const InnerPage = ({
   return (
     <>
       <div id="global-page" className="">
-        <h3>COVID-19 | {title}</h3>
+        <h3>{title}</h3>
       </div>
       <br></br>
       <div className="">
