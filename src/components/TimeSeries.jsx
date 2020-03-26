@@ -8,10 +8,11 @@ const TimeSeries = ({ lastUpdated, data }) => {
 
   const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
   const allDates = []
-  const confirmed = []
+  let confirmed = []
   // const recovered = []
-  const deaths = []
+  let deaths = []
   // const active = []
+  let firstConfirmedCase = null
 
   const chartColors = {
     red: 'rgb(255, 99, 132)',
@@ -22,6 +23,31 @@ const TimeSeries = ({ lastUpdated, data }) => {
     purple: 'rgb(153, 102, 255)',
     grey: 'rgb(201, 203, 207)'
   }
+
+  let firstCaseAdded = false
+  data.forEach((element, i) => {
+    const cases = element
+    if (cases.confirmed > 0) {
+      const dateFromString = new Date(cases.day)
+      if (!firstCaseAdded && i > 0) {
+        const previousCase = data[i-1]        
+        const dateFromString = new Date(previousCase.day)
+        firstCaseAdded = true
+        firstConfirmedCase = cases
+        allDates.push((dateFromString).toLocaleDateString())
+        confirmed.push({x: dateFromString, y: previousCase.confirmed})
+        // recovered.push({x: dateFromString, y: element.recovered})
+        deaths.push({x: dateFromString, y: previousCase.deaths})
+        // active.push({x: dateFromString, y: element.active})
+      } else {
+      allDates.push((dateFromString).toLocaleDateString())
+      confirmed.push({x: dateFromString, y: cases.confirmed})
+      // recovered.push({x: dateFromString, y: element.recovered})
+      deaths.push({x: dateFromString, y: cases.deaths})
+      // active.push({x: dateFromString, y: element.active})          
+      }
+    }
+  })
   
   const chartConfig = {
     type: chartType,
@@ -102,15 +128,6 @@ const TimeSeries = ({ lastUpdated, data }) => {
 
     new Chart(myChartRef, chartConfig);
   }, [chartRef, chartConfig])
-  
-  data.forEach(element => {
-    const dateFromString = new Date(element.day)
-    allDates.push((dateFromString).toLocaleDateString())
-    confirmed.push({x: dateFromString, y: element.confirmed})
-    // recovered.push({x: dateFromString, y: element.recovered})
-    deaths.push({x: dateFromString, y: element.deaths})
-    // active.push({x: dateFromString, y: element.active})
-  })
   
   return (
     <div className="">
