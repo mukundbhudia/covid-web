@@ -15,19 +15,17 @@ import CountryInnerPage from './components/CountryInnerPage'
 import CountryNotFound from './components/CountryNotFound'
 
 const COVID_TOTALS = gql`
-  fragment CaseFields on Cases {
-    confirmed
-    active
-    recovered
-    deaths
-  }
   query {
     lastUpdated
     totalCases {
-      ...CaseFields
-    }
+      confirmed
+      active
+      recovered
+      deaths
+  }
     globalTimeSeries {
-      ...CaseFields
+      confirmed
+      deaths
       day
     }
     topXconfirmedByCountry(limit: 5) {

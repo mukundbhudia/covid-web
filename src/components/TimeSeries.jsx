@@ -9,9 +9,9 @@ const TimeSeries = ({ lastUpdated, data }) => {
   const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
   const allDates = []
   const confirmed = []
-  const recovered = []
+  // const recovered = []
   const deaths = []
-  const active = []
+  // const active = []
 
   const chartColors = {
     red: 'rgb(255, 99, 132)',
@@ -35,20 +35,20 @@ const TimeSeries = ({ lastUpdated, data }) => {
         data: confirmed,
         fill: false,
       }, 
-      {
-        label: 'Active',
-        fill: false,
-        backgroundColor: chartColors.blue,
-        borderColor: chartColors.blue,
-        data: active,
-      }, 
-      {
-        label: 'Recovered',
-        fill: false,
-        backgroundColor: chartColors.green,
-        borderColor: chartColors.green,
-        data: recovered,
-      }, 
+      // {
+      //   label: 'Active',
+      //   fill: false,
+      //   backgroundColor: chartColors.blue,
+      //   borderColor: chartColors.blue,
+      //   data: active,
+      // }, 
+      // {
+      //   label: 'Recovered',
+      //   fill: false,
+      //   backgroundColor: chartColors.green,
+      //   borderColor: chartColors.green,
+      //   data: recovered,
+      // }, 
       {
         label: 'Deaths',
         fill: false,
@@ -107,9 +107,9 @@ const TimeSeries = ({ lastUpdated, data }) => {
     const dateFromString = new Date(element.day)
     allDates.push((dateFromString).toLocaleDateString())
     confirmed.push({x: dateFromString, y: element.confirmed})
-    recovered.push({x: dateFromString, y: element.recovered})
+    // recovered.push({x: dateFromString, y: element.recovered})
     deaths.push({x: dateFromString, y: element.deaths})
-    active.push({x: dateFromString, y: element.active})
+    // active.push({x: dateFromString, y: element.active})
   })
   
   return (

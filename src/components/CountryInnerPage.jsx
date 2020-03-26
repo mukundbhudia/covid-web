@@ -26,9 +26,7 @@ const getCountry = (idKey) => gql`
       lastUpdate
       casesByDate {
         confirmed
-        active
         deaths
-        recovered
         day
       }
     }
