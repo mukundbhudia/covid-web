@@ -29,6 +29,11 @@ const getCountry = (idKey) => gql`
         deaths
         day
       }
+      provincesList {
+        idKey
+        province
+      }
+      hasProvince
     }
   }
 `
@@ -86,6 +91,22 @@ const InnerPage = (pData) => {
       <div id={idKey} className="">
         <h3>{genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)}</h3>
       </div>
+      {getCasesByIdKey.hasProvince &&
+        <ul className="nav">
+          {getCasesByIdKey.provincesList.map((provinceKey, i) => {
+            return (<li className="nav-item" key={i}>
+            <a className="nav-link active" href={`/${provinceKey.idKey}`}>{`${provinceKey.province}`}</a>
+          </li>)
+          })}
+        </ul>
+      }
+      {getCasesByIdKey.province &&
+        <ul className="nav">
+          <li className="nav-item">
+            <a className="nav-link active" href={`/${getCasesByIdKey.country.replace(/,/g, '').replace(/\s+/g, '-').toLowerCase()}`}>{getCasesByIdKey.country}</a>
+          </li>
+      </ul>
+      }
       <br></br>
       <div className="">
       <div className="row">
