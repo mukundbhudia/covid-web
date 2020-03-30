@@ -15,6 +15,8 @@ const InnerPage = ({
    globalTimeSeries,
   }) => {
 
+  const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
+
   const confirmedVsActiveProgressBar = [
     {
       data: totalCases.confirmed,
@@ -45,6 +47,7 @@ const InnerPage = ({
       <div id="global-page" className="">
         <h3>{title}</h3>
       </div>
+      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedTimeStamp}</span></p>
       <br></br>
       <div className="">
       <div className="row">

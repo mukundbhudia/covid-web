@@ -39,7 +39,7 @@ const TopCasesInnerPage = ({
       <div id="global-page" className="">
         <h3>{title}</h3>
       </div>
-      <p>Last updated: {lastUpdatedDate}</p>
+      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedDate}</span></p>
       <div className="">
         <div className="row">
             <TopXBarGraph data={data.topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 10 confirmed by country" chartLabel="confirmed" labelColor="red" />

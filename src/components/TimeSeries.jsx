@@ -6,7 +6,6 @@ const TimeSeries = ({ lastUpdated, data }) => {
   const [ dataType, setDataType ] = useState('linear')
   const [ chartType, setChartType ] = useState('line')
 
-  const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
   const allDates = []
   let confirmed = []
   // const recovered = []
@@ -137,7 +136,6 @@ const TimeSeries = ({ lastUpdated, data }) => {
           ref={chartRef}
         ></canvas>
       </div>
-      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedTimeStamp}</span></p>
 
       {/* <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
         <label className={`btn btn-sm btn-secondary ${dataType === 'linear' ? 'active' : ''}`}>

@@ -50,6 +50,7 @@ const InnerPage = (pData) => {
     return ( <CountryNotFound /> )
   }
   let lastUpdated = getCasesByIdKey.lastUpdate
+  const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
   let idKey = id
 
   const genPageTitle = (country, province) => {
@@ -91,6 +92,7 @@ const InnerPage = (pData) => {
       <div id={idKey} className="">
         <h3>{genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)}</h3>
       </div>
+      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedTimeStamp}</span></p>
       {getCasesByIdKey.hasProvince &&
         <ul className="nav">
           {getCasesByIdKey.provincesList.map((provinceKey, i) => {
