@@ -3,6 +3,7 @@ import TimeSeries from './TimeSeries'
 import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
 import ProgressBar from './ProgressBar'
+import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
 
 const InnerPage = ({
    title,
@@ -14,8 +15,6 @@ const InnerPage = ({
    lastUpdated,
    globalTimeSeries,
   }) => {
-
-  const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
 
   const confirmedVsActiveProgressBar = [
     {
@@ -47,8 +46,9 @@ const InnerPage = ({
       <div id="global-page" className="">
         <h3>{title}</h3>
       </div>
-      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedTimeStamp}</span></p>
-      <br></br>
+      <div className="row">
+        <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
+      </div>
       <div className="">
       <div className="row">
           <div className="col-sm">

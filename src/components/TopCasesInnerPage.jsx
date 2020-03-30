@@ -2,6 +2,7 @@ import React from 'react'
 import TopXBarGraph from './TopXBarGraph'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
 
 const getTopCases = () => gql`
   query {
@@ -32,14 +33,14 @@ const TopCasesInnerPage = ({
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
-  const lastUpdatedDate = (new Date(parseInt(lastUpdated))).toLocaleString()
-
   return (
     <>
       <div id="global-page" className="">
         <h3>{title}</h3>
       </div>
-      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedDate}</span></p>
+      <div className="row">
+        <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
+      </div>
       <div className="">
         <div className="row">
             <TopXBarGraph data={data.topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 10 confirmed by country" chartLabel="confirmed" labelColor="red" />

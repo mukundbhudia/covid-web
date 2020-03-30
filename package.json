@@ -20,6 +20,7 @@
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "timeago.js": "^4.0.2",
     "typescript": "^3.7.5"
   },
   "scripts": {

@@ -11,6 +11,7 @@ import TimeSeries from './TimeSeries'
 // import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
 import ProgressBar from './ProgressBar'
+import DataUpdatedTimeStamp from './DataUpdatedTimeStamp';
 
 const getCountry = (idKey) => gql`
   query {
@@ -50,7 +51,6 @@ const InnerPage = (pData) => {
     return ( <CountryNotFound /> )
   }
   let lastUpdated = getCasesByIdKey.lastUpdate
-  const lastUpdatedTimeStamp = (new Date(parseInt(lastUpdated))).toLocaleString()
   let idKey = id
 
   const genPageTitle = (country, province) => {
@@ -92,7 +92,9 @@ const InnerPage = (pData) => {
       <div id={idKey} className="">
         <h3>{genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)}</h3>
       </div>
-      <p className="lastUpdatedTimeStamp">Data last updated: <span id="lastUpdated">{lastUpdatedTimeStamp}</span></p>
+      <div className="row">
+        <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
+      </div>
       {getCasesByIdKey.hasProvince &&
         <ul className="nav">
           {getCasesByIdKey.provincesList.map((provinceKey, i) => {
@@ -109,7 +111,6 @@ const InnerPage = (pData) => {
           </li>
       </ul>
       }
-      <br></br>
       <div className="">
       <div className="row">
           <div className="col-sm">
