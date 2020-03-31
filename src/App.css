@@ -1,5 +1,6 @@
 body {
   margin-top: 20px;
+  font-size: .875rem;
 }
 
 .canvas{
@@ -17,14 +18,20 @@ body {
   color: #777;
 }
 
+.alert-purple {
+  color: #5b037b;
+  background-color: #ddc4fb;
+  border-color: #cbabf2;
+}
+
+.text-purple {
+  color: #5b037b;
+}
+
 .footer {
   margin-top: 10px !important;
   font-size: 11px;
   background-color: #e3e3e3;
-}
-
-body {
-  font-size: .875rem;
 }
 
 .feather {

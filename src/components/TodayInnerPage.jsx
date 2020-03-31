@@ -6,26 +6,22 @@ import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
 
 const getTopCases = () => gql`
   query {
-    topXconfirmedByCountry(limit: 10) {
-      country
-      confirmed
+    totalCases {
+      confirmedCasesToday
+      deathsToday
     }
-    topXactiveByCountry(limit: 10) {
+    topXconfirmedTodayByCountry(limit: 10) {
       country
-      active
+      confirmedCasesToday
     }
-    topXrecoveredByCountry(limit: 10) {
+    topXdeathsTodayByCountry(limit: 10) {
       country
-      recovered
-    }
-    topXdeathsByCountry(limit: 10) {
-      country
-      deaths
+      deathsToday
     }
   }
 `
 
-const TopCasesInnerPage = ({
+const TodayInnerPage = ({
    title,
    lastUpdated,
   }) => {
@@ -33,25 +29,39 @@ const TopCasesInnerPage = ({
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
+  const totalCases = data.totalCases
+
   return (
     <>
       <div id="global-page" className="">
-        <h3>{title}</h3>
+        <h3>{title} | {(new Date()).toLocaleDateString()}</h3>
       </div>
       <div className="row">
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
       <div className="row">
-          <TopXBarGraph data={data.topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 10 confirmed by country" chartLabel="confirmed" labelColor="red" />
+        <div className="col-sm">
+          <div className="alert alert-purple" role="alert">
+            <h5>New confirmed cases globally</h5>
+            <div id="confirmedTodayCounter" className="total-cases text-purple">
+              { totalCases.confirmedCasesToday.toLocaleString() }
+            </div>
+          </div>
+        </div>
+        <div className="col-sm">
+          <div className="alert alert-warning" role="alert">
+            <h5>New deaths globally</h5>
+            <div id="deathsTodayCounter" className="total-cases text-yellow">
+              { totalCases.deathsToday.toLocaleString() }
+            </div>
+          </div>
+        </div>
       </div>
       <div className="row">
-        <TopXBarGraph data={data.topXactiveByCountry} id="top5active" chartTitle="Top 10 active by country" chartLabel="active" labelColor="blue" />
+          <TopXBarGraph data={data.topXconfirmedTodayByCountry} id="top10confirmedToday" chartTitle="Top 10 confirmed today by country" chartLabel="confirmedCasesToday" labelColor="purple" />
       </div>
       <div className="row">
-          <TopXBarGraph data={data.topXrecoveredByCountry} id="top5recovered" chartTitle="Top 10 recovered by country" chartLabel="recovered" labelColor="green" />
-      </div> 
-      <div className="row">
-          <TopXBarGraph data={data.topXdeathsByCountry} id="top5deaths" chartTitle="Top 10 deaths by country" chartLabel="deaths" labelColor="grey" />
+        <TopXBarGraph data={data.topXdeathsTodayByCountry} id="top10deathsToday" chartTitle="Top 10 deaths today by country" chartLabel="deathsToday" labelColor="yellow" />
       </div>
       <footer className="footer mt-auto py-3">
       <div className="container pull-left">
@@ -65,4 +75,4 @@ const TopCasesInnerPage = ({
   )
 }
 
-export default TopCasesInnerPage
+export default TodayInnerPage

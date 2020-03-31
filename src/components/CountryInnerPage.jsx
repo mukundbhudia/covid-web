@@ -124,43 +124,59 @@ const InnerPage = (pData) => {
           </li>
       </ul>
       }
-      <div className="">
+
       <div className="row">
-          <div className="col-sm">
+        <div className="col-sm">
           <div className="alert alert-danger" role="alert">
-              <h5>Total confirmed</h5>
-              <div id="confirmedCounter" className="total-cases text-danger">
-                { currentCases.confirmed.toLocaleString() }
-              </div>
+            <h5>Total confirmed</h5>
+            <div id="confirmedCounter" className="total-cases text-danger">
+              { currentCases.confirmed.toLocaleString() }
+            </div>
           </div>
-          </div>
-          <div className="col-sm">
+        </div>
+        <div className="col-sm">
           <div className="alert alert-primary" role="alert">
-              <h5>Total active</h5>
-              <div id="activeCounter" className="total-cases text-primary">
-                { currentCases.active.toLocaleString() }
-              </div>
+            <h5>Total active</h5>
+            <div id="activeCounter" className="total-cases text-primary">
+              { currentCases.active.toLocaleString() }
+            </div>
           </div>
-          </div>
-          <div className="col-sm">
+        </div>
+        <div className="col-sm">
           <div className="alert alert-success" role="alert">
-              <h5>Total recovered</h5>
-              <div id="recoveredCounter" className="total-cases text-success">
-                { currentCases.recovered.toLocaleString() }
-              </div>
+            <h5>Total recovered</h5>
+            <div id="recoveredCounter" className="total-cases text-success">
+              { currentCases.recovered.toLocaleString() }
+            </div>
           </div>
-          </div>
-          <div className="col-sm">
+        </div>
+        <div className="col-sm">
           <div className="alert alert-dark" role="alert">
-              <h5>Total deaths</h5>
-              <div id="deathsCounter" className="total-cases text-dark">
-                { currentCases.deaths.toLocaleString() }
-              </div>
+            <h5>Total deaths</h5>
+            <div id="deathsCounter" className="total-cases text-dark">
+              { currentCases.deaths.toLocaleString() }
+            </div>
           </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm">
+          <div className="alert alert-purple" role="alert">
+            <h5>New confirmed cases</h5>
+            <div id="confirmedTodayCounter" className="total-cases text-purple">
+              { currentCases.confirmedCasesToday.toLocaleString() }
+            </div>
           </div>
+        </div>
+        <div className="col-sm">
+          <div className="alert alert-warning" role="alert">
+            <h5>New deaths</h5>
+            <div id="deathsTodayCounter" className="total-cases text-yellow">
+              { currentCases.deathsToday.toLocaleString() }
+            </div>
+          </div>
+        </div>
       </div>
-      </div>
-      <div className="">
       <div className="row">
         <div className="col-sm">
           <div className="card bg-light mb-3">
@@ -185,12 +201,9 @@ const InnerPage = (pData) => {
       </div>
       <div className="row">
       </div>
-      </div>
       {getCasesByIdKey.casesByDate &&
         <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} currentCases={currentCases} />
       }
-      <div className="">
-      </div>
       <footer className="footer mt-auto py-3">
       <div className="container pull-left">
           <span className="text-muted">Data sources: <a href="https://www.who.int/">WHO</a>, <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">John Hopkins University</a></span>

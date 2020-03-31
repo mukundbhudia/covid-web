@@ -13,6 +13,7 @@ import './App.css'
 import GlobalInnerPage from './components/GlobalInnerPage'
 import CountryInnerPage from './components/CountryInnerPage'
 import TopCasesInnerPage from './components/TopCasesInnerPage'
+import TodayInnerPage from './components/TodayInnerPage'
 import CountryNotFound from './components/CountryNotFound'
 
 const COVID_TOTALS = gql`
@@ -92,6 +93,12 @@ const App = (
                 </a>
               </li>
               <li className="nav-item">
+                <a className="nav-link" href="/today">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                  Today
+                </a>
+              </li>
+              <li className="nav-item">
                 <a className="nav-link" href="/top-cases">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                   Top cases
@@ -157,6 +164,12 @@ const App = (
               <Route path="/top-cases" children={
                 <TopCasesInnerPage
                   title="Top cases globally"
+                  lastUpdated={lastUpdated}
+                />
+              } />
+              <Route path="/today" children={
+                <TodayInnerPage
+                  title="Today's cases"
                   lastUpdated={lastUpdated}
                 />
               } />

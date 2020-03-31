@@ -102,8 +102,8 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
           type : 'bar',
           label: 'New confirmed cases',
           fill: false,
-          backgroundColor: chartColors.blue,
-          borderColor: chartColors.blue,
+          backgroundColor: chartColors.purple,
+          borderColor: chartColors.purple,
           data: confirmedToday,
         },
         {
