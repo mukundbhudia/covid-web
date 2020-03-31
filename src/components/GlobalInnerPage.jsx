@@ -41,6 +41,7 @@ const InnerPage = ({
       color: 'grey',
     },
   ]
+
   return (
     <>
       <div id="global-page" className="">
@@ -54,25 +55,33 @@ const InnerPage = ({
           <div className="col-sm">
           <div className="alert alert-danger" role="alert">
               <h5>Total confirmed</h5>
-              <div id="confirmedCounter" className="total-cases text-danger">{ totalCases.confirmed.toLocaleString() }</div>
+              <div id="confirmedCounter" className="total-cases text-danger">
+                { totalCases.confirmed.toLocaleString() }
+              </div>
           </div>
           </div>
           <div className="col-sm">
           <div className="alert alert-primary" role="alert">
               <h5>Total active</h5>
-              <div id="activeCounter" className="total-cases text-primary">{ totalCases.active.toLocaleString() }</div>
+              <div id="activeCounter" className="total-cases text-primary">
+                { totalCases.active.toLocaleString() }
+              </div>
           </div> 
           </div>
           <div className="col-sm">
           <div className="alert alert-success" role="alert">
               <h5>Total recovered</h5>
-              <div id="recoveredCounter" className="total-cases text-success">{ totalCases.recovered.toLocaleString() }</div>
+              <div id="recoveredCounter" className="total-cases text-success">
+                { totalCases.recovered.toLocaleString() }
+              </div>
           </div>
           </div>
           <div className="col-sm">
           <div className="alert alert-dark" role="alert">
               <h5>Total deaths</h5>
-              <div id="deathsCounter" className="total-cases text-dark">{ totalCases.deaths.toLocaleString() }</div>
+              <div id="deathsCounter" className="total-cases text-dark">
+                { totalCases.deaths.toLocaleString() }
+              </div>
           </div>
           </div>
       </div>
@@ -123,7 +132,7 @@ const InnerPage = ({
           /> */}
       </div>
       </div>
-      <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} />
+      <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} currentCases={totalCases} />
       <div className="">
       <div className="row">
           <TopXBarGraph data={topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 5 confirmed by country" chartLabel="confirmed" labelColor="red" />

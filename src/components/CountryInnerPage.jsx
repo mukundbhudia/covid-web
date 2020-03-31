@@ -22,12 +22,16 @@ const getCountry = (idKey) => gql`
       active
       recovered
       deaths
+      confirmedCasesToday
+      deathsToday
       latitude
       longitude
       lastUpdate
       casesByDate {
         confirmed
         deaths
+        confirmedCasesToday
+        deathsToday
         day
       }
       provincesList {
@@ -87,6 +91,15 @@ const InnerPage = (pData) => {
     },
   ]
 
+  const currentCases = {
+    confirmed: getCasesByIdKey.confirmed,
+    active: getCasesByIdKey.active,
+    recovered: getCasesByIdKey.recovered,
+    deaths: getCasesByIdKey.deaths,
+    confirmedCasesToday: getCasesByIdKey.confirmedCasesToday,
+    deathsToday: getCasesByIdKey.deathsToday,
+  }
+
   return (
     <>
       <div id={idKey} className="">
@@ -116,25 +129,33 @@ const InnerPage = (pData) => {
           <div className="col-sm">
           <div className="alert alert-danger" role="alert">
               <h5>Total confirmed</h5>
-              <div id="confirmedCounter" className="total-cases text-danger">{ getCasesByIdKey.confirmed.toLocaleString() }</div>
+              <div id="confirmedCounter" className="total-cases text-danger">
+                { currentCases.confirmed.toLocaleString() }
+              </div>
           </div>
           </div>
           <div className="col-sm">
           <div className="alert alert-primary" role="alert">
               <h5>Total active</h5>
-              <div id="activeCounter" className="total-cases text-primary">{ getCasesByIdKey.active.toLocaleString() }</div>
-          </div> 
+              <div id="activeCounter" className="total-cases text-primary">
+                { currentCases.active.toLocaleString() }
+              </div>
+          </div>
           </div>
           <div className="col-sm">
           <div className="alert alert-success" role="alert">
               <h5>Total recovered</h5>
-              <div id="recoveredCounter" className="total-cases text-success">{ getCasesByIdKey.recovered.toLocaleString() }</div>
+              <div id="recoveredCounter" className="total-cases text-success">
+                { currentCases.recovered.toLocaleString() }
+              </div>
           </div>
           </div>
           <div className="col-sm">
           <div className="alert alert-dark" role="alert">
               <h5>Total deaths</h5>
-              <div id="deathsCounter" className="total-cases text-dark">{ getCasesByIdKey.deaths.toLocaleString() }</div>
+              <div id="deathsCounter" className="total-cases text-dark">
+                { currentCases.deaths.toLocaleString() }
+              </div>
           </div>
           </div>
       </div>
@@ -166,7 +187,7 @@ const InnerPage = (pData) => {
       </div>
       </div>
       {getCasesByIdKey.casesByDate &&
-        <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} />
+        <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} currentCases={currentCases} />
       }
       <div className="">
       </div>

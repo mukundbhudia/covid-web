@@ -23,10 +23,14 @@ const COVID_TOTALS = gql`
       active
       recovered
       deaths
-  }
+      confirmedCasesToday
+      deathsToday
+    }
     globalTimeSeries {
       confirmed
       deaths
+      confirmedCasesToday
+      deathsToday
       day
     }
     topXconfirmedByCountry(limit: 5) {
