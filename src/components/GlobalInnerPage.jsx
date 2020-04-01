@@ -1,20 +1,70 @@
 import React from 'react'
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+
 import TimeSeries from './TimeSeries'
 import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
-import ProgressBar from './ProgressBar'
 import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
+import PanelDeathsToday from './PanelDeathsToday'
+import PanelConfirmedToday from './PanelConfirmedToday'
+import PanelConfirmedCount from './PanelConfirmedCount'
+import PanelActiveCount from './PanelActiveCount'
+import PanelRecoveredCount from './PanelRecoveredCount'
+import PanelDeathCount from './PanelDeathCount'
+import PanelConfirmedVsActive from './PanelConfirmedVsActive'
+import PanelRecoveriesVsDeaths from './PanelRecoveriesVsDeaths'
+
+const COVID_GLOBAL_PAGE = gql`
+  query {
+    totalCases {
+      confirmed
+      active
+      recovered
+      deaths
+      confirmedCasesToday
+      deathsToday
+    }
+    globalTimeSeries {
+      confirmed
+      deaths
+      confirmedCasesToday
+      deathsToday
+      day
+    }
+    topXconfirmedByCountry(limit: 5) {
+      country
+      confirmed
+    }
+    topXactiveByCountry(limit: 5) {
+      country
+      active
+    }
+    topXrecoveredByCountry(limit: 5) {
+      country
+      recovered
+    }
+    topXdeathsByCountry(limit: 5) {
+      country
+      deaths
+    }
+  }
+`
 
 const InnerPage = ({
    title,
-   totalCases,
-   topXactiveByCountry,
-   topXconfirmedByCountry,
-   topXdeathsByCountry,
-   topXrecoveredByCountry,
    lastUpdated,
-   globalTimeSeries,
   }) => {
+  const { loading, error, data } = useQuery(COVID_GLOBAL_PAGE)
+  if (loading) return <p>Loading data for dashboard ...</p>
+  if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+
+  const totalCases = data.totalCases
+  const globalTimeSeries = data.globalTimeSeries
+  const topXconfirmedByCountry = data.topXconfirmedByCountry
+  const topXactiveByCountry = data.topXactiveByCountry
+  const topXrecoveredByCountry = data.topXrecoveredByCountry
+  const topXdeathsByCountry = data.topXdeathsByCountry
 
   const confirmedVsActiveProgressBar = [
     {
@@ -52,76 +102,32 @@ const InnerPage = ({
       </div>
       <div className="row">
         <div className="col-sm">
-          <div className="alert alert-danger" role="alert">
-            <h5>Total confirmed</h5>
-            <div id="confirmedCounter" className="total-cases text-danger">
-              { totalCases.confirmed.toLocaleString() }
-            </div>
-          </div>
+          <PanelConfirmedCount caseCount={totalCases.confirmed}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-primary" role="alert">
-            <h5>Total active</h5>
-            <div id="activeCounter" className="total-cases text-primary">
-              { totalCases.active.toLocaleString() }
-            </div>
-          </div> 
+          <PanelActiveCount caseCount={totalCases.active}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-success" role="alert">
-            <h5>Total recovered</h5>
-            <div id="recoveredCounter" className="total-cases text-success">
-              { totalCases.recovered.toLocaleString() }
-            </div>
-          </div>
+          <PanelRecoveredCount caseCount={totalCases.recovered}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-dark" role="alert">
-            <h5>Total deaths</h5>
-            <div id="deathsCounter" className="total-cases text-dark">
-              { totalCases.deaths.toLocaleString() }
-            </div>
-          </div>
+          <PanelDeathCount caseCount={totalCases.deaths}/>
         </div>
       </div>
       <div className="row">
         <div className="col-sm">
-          <div className="alert alert-purple" role="alert">
-            <h5>New confirmed cases</h5>
-            <div id="confirmedTodayCounter" className="total-cases text-purple">
-              { totalCases.confirmedCasesToday.toLocaleString() }
-            </div>
-          </div>
+          <PanelConfirmedToday caseCount={totalCases.confirmedCasesToday}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-warning" role="alert">
-            <h5>New deaths</h5>
-            <div id="deathsTodayCounter" className="total-cases text-yellow">
-              { totalCases.deathsToday.toLocaleString() }
-            </div>
-          </div>
+          <PanelDeathsToday caseCount={totalCases.deathsToday} />
         </div>
       </div>
       <div className="row">
         <div className="col-sm">
-          <div className="card bg-light mb-3">
-            <div className="card-body">
-              <h6 className="card-title">Confirmed/Active</h6>
-              <ProgressBar
-                  dataSet={confirmedVsActiveProgressBar}
-              />
-            </div>
-          </div>
+          <PanelConfirmedVsActive data={confirmedVsActiveProgressBar}/>
         </div>
         <div className="col-sm">
-          <div className="card bg-light mb-3">
-            <div className="card-body">
-              <h6 className="card-title">Recoveries/Deaths</h6>
-                <ProgressBar
-                  dataSet={recoveredVsDeathsProgressBar}
-                />
-            </div>
-          </div>
+          <PanelRecoveriesVsDeaths data={recoveredVsDeathsProgressBar}/>
         </div>
       </div>
       <div className="row">
@@ -147,7 +153,6 @@ const InnerPage = ({
           /> */}
       </div>
       <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} currentCases={totalCases} />
-      <div className="">
       <div className="row">
           <TopXBarGraph data={topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 5 confirmed by country" chartLabel="confirmed" labelColor="red" />
           <TopXBarGraph data={topXactiveByCountry} id="top5active" chartTitle="Top 5 active by country" chartLabel="active" labelColor="blue" />
@@ -155,7 +160,6 @@ const InnerPage = ({
       <div className="row">
           <TopXBarGraph data={topXrecoveredByCountry} id="top5recovered" chartTitle="Top 5 recovered by country" chartLabel="recovered" labelColor="green" />
           <TopXBarGraph data={topXdeathsByCountry} id="top5deaths" chartTitle="Top 5 deaths by country" chartLabel="deaths" labelColor="grey" />
-      </div>
       </div>
       <footer className="footer mt-auto py-3">
       <div className="container pull-left">

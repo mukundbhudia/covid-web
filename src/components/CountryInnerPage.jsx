@@ -10,8 +10,15 @@ import CountryNotFound from '../components/CountryNotFound'
 import TimeSeries from './TimeSeries'
 // import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
-import ProgressBar from './ProgressBar'
 import DataUpdatedTimeStamp from './DataUpdatedTimeStamp';
+import PanelConfirmedCount from './PanelConfirmedCount';
+import PanelActiveCount from './PanelActiveCount';
+import PanelRecoveredCount from './PanelRecoveredCount';
+import PanelDeathCount from './PanelDeathCount';
+import PanelDeathsToday from './PanelDeathsToday';
+import PanelConfirmedToday from './PanelConfirmedToday';
+import PanelConfirmedVsActive from './PanelConfirmedVsActive';
+import PanelRecoveriesVsDeaths from './PanelRecoveriesVsDeaths';
 
 const getCountry = (idKey) => gql`
   query {
@@ -127,79 +134,33 @@ const InnerPage = (pData) => {
 
       <div className="row">
         <div className="col-sm">
-          <div className="alert alert-danger" role="alert">
-            <h5>Total confirmed</h5>
-            <div id="confirmedCounter" className="total-cases text-danger">
-              { currentCases.confirmed.toLocaleString() }
-            </div>
-          </div>
+          <PanelConfirmedCount caseCount={currentCases.confirmed}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-primary" role="alert">
-            <h5>Total active</h5>
-            <div id="activeCounter" className="total-cases text-primary">
-              { currentCases.active.toLocaleString() }
-            </div>
-          </div>
+          <PanelActiveCount caseCount={currentCases.active}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-success" role="alert">
-            <h5>Total recovered</h5>
-            <div id="recoveredCounter" className="total-cases text-success">
-              { currentCases.recovered.toLocaleString() }
-            </div>
-          </div>
+          <PanelRecoveredCount caseCount={currentCases.recovered}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-dark" role="alert">
-            <h5>Total deaths</h5>
-            <div id="deathsCounter" className="total-cases text-dark">
-              { currentCases.deaths.toLocaleString() }
-            </div>
-          </div>
+          <PanelDeathCount caseCount={currentCases.deaths}/>
         </div>
       </div>
       <div className="row">
         <div className="col-sm">
-          <div className="alert alert-purple" role="alert">
-            <h5>New confirmed cases</h5>
-            <div id="confirmedTodayCounter" className="total-cases text-purple">
-              { currentCases.confirmedCasesToday.toLocaleString() }
-            </div>
-          </div>
+          <PanelConfirmedToday caseCount={currentCases.confirmedCasesToday}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-warning" role="alert">
-            <h5>New deaths</h5>
-            <div id="deathsTodayCounter" className="total-cases text-yellow">
-              { currentCases.deathsToday.toLocaleString() }
-            </div>
-          </div>
+          <PanelDeathsToday caseCount={currentCases.deathsToday}/>
         </div>
       </div>
       <div className="row">
         <div className="col-sm">
-          <div className="card bg-light mb-3">
-            <div className="card-body">
-              <h6 className="card-title">Confirmed/Active</h6>
-              <ProgressBar
-                  dataSet={confirmedVsActiveProgressBar}
-              />
-            </div>
-          </div>
+          <PanelConfirmedVsActive data={confirmedVsActiveProgressBar}/>
         </div>
         <div className="col-sm">
-          <div className="card bg-light mb-3">
-            <div className="card-body">
-              <h6 className="card-title">Recoveries/Deaths</h6>
-                <ProgressBar
-                  dataSet={recoveredVsDeathsProgressBar}
-                />
-            </div>
-          </div>
+          <PanelRecoveriesVsDeaths data={recoveredVsDeathsProgressBar}/>
         </div>
-      </div>
-      <div className="row">
       </div>
       {getCasesByIdKey.casesByDate &&
         <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} currentCases={currentCases} />

@@ -3,6 +3,8 @@ import TopXBarGraph from './TopXBarGraph'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
+import PanelConfirmedToday from './PanelConfirmedToday'
+import PanelDeathsToday from './PanelDeathsToday'
 
 const getTopCases = () => gql`
   query {
@@ -41,20 +43,10 @@ const TodayInnerPage = ({
       </div>
       <div className="row">
         <div className="col-sm">
-          <div className="alert alert-purple" role="alert">
-            <h5>New confirmed cases globally</h5>
-            <div id="confirmedTodayCounter" className="total-cases text-purple">
-              { totalCases.confirmedCasesToday.toLocaleString() }
-            </div>
-          </div>
+          <PanelConfirmedToday caseCount={totalCases.confirmedCasesToday}/>
         </div>
         <div className="col-sm">
-          <div className="alert alert-warning" role="alert">
-            <h5>New deaths globally</h5>
-            <div id="deathsTodayCounter" className="total-cases text-yellow">
-              { totalCases.deathsToday.toLocaleString() }
-            </div>
-          </div>
+          <PanelDeathsToday caseCount={totalCases.deathsToday}/>
         </div>
       </div>
       <div className="row">
