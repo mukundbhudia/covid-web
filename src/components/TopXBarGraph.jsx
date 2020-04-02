@@ -35,6 +35,7 @@ const TopXBarGraph = ({ data, id, chartTitle, chartLabel, labelColor }) => {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         labels: false
       },
@@ -82,9 +83,9 @@ const TopXBarGraph = ({ data, id, chartTitle, chartLabel, labelColor }) => {
 
   return (
     <div className="col-sm">
-      <div className="chart" id={id}>
+      <div className="chart topXbarGraph" id={id}>
         <canvas
-          id={`canvas-${id}`}
+          id={`canvas`}
           ref={chartRef}
         ></canvas>
       </div>

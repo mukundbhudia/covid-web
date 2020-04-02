@@ -118,6 +118,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       title: {
         display: true,
         text: 'Covid-19 cases by day'
@@ -163,7 +164,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
   
   return (
     <div className="">
-      <div className="chart">
+      <div className="chart timeSeries">
         <canvas
           className="canvas"
           ref={chartRef}

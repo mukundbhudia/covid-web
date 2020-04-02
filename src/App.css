@@ -3,14 +3,40 @@ body {
   font-size: .875rem;
 }
 
-.canvas{
+canvas{
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
 }
 
 .chart {
-  /* width:100%; */
+  position: relative;
+  margin: auto;
+  width:100%;
+}
+
+.chart.timeSeries {
+  height:60vh;
+}
+
+.chart.topXbarGraph {
+  height: 56vh;
+}
+
+.multiTopBar > .col-sm > .chart.topXbarGraph {
+  height: 32vh;
+}
+
+@media (max-width: 575.98px) { 
+  .chart.topXbarGraph {
+    height:40vh;
+  }
+}
+
+@media (max-width: 767.98px) { 
+  .chart.topXbarGraph {
+    height:40vh;
+  }
 }
 
 .lastUpdatedTimeStamp {

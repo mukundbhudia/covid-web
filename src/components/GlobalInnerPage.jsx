@@ -153,11 +153,11 @@ const InnerPage = ({
           /> */}
       </div>
       <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} currentCases={totalCases} />
-      <div className="row">
+      <div className="row multiTopBar">
           <TopXBarGraph data={topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 5 confirmed by country" chartLabel="confirmed" labelColor="red" />
           <TopXBarGraph data={topXactiveByCountry} id="top5active" chartTitle="Top 5 active by country" chartLabel="active" labelColor="blue" />
       </div>
-      <div className="row">
+      <div className="row multiTopBar">
           <TopXBarGraph data={topXrecoveredByCountry} id="top5recovered" chartTitle="Top 5 recovered by country" chartLabel="recovered" labelColor="green" />
           <TopXBarGraph data={topXdeathsByCountry} id="top5deaths" chartTitle="Top 5 deaths by country" chartLabel="deaths" labelColor="grey" />
       </div>
