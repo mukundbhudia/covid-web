@@ -3,7 +3,6 @@ import TopXBarGraph from './TopXBarGraph'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
-import Footer from './Footer'
 
 const getTopCases = () => gql`
   query {
@@ -54,7 +53,6 @@ const TopCasesInnerPage = ({
       <div className="row">
           <TopXBarGraph data={data.topXdeathsByCountry} id="top5deaths" chartTitle="Top 10 deaths by country" chartLabel="deaths" labelColor="grey" />
       </div>
-      <Footer/>
     </>
   )
 }

@@ -15,6 +15,7 @@ import CountryInnerPage from './components/CountryInnerPage'
 import TopCasesInnerPage from './components/TopCasesInnerPage'
 import TodayInnerPage from './components/TodayInnerPage'
 import CountryNotFound from './components/CountryNotFound'
+import Footer from './components/Footer';
 
 const COVID_TOTALS = gql`
   query {
@@ -147,6 +148,7 @@ const App = () => {
           </main>
         </div>
       </div>
+      <Footer/>
       </Router>
     </>
   )

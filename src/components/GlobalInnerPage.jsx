@@ -14,7 +14,6 @@ import PanelRecoveredCount from './PanelRecoveredCount'
 import PanelDeathCount from './PanelDeathCount'
 import PanelConfirmedVsActive from './PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from './PanelRecoveriesVsDeaths'
-import Footer from './Footer'
 
 const COVID_GLOBAL_PAGE = gql`
   query {
@@ -162,7 +161,6 @@ const InnerPage = ({
           <TopXBarGraph data={topXrecoveredByCountry} id="top5recovered" chartTitle="Top 5 recovered by country" chartLabel="recovered" labelColor="green" />
           <TopXBarGraph data={topXdeathsByCountry} id="top5deaths" chartTitle="Top 5 deaths by country" chartLabel="deaths" labelColor="grey" />
       </div>
-      <Footer/>
     </>
   )
 }

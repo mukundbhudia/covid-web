@@ -5,7 +5,6 @@ import { gql } from 'apollo-boost'
 import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
 import PanelConfirmedToday from './PanelConfirmedToday'
 import PanelDeathsToday from './PanelDeathsToday'
-import Footer from './Footer'
 
 const getTopCases = () => gql`
   query {
@@ -56,7 +55,6 @@ const TodayInnerPage = ({
       <div className="row">
         <TopXBarGraph data={data.topXdeathsTodayByCountry} id="top10deathsToday" chartTitle="Top 10 deaths today by country" chartLabel="deathsToday" labelColor="yellow" />
       </div>
-      <Footer/>
     </>
   )
 }

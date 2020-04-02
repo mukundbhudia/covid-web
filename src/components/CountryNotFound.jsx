@@ -2,7 +2,6 @@ import React from 'react'
 import {
   useParams
 } from "react-router-dom";
-import Footer from './Footer';
 
 const InnerPage = (data) => {
   let { id } = useParams()
@@ -16,7 +15,6 @@ const InnerPage = (data) => {
       <div className="container-xl">
         <p>The page at /{id} cannot be found.</p>
       </div>
-      <Footer/>
     </>
   )
 }

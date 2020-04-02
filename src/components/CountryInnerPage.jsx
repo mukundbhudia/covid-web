@@ -19,7 +19,6 @@ import PanelDeathsToday from './PanelDeathsToday';
 import PanelConfirmedToday from './PanelConfirmedToday';
 import PanelConfirmedVsActive from './PanelConfirmedVsActive';
 import PanelRecoveriesVsDeaths from './PanelRecoveriesVsDeaths';
-import Footer from './Footer';
 
 const getCountry = (idKey) => gql`
   query {
@@ -166,7 +165,6 @@ const InnerPage = (pData) => {
       {getCasesByIdKey.casesByDate &&
         <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} currentCases={currentCases} />
       }
-      <Footer/>
     </>
   )
 }

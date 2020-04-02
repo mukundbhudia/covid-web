@@ -4,7 +4,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="footer mt-auto py-3">
+      <footer className="footer col-md-10 float-right mt-auto py-3">
         <div className="container pull-left">
             <span className="text-muted">Data sources: <a href="https://www.who.int/">WHO</a>, <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">John Hopkins University</a></span>
         </div>
