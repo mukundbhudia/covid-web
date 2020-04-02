@@ -159,7 +159,9 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
     const myChartRef = chartRef.current.getContext("2d")
     // console.log('Rendering again!')
 
-    new Chart(myChartRef, chartConfig);
+    const chart = new Chart(myChartRef, chartConfig);
+
+    return () => chart.destroy()
   }, [chartRef, chartConfig])
   
   return (
