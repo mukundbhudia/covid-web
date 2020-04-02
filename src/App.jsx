@@ -16,6 +16,7 @@ import TopCasesInnerPage from './components/TopCasesInnerPage'
 import TodayInnerPage from './components/TodayInnerPage'
 import CountryNotFound from './components/CountryNotFound'
 import Footer from './components/Footer';
+import InputSearch from './components/InputSearch';
 
 const COVID_TOTALS = gql`
   query {
@@ -41,7 +42,7 @@ const App = () => {
     <Router>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="/">COVID-19 Dashboard</a>
-        {/* <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" /> */}
+        <InputSearch data={casesByLocation}/>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
             {/* <a className="nav-link" href="#">Sign out</a> */}

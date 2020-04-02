@@ -17,6 +17,7 @@
     "chartjs-plugin-labels": "^1.1.0",
     "graphql": "^14.6.0",
     "react": "^16.13.0",
+    "react-bootstrap-typeahead": "^5.0.0-alpha.1",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
