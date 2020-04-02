@@ -14,6 +14,7 @@ import PanelRecoveredCount from './PanelRecoveredCount'
 import PanelDeathCount from './PanelDeathCount'
 import PanelConfirmedVsActive from './PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from './PanelRecoveriesVsDeaths'
+import Footer from './Footer'
 
 const COVID_GLOBAL_PAGE = gql`
   query {
@@ -161,14 +162,7 @@ const InnerPage = ({
           <TopXBarGraph data={topXrecoveredByCountry} id="top5recovered" chartTitle="Top 5 recovered by country" chartLabel="recovered" labelColor="green" />
           <TopXBarGraph data={topXdeathsByCountry} id="top5deaths" chartTitle="Top 5 deaths by country" chartLabel="deaths" labelColor="grey" />
       </div>
-      <footer className="footer mt-auto py-3">
-      <div className="container pull-left">
-          <span className="text-muted">Data sources: <a href="https://www.who.int/">WHO</a>, <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">John Hopkins University</a></span>
-      </div>
-      <div className="container pull-right">
-          <span className="text-muted">Made by: <a href="https://github.com/mukundbhudia">Mukund</a>, <a href="https://github.com/salomao-rodrigues">Sal</a></span>
-      </div>
-      </footer>
+      <Footer/>
     </>
   )
 }

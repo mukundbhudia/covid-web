@@ -19,6 +19,7 @@ import PanelDeathsToday from './PanelDeathsToday';
 import PanelConfirmedToday from './PanelConfirmedToday';
 import PanelConfirmedVsActive from './PanelConfirmedVsActive';
 import PanelRecoveriesVsDeaths from './PanelRecoveriesVsDeaths';
+import Footer from './Footer';
 
 const getCountry = (idKey) => gql`
   query {
@@ -165,14 +166,7 @@ const InnerPage = (pData) => {
       {getCasesByIdKey.casesByDate &&
         <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} currentCases={currentCases} />
       }
-      <footer className="footer mt-auto py-3">
-      <div className="container pull-left">
-          <span className="text-muted">Data sources: <a href="https://www.who.int/">WHO</a>, <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">John Hopkins University</a></span>
-      </div>
-      <div className="container pull-right">
-          <span className="text-muted">Made by: <a href="https://github.com/mukundbhudia">Mukund</a>, <a href="https://github.com/salomao-rodrigues">Sal</a></span>
-      </div>
-      </footer>
+      <Footer/>
     </>
   )
 }
