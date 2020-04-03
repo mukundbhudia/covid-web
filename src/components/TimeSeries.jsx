@@ -3,8 +3,8 @@ import Chart from 'chart.js'
 
 const TimeSeries = ({ lastUpdated, data, currentCases }) => {
   const chartRef = React.createRef()
-  const [ dataType, setDataType ] = useState('linear')
-  const [ chartType, setChartType ] = useState('line')
+  const [ dataType, ] = useState('linear')
+  const [ chartType, ] = useState('line')
 
   const allDates = []
   let confirmed = []
@@ -13,7 +13,6 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
   let deaths = []
   let deathsToday = []
   // const active = []
-  let firstConfirmedCase = null
 
   const chartColors = {
     red: 'rgb(255, 99, 132)',
@@ -34,7 +33,6 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
         const previousCase = data[i-1]        
         const dateFromString = new Date(previousCase.day)
         firstCaseAdded = true
-        firstConfirmedCase = cases
         allDates.push((dateFromString).toLocaleDateString())
         confirmed.push({x: dateFromString, y: previousCase.confirmed})
         // recovered.push({x: dateFromString, y: previousCase.recovered})
@@ -157,7 +155,6 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
 
   useEffect(() => {
     const myChartRef = chartRef.current.getContext("2d")
-    // console.log('Rendering again!')
 
     const chart = new Chart(myChartRef, chartConfig);
 
