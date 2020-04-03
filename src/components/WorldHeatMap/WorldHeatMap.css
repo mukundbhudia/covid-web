@@ -1,0 +1,11 @@
+.choroplethMap {
+  height: 75vh;
+  width: 100%;
+}
+
+@media (max-width: 767.98px) { 
+  .choroplethMap {
+    height: 25vh;
+    width: 100%;
+  }
+}

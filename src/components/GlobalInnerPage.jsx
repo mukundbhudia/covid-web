@@ -14,6 +14,7 @@ import PanelRecoveredCount from './PanelRecoveredCount'
 import PanelDeathCount from './PanelDeathCount'
 import PanelConfirmedVsActive from './PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from './PanelRecoveriesVsDeaths'
+import WorldHeatMap from './WorldHeatMap/WorldHeatMap'
 
 const COVID_GLOBAL_PAGE = gql`
   query {
@@ -31,6 +32,10 @@ const COVID_GLOBAL_PAGE = gql`
       confirmedCasesToday
       deathsToday
       day
+    }
+    casesByLocationWithNoProvince {
+      countryCode
+      confirmed
     }
     topXconfirmedByCountry(limit: 5) {
       country
@@ -65,6 +70,7 @@ const InnerPage = ({
   const topXactiveByCountry = data.topXactiveByCountry
   const topXrecoveredByCountry = data.topXrecoveredByCountry
   const topXdeathsByCountry = data.topXdeathsByCountry
+  const casesByLocationWithNoProvince = data.casesByLocationWithNoProvince
 
   const confirmedVsActiveProgressBar = [
     {
@@ -152,7 +158,19 @@ const InnerPage = ({
           labelColor2="grey"
           /> */}
       </div>
-      <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} currentCases={totalCases} />
+
+      <div className="row">
+        <div className="col-sm">
+          <WorldHeatMap mapType="Confirmed" data={casesByLocationWithNoProvince}/>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-sm">
+        <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} currentCases={totalCases} />
+        </div>
+      </div>
+
       <div className="row multiTopBar">
           <TopXBarGraph data={topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 5 confirmed by country" chartLabel="confirmed" labelColor="red" />
           <TopXBarGraph data={topXactiveByCountry} id="top5active" chartTitle="Top 5 active by country" chartLabel="active" labelColor="blue" />
