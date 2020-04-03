@@ -27,6 +27,36 @@ canvas{
   height: 32vh;
 }
 
+.heatMapHeader {
+  text-align: center;
+  margin-bottom: 7px;
+  font-weight: 400;
+}
+
+.confirmedText {
+  color: darkred;
+}
+
+.activeText {
+  color: darkblue;
+}
+
+.recoveredText {
+  color: darkgreen;
+}
+
+.deathsText {
+  color: dimgray;
+}
+
+.confirmedTodayText {
+  color: darkslateblue;
+}
+
+.deathsTodayText {
+  color: darkorange;
+}
+
 @media (max-width: 575.98px) { 
   .chart.topXbarGraph {
     height:40vh;

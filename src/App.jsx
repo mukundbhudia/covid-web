@@ -17,6 +17,7 @@ import TodayInnerPage from './components/TodayInnerPage'
 import CountryNotFound from './components/CountryNotFound'
 import Footer from './components/Footer';
 import InputSearch from './components/InputSearch';
+import HeatMapsInnerPage from './components/HeatMapsInnerPage';
 
 const COVID_TOTALS = gql`
   query {
@@ -73,12 +74,12 @@ const App = () => {
                     Top cases
                   </a>
                 </li>
-                {/* <li className="nav-item">
-                  <a className="nav-link" href="#">
+                <li className="nav-item">
+                  <a className="nav-link" href="/heatmaps">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                    Stats
+                    Heatmaps
                   </a>
-                </li> */}
+                </li>
               </ul>
 
               <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -133,6 +134,12 @@ const App = () => {
                 <Route path="/today" children={
                   <TodayInnerPage
                     title="Today's cases"
+                    lastUpdated={lastUpdated}
+                  />
+                } />
+                <Route path="/heatmaps" children={
+                  <HeatMapsInnerPage
+                    title="Heatmaps"
                     lastUpdated={lastUpdated}
                   />
                 } />

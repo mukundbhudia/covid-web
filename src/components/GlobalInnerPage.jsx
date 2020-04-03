@@ -161,7 +161,8 @@ const InnerPage = ({
 
       <div className="row">
         <div className="col-sm">
-          <WorldHeatMap mapType="Confirmed" data={casesByLocationWithNoProvince}/>
+          <div className="heatMapHeader confirmedText">Confirmed cases</div>
+          <WorldHeatMap mapDataLabel="Confirmed" caseType="confirmed" data={casesByLocationWithNoProvince} lightColour="#ffeaef" darkColour="#ff6384"/>
         </div>
       </div>
 

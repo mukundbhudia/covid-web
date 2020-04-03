@@ -6,12 +6,15 @@ import './WorldHeatMap.css'
 class WorldHeatMap extends Component {
   componentDidMount() {
     const casesByLocationWithNoProvince = this.props.data
-    const mapType = this.props.mapType
+    const mapDataLabel = this.props.mapDataLabel
+    const lightColour = this.props.lightColour
+    const darkColour = this.props.darkColour
+    const caseType = this.props.caseType
 
     const heatMapData = []
     casesByLocationWithNoProvince.forEach((item, i) => {
       if (item.countryCode) {
-        return heatMapData.push([item.countryCode, item.confirmed])
+        return heatMapData.push([item.countryCode, item[caseType]])
       }
     })
     
@@ -31,7 +34,7 @@ class WorldHeatMap extends Component {
     // color can be whatever you wish
     let paletteScale = d3.scale.linear()
       .domain([minValue, maxValue])
-      .range(["#fee0d2", "#de2d26"]) // [lighter, darker]
+      .range([lightColour, darkColour])
 
     // fill dataset in appropriate format
     heatMapData.forEach(function (item) { //
@@ -42,7 +45,7 @@ class WorldHeatMap extends Component {
     })
 
     new Datamap({
-      element: document.getElementById(`choroplethMap-${mapType}`),
+      element: document.getElementById(`choroplethMap-${mapDataLabel}`),
       projection: 'mercator', // big world map
       // countries don't listed in dataset will be painted with this color
       fills: { defaultFill: '#F5F5F5' },
@@ -63,17 +66,17 @@ class WorldHeatMap extends Component {
           // tooltip content
           return `<div class="hoverinfo">
             <strong>${geo.properties.name}</strong>
-            <br>${mapType}: <strong>${data.numberOfThings}</strong>
+            <br>${mapDataLabel}: <strong>${data.numberOfThings.toLocaleString()}</strong>
             </div>`
         }
       }
     })
   }
   render() {
-    const mapType = this.props.mapType
+    const mapDataLabel = this.props.mapDataLabel
     return (
       <>
-        <div id={`choroplethMap-${mapType}`} className="choroplethMap"></div>
+        <div id={`choroplethMap-${mapDataLabel}`} className="choroplethMap"></div>
       </>
     )
   }
