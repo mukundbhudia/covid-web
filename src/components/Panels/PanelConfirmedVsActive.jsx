@@ -1,5 +1,5 @@
 import React from 'react'
-import ProgressBar from './ProgressBar'
+import ProgressBar from '../Charts/ProgressBar'
 
 const PanelConfirmedVsActive = ({
   data,

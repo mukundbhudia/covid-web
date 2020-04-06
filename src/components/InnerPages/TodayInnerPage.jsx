@@ -1,11 +1,11 @@
 import React from 'react'
-import TopXBarGraph from './TopXBarGraph'
+import TopXBarGraph from '../Charts/TopXBarGraph'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
-import PanelConfirmedToday from './PanelConfirmedToday'
-import PanelDeathsToday from './PanelDeathsToday'
-import WorldHeatMap from './WorldHeatMap/WorldHeatMap'
+import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
+import PanelConfirmedToday from '../Panels/PanelConfirmedToday'
+import PanelDeathsToday from '../Panels/PanelDeathsToday'
+import WorldHeatMap from '../WorldHeatMap/WorldHeatMap'
 
 const getTopCases = () => gql`
   query {

@@ -1,8 +1,8 @@
 import React from 'react'
-import TopXBarGraph from './TopXBarGraph'
+import TopXBarGraph from '../Charts/TopXBarGraph'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
+import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 
 const getTopCases = () => gql`
   query {

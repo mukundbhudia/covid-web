@@ -10,14 +10,14 @@ import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
 import './App.css'
-import GlobalInnerPage from './components/GlobalInnerPage'
-import CountryInnerPage from './components/CountryInnerPage'
-import TopCasesInnerPage from './components/TopCasesInnerPage'
-import TodayInnerPage from './components/TodayInnerPage'
-import CountryNotFound from './components/CountryNotFound'
-import Footer from './components/Footer';
-import InputSearch from './components/InputSearch';
-import HeatMapsInnerPage from './components/HeatMapsInnerPage';
+import GlobalInnerPage from './components/InnerPages/GlobalInnerPage'
+import CountryInnerPage from './components/InnerPages/CountryInnerPage'
+import TopCasesInnerPage from './components/InnerPages/TopCasesInnerPage'
+import TodayInnerPage from './components/InnerPages/TodayInnerPage'
+import CountryNotFound from './components/InnerPages/CountryNotFound'
+import Footer from './components/Nav/Footer';
+import InputSearch from './components/Nav/InputSearch/InputSearch';
+import HeatMapsInnerPage from './components/InnerPages/HeatMapsInnerPage';
 
 const COVID_TOTALS = gql`
   query {

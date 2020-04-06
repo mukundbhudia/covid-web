@@ -1,8 +1,8 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import DataUpdatedTimeStamp from './DataUpdatedTimeStamp'
-import WorldHeatMap from './WorldHeatMap/WorldHeatMap'
+import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
+import WorldHeatMap from '../WorldHeatMap/WorldHeatMap'
 
 const getTopCases = () => gql`
   query {

@@ -6,19 +6,19 @@ import {
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-import CountryNotFound from '../components/CountryNotFound'
-import TimeSeries from './TimeSeries'
+import CountryNotFound from './CountryNotFound'
+import TimeSeries from '../Charts/TimeSeries'
 // import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
-import DataUpdatedTimeStamp from './DataUpdatedTimeStamp';
-import PanelConfirmedCount from './PanelConfirmedCount';
-import PanelActiveCount from './PanelActiveCount';
-import PanelRecoveredCount from './PanelRecoveredCount';
-import PanelDeathCount from './PanelDeathCount';
-import PanelDeathsToday from './PanelDeathsToday';
-import PanelConfirmedToday from './PanelConfirmedToday';
-import PanelConfirmedVsActive from './PanelConfirmedVsActive';
-import PanelRecoveriesVsDeaths from './PanelRecoveriesVsDeaths';
+import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp';
+import PanelConfirmedCount from '../Panels/PanelConfirmedCount';
+import PanelActiveCount from '../Panels/PanelActiveCount';
+import PanelRecoveredCount from '../Panels/PanelRecoveredCount';
+import PanelDeathCount from '../Panels/PanelDeathCount';
+import PanelDeathsToday from '../Panels/PanelDeathsToday';
+import PanelConfirmedToday from '../Panels/PanelConfirmedToday';
+import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive';
+import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths';
 
 const getCountry = (idKey) => gql`
   query {
