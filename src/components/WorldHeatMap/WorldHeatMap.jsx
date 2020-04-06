@@ -62,7 +62,12 @@ class WorldHeatMap extends Component {
         // show desired information in tooltip
         popupTemplate: function(geo, data) {
           // don't show tooltip if country don't present in dataset
-          if (!data) { return }
+          if (!data) {
+            return `<div class="hoverinfo">
+            <strong>${geo.properties.name}</strong>
+            <br>${mapDataLabel}: <span>N/A</span>
+            </div>`
+          }
           // tooltip content
           return `<div class="hoverinfo">
             <strong>${geo.properties.name}</strong>
