@@ -68,7 +68,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
       datasets: [
         {
           type: 'line',
-          label: 'Confirmed',
+          label: 'Cumulative confirmed cases',
           fill: false,
           backgroundColor: chartColors.red,
           borderColor: chartColors.red,
@@ -90,7 +90,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
         // }, 
         {
           type : 'line',
-          label: 'Deaths',
+          label: 'Cumulative deaths',
           fill: false,
           backgroundColor: chartColors.grey,
           borderColor: chartColors.grey,
@@ -98,7 +98,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
         },
         {
           type : 'bar',
-          label: 'New confirmed cases',
+          label: 'Daily confirmed cases',
           fill: false,
           backgroundColor: chartColors.purple,
           borderColor: chartColors.purple,
@@ -106,7 +106,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
         },
         {
           type : 'bar',
-          label: 'New deaths',
+          label: 'Daily deaths',
           fill: false,
           backgroundColor: chartColors.yellow,
           borderColor: chartColors.yellow,
@@ -119,11 +119,21 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
       maintainAspectRatio: false,
       title: {
         display: true,
-        text: 'Covid-19 cases by day'
+        text: 'Time series cases by day'
       },
       tooltips: {
         mode: 'index',
         intersect: false,
+        callbacks: {
+          label: (tooltipItem, data) => {
+            let label = data.datasets[tooltipItem.datasetIndex].label || ''
+            if (label) {
+                label += ': '
+            }
+            label += tooltipItem.yLabel.toLocaleString()
+            return label
+          },
+        },
       },
       hover: {
         mode: 'nearest',

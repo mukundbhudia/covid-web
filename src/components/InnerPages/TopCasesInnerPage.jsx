@@ -42,16 +42,16 @@ const TopCasesInnerPage = ({
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
       <div className="row">
-          <TopXBarGraph data={data.topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 10 confirmed by country" chartLabel="confirmed" labelColor="red" />
+          <TopXBarGraph data={data.topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 10 confirmed by country" chartLabel="Confirmed" chartLabelKey="confirmed" labelColor="red" />
       </div>
       <div className="row">
-        <TopXBarGraph data={data.topXactiveByCountry} id="top5active" chartTitle="Top 10 active by country" chartLabel="active" labelColor="blue" />
+        <TopXBarGraph data={data.topXactiveByCountry} id="top5active" chartTitle="Top 10 active by country" chartLabel="Active" chartLabelKey="active" labelColor="blue" />
       </div>
       <div className="row">
-          <TopXBarGraph data={data.topXrecoveredByCountry} id="top5recovered" chartTitle="Top 10 recovered by country" chartLabel="recovered" labelColor="green" />
+          <TopXBarGraph data={data.topXrecoveredByCountry} id="top5recovered" chartTitle="Top 10 recovered by country" chartLabel="Recovered" chartLabelKey="recovered" labelColor="green" />
       </div> 
       <div className="row">
-          <TopXBarGraph data={data.topXdeathsByCountry} id="top5deaths" chartTitle="Top 10 deaths by country" chartLabel="deaths" labelColor="grey" />
+          <TopXBarGraph data={data.topXdeathsByCountry} id="top5deaths" chartTitle="Top 10 deaths by country" chartLabel="Deaths" chartLabelKey="deaths" labelColor="grey" />
       </div>
     </>
   )

@@ -37,28 +37,44 @@ const HeatMapsInnerPage = ({
 
       <div className="row">
         <div className="col-sm">
-          <div className="heatMapHeader confirmedText">Confirmed cases</div>
+          <p className="heatMapHeader confirmedText">Confirmed cases</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm">
           <WorldHeatMap mapDataLabel="Confirmed" caseType="confirmed" data={casesByLocationWithNoProvince} lightColour="#fee0d2" darkColour="#de2d26"/>
         </div>
       </div>
 
       <div className="row">
         <div className="col-sm">
-          <div className="heatMapHeader activeText">Active cases</div>
+          <p className="heatMapHeader activeText">Active cases</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm">
           <WorldHeatMap mapDataLabel="Active" caseType="active" data={casesByLocationWithNoProvince} lightColour="#deebf7" darkColour="#3182bd"/>
         </div>
       </div>
 
       <div className="row">
         <div className="col-sm">
-          <div className="heatMapHeader recoveredText">Recovered cases</div>
+          <p className="heatMapHeader recoveredText">Recovered cases</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm">
           <WorldHeatMap mapDataLabel="Recovered" caseType="recovered" data={casesByLocationWithNoProvince} lightColour="#e5f5e0" darkColour="#31a354"/>
         </div>
       </div>
 
       <div className="row">
         <div className="col-sm">
-          <div className="heatMapHeader deathsText">Deaths cases</div>
+          <p className="heatMapHeader deathsText">Death cases</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm">
           <WorldHeatMap mapDataLabel="Deaths" caseType="deaths" data={casesByLocationWithNoProvince} lightColour="#f0f0f0" darkColour="#636363"/>
         </div>
       </div>

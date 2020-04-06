@@ -161,7 +161,11 @@ const InnerPage = ({
 
       <div className="row">
         <div className="col-sm">
-          <div className="heatMapHeader confirmedText">Confirmed cases</div>
+          <p className="heatMapHeader confirmedText">Confirmed cases</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm">
           <WorldHeatMap mapDataLabel="Confirmed" caseType="confirmed" data={casesByLocationWithNoProvince} lightColour="#ffeaef" darkColour="#ff6384"/>
         </div>
       </div>
@@ -173,12 +177,12 @@ const InnerPage = ({
       </div>
 
       <div className="row multiTopBar">
-          <TopXBarGraph data={topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 5 confirmed by country" chartLabel="confirmed" labelColor="red" />
-          <TopXBarGraph data={topXactiveByCountry} id="top5active" chartTitle="Top 5 active by country" chartLabel="active" labelColor="blue" />
+          <TopXBarGraph data={topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 5 confirmed by country" chartLabel="Confirmed" chartLabelKey="confirmed" labelColor="red" />
+          <TopXBarGraph data={topXactiveByCountry} id="top5active" chartTitle="Top 5 active by country" chartLabel="Active" chartLabelKey="active" labelColor="blue" />
       </div>
       <div className="row multiTopBar">
-          <TopXBarGraph data={topXrecoveredByCountry} id="top5recovered" chartTitle="Top 5 recovered by country" chartLabel="recovered" labelColor="green" />
-          <TopXBarGraph data={topXdeathsByCountry} id="top5deaths" chartTitle="Top 5 deaths by country" chartLabel="deaths" labelColor="grey" />
+          <TopXBarGraph data={topXrecoveredByCountry} id="top5recovered" chartTitle="Top 5 recovered by country" chartLabel="Recovered" chartLabelKey="recovered" labelColor="green" />
+          <TopXBarGraph data={topXdeathsByCountry} id="top5deaths" chartTitle="Top 5 deaths by country" chartLabel="Deaths" chartLabelKey="deaths" labelColor="grey" />
       </div>
     </>
   )

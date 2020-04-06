@@ -59,22 +59,30 @@ const TodayInnerPage = ({
 
       <div className="row">
         <div className="col-sm">
-          <div className="heatMapHeader confirmedTodayText">Confirmed cases today</div>
+          <p className="heatMapHeader confirmedTodayText">Confirmed cases today</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm">
           <WorldHeatMap mapDataLabel="Confirmed Today" caseType="confirmedCasesToday" data={casesByLocationWithNoProvince} lightColour="#efedf5" darkColour="#756bb1"/>
         </div>
       </div>
       <div className="row">
-          <TopXBarGraph data={data.topXconfirmedTodayByCountry} id="top10confirmedToday" chartTitle="Top 10 confirmed today by country" chartLabel="confirmedCasesToday" labelColor="purple" />
+          <TopXBarGraph data={data.topXconfirmedTodayByCountry} id="top10confirmedToday" chartTitle="Top 10 confirmed cases today by country" chartLabel="Confirmed cases today" chartLabelKey="confirmedCasesToday" labelColor="purple" />
       </div>
 
       <div className="row">
         <div className="col-sm">
-          <div className="heatMapHeader deathsTodayText">Confirmed deaths today</div>
+          <p className="heatMapHeader deathsTodayText">Confirmed deaths today</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm">
           <WorldHeatMap mapDataLabel="Deaths Today" caseType="deathsToday" data={casesByLocationWithNoProvince} lightColour="#fff7bc" darkColour="#d95f0e"/>
         </div>
       </div>
       <div className="row">
-        <TopXBarGraph data={data.topXdeathsTodayByCountry} id="top10deathsToday" chartTitle="Top 10 deaths today by country" chartLabel="deathsToday" labelColor="yellow" />
+        <TopXBarGraph data={data.topXdeathsTodayByCountry} id="top10deathsToday" chartTitle="Top 10 deaths today by country" chartLabel="Deaths today" chartLabelKey="deathsToday" labelColor="yellow" />
       </div>
     </>
   )

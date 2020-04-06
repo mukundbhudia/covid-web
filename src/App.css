@@ -34,27 +34,27 @@ canvas{
 }
 
 .confirmedText {
-  color: darkred;
+  color: #721c24;
 }
 
 .activeText {
-  color: darkblue;
+  color: #004085;
 }
 
 .recoveredText {
-  color: darkgreen;
+  color: #155724;
 }
 
 .deathsText {
-  color: dimgray;
+  color: #1b1e21;
 }
 
 .confirmedTodayText {
-  color: darkslateblue;
+  color: #5b037b;
 }
 
 .deathsTodayText {
-  color: darkorange;
+  color: #856404;
 }
 
 @media (max-width: 575.98px) { 

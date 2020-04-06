@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import Chart from 'chart.js'
 
-const TopXBarGraph = ({ data, id, chartTitle, chartLabel, labelColor }) => {
+const TopXBarGraph = ({ data, id, chartTitle, chartLabel, chartLabelKey, labelColor }) => {
   const chartRef = React.createRef()
 
-  const dataArray = data.map(element => ({ x: element.country, y: element[chartLabel] }))
+  const dataArray = data.map(element => ({ x: element.country, y: element[chartLabelKey] }))
   const countries = data.map(element => element.country)
 
   const chartColors = {
@@ -46,6 +46,16 @@ const TopXBarGraph = ({ data, id, chartTitle, chartLabel, labelColor }) => {
       tooltips: {
         mode: 'index',
         intersect: false,
+        callbacks: {
+          label: (tooltipItem, data) => {
+            let label = data.datasets[tooltipItem.datasetIndex].label || ''
+            if (label) {
+                label += ': '
+            }
+            label += tooltipItem.yLabel.toLocaleString()
+            return label
+          },
+        },
       },
       hover: {
         mode: 'nearest',
