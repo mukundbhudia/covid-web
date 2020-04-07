@@ -122,7 +122,7 @@ const InnerPage = (pData) => {
             <ul className="nav">
               {getCasesByIdKey.provincesList.map((provinceKey, i) => {
                 return (<li className="nav-item provinceNavLink" key={i}>
-                <a className="nav-link active" href={`/${provinceKey.idKey}`}>{`${provinceKey.province}`}</a>
+                <a className="nav-link active" href={`${process.env.PUBLIC_URL}/${provinceKey.idKey}`}>{`${provinceKey.province}`}</a>
               </li>)
               })}
             </ul>
@@ -130,7 +130,7 @@ const InnerPage = (pData) => {
           {getCasesByIdKey.province &&
             <ul className="nav">
               <li className="nav-item provinceNavLink">
-                <a className="nav-link active" href={`/${getCasesByIdKey.country.replace(/,/g, '').replace(/\s+/g, '-').toLowerCase()}`}>{getCasesByIdKey.country}</a>
+                <a className="nav-link active" href={`${process.env.PUBLIC_URL}/${getCasesByIdKey.country.replace(/,/g, '').replace(/\s+/g, '-').toLowerCase()}`}>{getCasesByIdKey.country}</a>
               </li>
           </ul>
           }

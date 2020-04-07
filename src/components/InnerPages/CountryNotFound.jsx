@@ -13,7 +13,7 @@ const InnerPage = (data) => {
       </div>
       <br></br>
       <div className="container-xl">
-        <p>The page at /{id} cannot be found.</p>
+        <p>The page at "<strong>/{id}</strong>" cannot be found.</p>
       </div>
     </>
   )

@@ -42,7 +42,7 @@ const App = () => {
     <>
     <Router basename={process.env.PUBLIC_URL}>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="/">COVID-19 Dashboard</a>
+        <a className="navbar-brand col-sm-3 col-md-2 mr-0" href={`${process.env.PUBLIC_URL}/`}>COVID-19 Dashboard</a>
         <InputSearch data={casesByLocation}/>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
@@ -57,25 +57,25 @@ const App = () => {
             <div className="sidebar-sticky">
               <ul className="nav flex-column">
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <a className="nav-link active" href={`${process.env.PUBLIC_URL}/`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     Global <span className="sr-only">(current)</span>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/today">
+                  <a className="nav-link" href={`${process.env.PUBLIC_URL}/today`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                     Today
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/top-cases">
+                  <a className="nav-link" href={`${process.env.PUBLIC_URL}/top-cases`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                     Top cases
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/heatmaps">
+                  <a className="nav-link" href={`${process.env.PUBLIC_URL}/heatmaps`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                     Heatmaps
                   </a>
