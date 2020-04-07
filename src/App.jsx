@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <>
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="/">COVID-19 Dashboard</a>
         <InputSearch data={casesByLocation}/>
@@ -157,7 +157,7 @@ const App = () => {
         </div>
       </div>
       <Footer/>
-      </Router>
+    </Router>
     </>
   )
 }
