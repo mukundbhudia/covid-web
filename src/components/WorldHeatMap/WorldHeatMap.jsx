@@ -10,11 +10,27 @@ class WorldHeatMap extends Component {
     const lightColour = this.props.lightColour
     const darkColour = this.props.darkColour
     const caseType = this.props.caseType
+    const showMoreThanOneDataItem = this.props.showMoreThanOneDataItem || false
 
     const heatMapData = []
     casesByLocationWithNoProvince.forEach((item, i) => {
       if (item.countryCode) {
-        return heatMapData.push([item.countryCode, item[caseType]])
+        if (!showMoreThanOneDataItem) {
+          return heatMapData.push([
+            item.countryCode,
+            item[caseType]
+          ])
+        } else if (showMoreThanOneDataItem) {
+          return heatMapData.push([
+            item.countryCode, 
+            item[caseType], 
+            item.confirmedCasesToday, 
+            item.active, 
+            item.recovered, 
+            item.deaths, 
+            item.deathsToday
+          ])
+        }
       }
     })
     
@@ -38,10 +54,27 @@ class WorldHeatMap extends Component {
 
     // fill dataset in appropriate format
     heatMapData.forEach(function (item) { //
-        // item example value ["USA", 70]
-        let iso = item[0],
-        value = item[1]
-      dataset[iso] = { numberOfThings: value, fillColor: paletteScale(value) }
+      // item example value ["USA", 70]
+      let iso = item[0],
+      value = item[1]
+      if (showMoreThanOneDataItem) {
+        let confirmedCasesToday = item[2]
+        let active = item[3]
+        let recovered = item[4]
+        let deaths = item[5]
+        let deathsToday = item[6]
+        dataset[iso] = {
+          caseCount: value,
+          confirmedCasesToday,
+          active,
+          recovered,
+          deaths,
+          deathsToday,
+          fillColor: paletteScale(value),
+        }
+      } else {
+        dataset[iso] = { caseCount: value, fillColor: paletteScale(value) }
+      }
     })
 
     new Datamap({
@@ -62,17 +95,30 @@ class WorldHeatMap extends Component {
         // show desired information in tooltip
         popupTemplate: function(geo, data) {
           // don't show tooltip if country don't present in dataset
-          if (!data) {
-            return `<div class="hoverinfo">
+          let tooltipHtml = `
+          <div class="hoverinfo">
             <strong>${geo.properties.name}</strong>
             <br>${mapDataLabel}: <span>N/A</span>
+          </div>`
+          if (data && !showMoreThanOneDataItem) {
+            tooltipHtml = `
+            <div class="hoverinfo">
+              <strong>${geo.properties.name}</strong>
+              <br>${mapDataLabel}: <strong>${data.caseCount.toLocaleString()}</strong>
+            </div>`
+          } else if (data && showMoreThanOneDataItem) {
+            tooltipHtml = `
+            <div class="hoverinfo">
+              <strong>${geo.properties.name}</strong>
+              <br>${mapDataLabel}: <strong>${data.caseCount.toLocaleString()}</strong>
+              <br>Confirmed today: <span>${data.confirmedCasesToday.toLocaleString()}</span>
+              <br>Active: <span>${data.active.toLocaleString()}</span>
+              <br>Recovered: <span>${data.recovered.toLocaleString()}</span>
+              <br>Deaths: <span>${data.deaths.toLocaleString()}</span>
+              <br>Deaths today: <span>${data.deathsToday.toLocaleString()}</span>
             </div>`
           }
-          // tooltip content
-          return `<div class="hoverinfo">
-            <strong>${geo.properties.name}</strong>
-            <br>${mapDataLabel}: <strong>${data.numberOfThings.toLocaleString()}</strong>
-            </div>`
+          return tooltipHtml
         }
       }
     })

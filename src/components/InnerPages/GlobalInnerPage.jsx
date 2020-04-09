@@ -36,6 +36,11 @@ const COVID_GLOBAL_PAGE = gql`
     casesByLocationWithNoProvince {
       countryCode
       confirmed
+      active
+      recovered
+      deaths
+      deathsToday
+      confirmedCasesToday
     }
     topXconfirmedByCountry(limit: 5) {
       country
@@ -166,7 +171,7 @@ const InnerPage = ({
       </div>
       <div className="row">
         <div className="col-sm">
-          <WorldHeatMap mapDataLabel="Confirmed" caseType="confirmed" data={casesByLocationWithNoProvince} lightColour="#ffeaef" darkColour="#ff6384"/>
+          <WorldHeatMap mapDataLabel="Confirmed" showMoreThanOneDataItem={true} caseType="confirmed" data={casesByLocationWithNoProvince} lightColour="#ffeaef" darkColour="#ff6384"/>
         </div>
       </div>
 
