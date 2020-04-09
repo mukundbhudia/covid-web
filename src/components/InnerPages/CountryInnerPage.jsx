@@ -11,6 +11,7 @@ import TimeSeries from '../Charts/TimeSeries'
 // import TopXBarGraph from './TopXBarGraph'
 // import PieChart from '../components/PieChart'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp';
+import ProvincesMenu from '../Nav/ProvincesMenu';
 import PanelConfirmedCount from '../Panels/PanelConfirmedCount';
 import PanelActiveCount from '../Panels/PanelActiveCount';
 import PanelRecoveredCount from '../Panels/PanelRecoveredCount';
@@ -116,26 +117,10 @@ const InnerPage = (pData) => {
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
 
-      <div className="row">
-        <div className="col-sm provinceNav">
-          {getCasesByIdKey.hasProvince &&
-            <ul className="nav">
-              {getCasesByIdKey.provincesList.map((provinceKey, i) => {
-                return (<li className="nav-item provinceNavLink" key={i}>
-                <a className="nav-link active" href={`${process.env.PUBLIC_URL}/${provinceKey.idKey}`}>{`${provinceKey.province}`}</a>
-              </li>)
-              })}
-            </ul>
-          }
-          {getCasesByIdKey.province &&
-            <ul className="nav">
-              <li className="nav-item provinceNavLink">
-                <a className="nav-link active" href={`${process.env.PUBLIC_URL}/${getCasesByIdKey.country.replace(/,/g, '').replace(/\s+/g, '-').toLowerCase()}`}>{getCasesByIdKey.country}</a>
-              </li>
-          </ul>
-          }
-        </div>
-      </div>
+      {
+        (getCasesByIdKey.province || getCasesByIdKey.hasProvince) &&
+          <ProvincesMenu countryName={getCasesByIdKey.country} idKey={idKey}/>
+      }
 
       <div className="row">
         <div className="col-sm">

@@ -38,6 +38,10 @@ canvas{
   margin-bottom: 4px;
 }
 
+.nav-item.provinceNavLink.active {
+  background-color: #afccfd;
+}
+
 .nav-item.provinceNavLink:hover {
   background-color: #f3f9ff;
 }
