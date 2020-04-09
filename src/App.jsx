@@ -16,8 +16,8 @@ import TopCasesInnerPage from './components/InnerPages/TopCasesInnerPage'
 import TodayInnerPage from './components/InnerPages/TodayInnerPage'
 import CountryNotFound from './components/InnerPages/CountryNotFound'
 import Footer from './components/Nav/Footer';
-import InputSearch from './components/Nav/InputSearch/InputSearch';
 import HeatMapsInnerPage from './components/InnerPages/HeatMapsInnerPage';
+import NavBar from './components/Nav/NavBar';
 
 const COVID_TOTALS = gql`
   query {
@@ -41,15 +41,8 @@ const App = () => {
   return (
     <>
     <Router basename={process.env.PUBLIC_URL}>
-      <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a className="navbar-brand col-sm-3 col-md-2 mr-0" href={`${process.env.PUBLIC_URL}/`}>COVID-19 Dashboard</a>
-        <InputSearch data={casesByLocation}/>
-        <ul className="navbar-nav px-3">
-          <li className="nav-item text-nowrap">
-            {/* <a className="nav-link" href="#">Sign out</a> */}
-          </li>
-        </ul>
-      </nav>
+
+      <NavBar searchData={casesByLocation}/>
 
       <div className="container-fluid">
         <div className="row">
