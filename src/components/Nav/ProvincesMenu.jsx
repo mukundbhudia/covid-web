@@ -1,5 +1,7 @@
 import React from 'react'
-
+import {
+  Link,
+} from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import ProvincesBarGraph from '../Charts/ProvincesBarGraph'
@@ -39,7 +41,7 @@ const ProvincesMenu = ({ countryName, idKey }) => {
                   className = "nav-item provinceNavLink active disabled"
                 }
                 return (<li className={className} key={i}>
-                <a className="nav-link" href={`${process.env.PUBLIC_URL}/${provinceKey.idKey}`}>{`${provinceKey.province}`}</a>
+                <Link className="nav-link" to={provinceKey.idKey}>{`${provinceKey.province}`}</Link>
               </li>)
               })}
             </ul>
