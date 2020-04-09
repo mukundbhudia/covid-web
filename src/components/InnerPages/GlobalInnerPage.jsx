@@ -84,7 +84,7 @@ const InnerPage = ({
       color: 'red',
     },
     {
-      data: totalCases.active,
+      data: totalCases.confirmed - totalCases.active,
       label: 'active',
       color: 'blue',
     },

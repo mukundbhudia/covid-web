@@ -31,7 +31,7 @@ const ProgressBar = ({ dataSet }) => {
   return (
     <div className="progress">
       {percentageDataSet.map((dataItem, i) => {
-        if (dataItem !== 0) {
+        if (dataItem.percentage > 0) {
           return (
             <div
               key={i}

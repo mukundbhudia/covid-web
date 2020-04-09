@@ -80,7 +80,7 @@ const InnerPage = (pData) => {
       color: 'red',
     },
     {
-      data: getCasesByIdKey.active,
+      data: getCasesByIdKey.confirmed - getCasesByIdKey.active,
       label: 'active',
       color: 'blue',
     },
