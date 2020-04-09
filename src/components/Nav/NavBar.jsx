@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import {
+  Link,
+} from 'react-router-dom'
 import InputSearch from './InputSearch/InputSearch'
 
 
@@ -28,13 +31,13 @@ const NavBar = ({ searchData }) => {
         <div className={`${classOne}`} id="navbarsExample04">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <a className="nav-link" href={`${process.env.PUBLIC_URL}/today`}>Today <span className="sr-only">(current)</span></a>
+              <Link className="nav-link" to="today">Today <span className="sr-only">(current)</span></Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href={`${process.env.PUBLIC_URL}/top-cases`}>Top&nbsp;cases</a>
+              <Link className="nav-link" to="top-cases">Top&nbsp;cases</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href={`${process.env.PUBLIC_URL}/heatmaps`}>Heatmaps</a>
+              <Link className="nav-link" to="heatmaps">Heatmaps</Link>
             </li>
           </ul>
         </div>
