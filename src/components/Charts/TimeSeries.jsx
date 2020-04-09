@@ -165,9 +165,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
 
   useEffect(() => {
     const myChartRef = chartRef.current.getContext("2d")
-
-    const chart = new Chart(myChartRef, chartConfig);
-
+    const chart = new Chart(myChartRef, chartConfig)
     return () => chart.destroy()
   }, [chartRef, chartConfig])
   

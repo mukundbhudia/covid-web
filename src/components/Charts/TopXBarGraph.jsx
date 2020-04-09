@@ -87,8 +87,8 @@ const TopXBarGraph = ({ data, id, chartTitle, chartLabel, chartLabelKey, labelCo
 
   useEffect(() => {
     const myChartRef = chartRef.current.getContext("2d")
-
-    new Chart(myChartRef, chartConfig);
+    const chart = new Chart(myChartRef, chartConfig)
+    return () => chart.destroy()
   }, [chartRef, chartConfig])
 
   return (
