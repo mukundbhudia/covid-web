@@ -117,11 +117,6 @@ const InnerPage = (pData) => {
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
 
-      {
-        (getCasesByIdKey.province || getCasesByIdKey.hasProvince) &&
-          <ProvincesMenu countryName={getCasesByIdKey.country} idKey={idKey}/>
-      }
-
       <div className="row">
         <div className="col-sm">
           <PanelConfirmedCount caseCount={currentCases.confirmed}/>
@@ -152,6 +147,12 @@ const InnerPage = (pData) => {
           <PanelRecoveriesVsDeaths data={recoveredVsDeathsProgressBar}/>
         </div>
       </div>
+
+      {
+        (getCasesByIdKey.province || getCasesByIdKey.hasProvince) &&
+        <ProvincesMenu countryName={getCasesByIdKey.country} idKey={idKey}/>
+      }
+
       {getCasesByIdKey.casesByDate &&
         <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} currentCases={currentCases} />
       }

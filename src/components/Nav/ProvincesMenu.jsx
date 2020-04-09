@@ -2,12 +2,19 @@ import React from 'react'
 
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import ProvincesBarGraph from '../Charts/ProvincesBarGraph'
 
 const getProvincesGivenCountryName = (countryName) => gql`
   query {
     getProvincesGivenCountryName(country: "${countryName}") {
-      idKey
       province
+      idKey
+      active
+      confirmed
+      deaths
+      confirmedCasesToday
+      deathsToday
+      recovered
     }
   }
 `
@@ -38,7 +45,10 @@ const ProvincesMenu = ({ countryName, idKey }) => {
             </ul>
           }
         </div>
-      </div> 
+      </div>
+      <div className="row">
+        <ProvincesBarGraph countryName={countryName} data={provinceList} id="provinceBarChart"/>
+      </div>
     </>
   )
 }
