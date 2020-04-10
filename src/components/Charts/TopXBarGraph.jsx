@@ -93,7 +93,7 @@ const TopXBarGraph = ({ data, id, chartTitle, chartLabel, chartLabelKey, labelCo
 
   return (
     <div className="col-sm">
-      <div className="chart topXbarGraph" id={id}>
+      <div className="chart topx barGraph" id={id}>
         <canvas
           id={`canvas`}
           ref={chartRef}

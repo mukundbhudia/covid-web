@@ -149,7 +149,7 @@ const ProvincesBarGraph = ({ countryName, data, id, }) => {
 
   return (
     <div className="col-sm">
-      <div className="chart topXbarGraph" id={id}>
+      <div className="chart provinces barGraph" id={id}>
         <canvas
           id={`canvas`}
           ref={chartRef}

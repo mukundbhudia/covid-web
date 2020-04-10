@@ -19,12 +19,28 @@ canvas{
   height:60vh;
 }
 
-.chart.topXbarGraph {
+.chart.barGraph {
   height: 56vh;
 }
 
-.multiTopBar > .col-sm > .chart.topXbarGraph {
+.multiTopBar > .col-sm > .chart.barGraph {
   height: 32vh;
+}
+
+@media (max-width: 575.98px) { 
+  .chart.barGraph {
+    height:40vh;
+  }
+}
+
+@media (max-width: 767.98px) { 
+  .chart.barGraph {
+    height:40vh;
+  }
+
+  .chart.provinces.barGraph {
+    height:58vh;
+  }
 }
 
 .provinceNav {
@@ -74,18 +90,6 @@ canvas{
 
 .deathsTodayText {
   color: #856404;
-}
-
-@media (max-width: 575.98px) { 
-  .chart.topXbarGraph {
-    height:40vh;
-  }
-}
-
-@media (max-width: 767.98px) { 
-  .chart.topXbarGraph {
-    height:40vh;
-  }
 }
 
 .lastUpdatedTimeStamp {
