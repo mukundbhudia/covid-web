@@ -26,8 +26,11 @@ const ProvincesMenu = ({ countryName, idKey }) => {
   if (loading) return <p>Loading provinces data ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
-  let provinceList = data && data.getProvincesGivenCountryName
-  provinceList.push({ idKey: countryName.replace(/,/g, '').replace(/\s+/g, '-').toLowerCase(), province: countryName})
+  let provinceList = []
+  if (data) {
+    let countryAsProvince = [{ idKey: countryName.replace(/,/g, '').replace(/\s+/g, '-').toLowerCase(), province: countryName}]
+    provinceList = countryAsProvince.concat(data.getProvincesGivenCountryName)
+  }
 
   return (
     <>
