@@ -31,7 +31,10 @@ const NavBar = ({ searchData }) => {
         <div className={`${classOne}`} id="navbarsExample04">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="today">Today <span className="sr-only">(current)</span></Link>
+              <Link className="nav-link" to="">Global <span className="sr-only">(current)</span></Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="today">Today</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="top-cases">Top&nbsp;cases</Link>
