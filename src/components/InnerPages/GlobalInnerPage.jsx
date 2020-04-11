@@ -15,6 +15,7 @@ import PanelDeathCount from '../Panels/PanelDeathCount'
 import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
 import WorldHeatMap from '../WorldHeatMap/WorldHeatMap'
+import HeatMapRangeSlider from '../WorldHeatMap/HeatMapRangeSlider'
 
 const COVID_GLOBAL_PAGE = gql`
   query {
@@ -172,6 +173,7 @@ const InnerPage = ({
       <div className="row">
         <div className="col-sm">
           <WorldHeatMap mapDataLabel="Confirmed" showMoreThanOneDataItem={true} caseType="confirmed" data={casesByLocationWithNoProvince} lightColour="#ffeaef" darkColour="#ff6384"/>
+          <HeatMapRangeSlider data={globalTimeSeries}/>
         </div>
       </div>
 
