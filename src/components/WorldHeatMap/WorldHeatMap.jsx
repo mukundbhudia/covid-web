@@ -4,13 +4,8 @@ import d3 from 'd3'
 import './WorldHeatMap.css'
 
 class WorldHeatMap extends Component {
-  componentDidMount() {
-    const casesByLocationWithNoProvince = this.props.data
-    const mapDataLabel = this.props.mapDataLabel
-    const lightColour = this.props.lightColour
-    const darkColour = this.props.darkColour
-    const caseType = this.props.caseType
-    const showMoreThanOneDataItem = this.props.showMoreThanOneDataItem || false
+
+  processMapData(casesByLocationWithNoProvince, lightColour, darkColour, caseType, showMoreThanOneDataItem) {
 
     const heatMapData = []
     casesByLocationWithNoProvince.forEach((item, i) => {
@@ -25,8 +20,8 @@ class WorldHeatMap extends Component {
             item.countryCode, 
             item[caseType], 
             item.confirmedCasesToday, 
-            item.active, 
-            item.recovered, 
+            item.active || 0, 
+            item.recovered || 0, 
             item.deaths, 
             item.deathsToday
           ])
@@ -77,7 +72,11 @@ class WorldHeatMap extends Component {
       }
     })
 
-    new Datamap({
+    return dataset
+  }
+
+  generateNewMap(dataset ,mapDataLabel, showMoreThanOneDataItem) {
+    const datamap = new Datamap({
       element: document.getElementById(`choroplethMap-${mapDataLabel}`),
       projection: 'mercator', // big world map
       // countries don't listed in dataset will be painted with this color
@@ -122,7 +121,32 @@ class WorldHeatMap extends Component {
         }
       }
     })
+    return datamap
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.date !== prevProps.date) {
+      const casesByLocationWithNoProvince = this.props.data
+      const lightColour = this.props.lightColour
+      const darkColour = this.props.darkColour
+      const caseType = this.props.caseType
+      const showMoreThanOneDataItem = this.props.showMoreThanOneDataItem || false
+      const mapData = this.processMapData(casesByLocationWithNoProvince, lightColour, darkColour, caseType, showMoreThanOneDataItem)
+      this.map.updateChoropleth(mapData)
+    }
+  }
+
+  componentDidMount() {
+    const casesByLocationWithNoProvince = this.props.data
+    const mapDataLabel = this.props.mapDataLabel
+    const lightColour = this.props.lightColour
+    const darkColour = this.props.darkColour
+    const caseType = this.props.caseType
+    const showMoreThanOneDataItem = this.props.showMoreThanOneDataItem || false
+    const mapData = this.processMapData(casesByLocationWithNoProvince, lightColour, darkColour, caseType, showMoreThanOneDataItem)
+    this.map = this.generateNewMap(mapData, mapDataLabel, showMoreThanOneDataItem)
+  }
+
   render() {
     const mapDataLabel = this.props.mapDataLabel
     return (
