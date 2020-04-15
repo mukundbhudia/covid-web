@@ -52,10 +52,19 @@ const HeatMapRangeSlider = ({ dates }) => {
   }
   return (
     <>
-    {content}
-    <label>Drag slider to change heatmap date. Currently at: <strong>{currentDayAsDate.toLocaleDateString()}</strong></label>
-    <input type="range" className="custom-range" min="1" max={timeSeriesLength} id="heatMapDateSlider" value={value}
-      onChange={changeEvent => setValue(changeEvent.target.value)}></input>
+    <div className="card bg-light mb-3">
+      <div className="card-body pt-0">
+          {content}
+          <label>
+            <span className="heatMapHeader confirmedText">Confirmed cases.</span>&nbsp;
+            Drag the slider below to change heatmap date. Currently viewing cases on&nbsp;
+            <strong>{currentDayAsDate.toLocaleDateString()}</strong>
+          </label>
+          <input type="range" className="custom-range" min="1" max={timeSeriesLength} id="heatMapDateSlider" value={value}
+            onChange={changeEvent => setValue(changeEvent.target.value)}></input>
+      </div>
+    </div>
+
     </>
   )
 }

@@ -158,11 +158,6 @@ const InnerPage = ({
 
       <div className="row">
         <div className="col-sm">
-          <p className="heatMapHeader confirmedText">Confirmed cases</p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm">
           <HeatMapRangeSlider dates={getAllDaysWithCases}/>
         </div>
       </div>
