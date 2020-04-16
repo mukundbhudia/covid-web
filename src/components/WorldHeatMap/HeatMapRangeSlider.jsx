@@ -36,9 +36,14 @@ const HeatMapRangeSlider = ({ dates }) => {
     return dates[daysBefore-2]
   }
 
+  const moveSlider = (newValue) => {
+    setValue(newValue)
+    prefetchLastFewDays(10)
+  }
+
   let content
   if (loading) {
-    let dayBefore = prefetchLastFewDays(10)
+    let dayBefore = prefetchLastFewDays(0)
     content = (
       <WorldHeatMap mapDataLabel="Confirmed" showMoreThanOneDataItem={true} caseType="confirmed" data={[]} date={dayBefore} lightColour="#ffeaef" darkColour="#ff6384"/>
     )
@@ -56,12 +61,13 @@ const HeatMapRangeSlider = ({ dates }) => {
       <div className="card-body pt-0">
           {content}
           <label>
-            <span className="heatMapHeader confirmedText">Confirmed cases.</span>&nbsp;
-            Drag the slider below to change heatmap date. Currently viewing cases on&nbsp;
+            <span className="heatMapHeader confirmedText">Confirmed cases.</span> Drag the slider below to change heatmap date. Currently viewing cases on&nbsp;
             <strong>{currentDayAsDate.toLocaleDateString()}</strong>
           </label>
           <input type="range" className="custom-range" min="1" max={timeSeriesLength} id="heatMapDateSlider" value={value}
-            onChange={changeEvent => setValue(changeEvent.target.value)}></input>
+            onMouseOver={() => {prefetchLastFewDays(10)}}
+            onChange={changeEvent => {moveSlider(changeEvent.target.value)}}>
+          </input>
       </div>
     </div>
 
