@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
 import WorldHeatMap from './WorldHeatMap'
-
+// TODO: Remove this componant?
 const getGlobalCasesGivenDate = (date) => gql`
 query {
   getGlobalCasesByDate(day: "${date}") {

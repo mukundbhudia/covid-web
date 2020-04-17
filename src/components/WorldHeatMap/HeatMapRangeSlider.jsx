@@ -18,34 +18,50 @@ query {
 }
 `
 
+const clamp = (number, min, max) => {
+  return Math.min(Math.max(number, min), max)
+}
+
+let datesVisited = []
+
 const HeatMapRangeSlider = ({ dates }) => {
   const timeSeriesLength = dates.length
-  const [ value, setValue ] = useState(timeSeriesLength)
+  const [ sliderValue, setSliderValue ] = useState(timeSeriesLength)
 
-  let currentDay = dates[value-1]
+  datesVisited[sliderValue] = true
+
+  let currentDay = dates[sliderValue-1]
   let currentDayAsDate = new Date(currentDay)
   const { loading, error, data, client } = useQuery(getGlobalCasesGivenDate(currentDay))
 
-  const prefetchLastFewDays = (daysBefore) => {
-    for (let index = 2; index < daysBefore; index++) {
-      let dayToQuery = dates[value-index]
-      client.query({
-        query: getGlobalCasesGivenDate(dayToQuery),
-      })
+  const prefetchLastFewDays = (sliderValueToPrefetch) => {
+    sliderValueToPrefetch = parseInt(sliderValueToPrefetch)
+    const MAX_TO_PREFETCH = 5
+
+    let rangeBefore = clamp(sliderValueToPrefetch - MAX_TO_PREFETCH, 0, timeSeriesLength)
+    let rangeAfter = clamp(sliderValueToPrefetch + MAX_TO_PREFETCH, 0, timeSeriesLength)
+
+    for (let i = rangeBefore; i < rangeAfter; i++) {
+      const dateVisited = datesVisited[i]
+      if (!dateVisited) {
+        let dayToQuery = dates[i]
+        client.query({
+          query: getGlobalCasesGivenDate(dayToQuery),
+        })
+        datesVisited[i] = true
+      }
     }
-    return dates[daysBefore-2]
   }
 
-  const moveSlider = (newValue) => {
-    setValue(newValue)
-    prefetchLastFewDays(10)
+  const moveSlider = (newSliderValue) => {
+    setSliderValue(newSliderValue)
+    prefetchLastFewDays(newSliderValue)
   }
 
   let content
   if (loading) {
-    let dayBefore = prefetchLastFewDays(0)
     content = (
-      <WorldHeatMap mapDataLabel="Confirmed" showMoreThanOneDataItem={true} caseType="confirmed" data={[]} date={dayBefore} lightColour="#ffeaef" darkColour="#ff6384"/>
+      <WorldHeatMap mapDataLabel="Confirmed" showMoreThanOneDataItem={true} caseType="confirmed" data={[]} date={""} lightColour="#ffeaef" darkColour="#ff6384"/>
     )
   } else if (error) {
     content = (<p>{JSON.stringify(error, null, 2)}</p>)
@@ -55,6 +71,7 @@ const HeatMapRangeSlider = ({ dates }) => {
       <WorldHeatMap mapDataLabel="Confirmed" showMoreThanOneDataItem={true} caseType="confirmed" data={getGlobalCasesByDate} date={currentDay} lightColour="#ffeaef" darkColour="#ff6384"/>
     )
   }
+
   return (
     <>
     <div className="card bg-light mb-3">
@@ -64,13 +81,12 @@ const HeatMapRangeSlider = ({ dates }) => {
             <span className="heatMapHeader confirmedText">Confirmed cases.</span> Drag the slider below to change heatmap date. Currently viewing cases on&nbsp;
             <strong>{currentDayAsDate.toLocaleDateString()}</strong>
           </label>
-          <input type="range" className="custom-range" min="1" max={timeSeriesLength} id="heatMapDateSlider" value={value}
-            onMouseOver={() => {prefetchLastFewDays(10)}}
-            onChange={changeEvent => {moveSlider(changeEvent.target.value)}}>
+          <input type="range" className="custom-range" min="1" max={timeSeriesLength} id="heatMapDateSlider" value={sliderValue}
+            onMouseOver={() => {prefetchLastFewDays(sliderValue)}}
+            onChange={changeEvent => { moveSlider(changeEvent.target.value) }}>
           </input>
       </div>
     </div>
-
     </>
   )
 }
