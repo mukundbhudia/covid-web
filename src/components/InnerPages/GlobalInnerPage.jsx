@@ -14,7 +14,7 @@ import PanelRecoveredCount from '../Panels/PanelRecoveredCount'
 import PanelDeathCount from '../Panels/PanelDeathCount'
 import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
-import WorldHeatMap from '../WorldHeatMap/WorldHeatMap'
+import HeatMapRangeSlider from '../WorldHeatMap/HeatMapRangeSlider'
 
 const COVID_GLOBAL_PAGE = gql`
   query {
@@ -33,15 +33,7 @@ const COVID_GLOBAL_PAGE = gql`
       deathsToday
       day
     }
-    casesByLocationWithNoProvince {
-      countryCode
-      confirmed
-      active
-      recovered
-      deaths
-      deathsToday
-      confirmedCasesToday
-    }
+    getAllDaysWithCases
     topXconfirmedByCountry(limit: 5) {
       country
       confirmed
@@ -75,7 +67,7 @@ const InnerPage = ({
   const topXactiveByCountry = data.topXactiveByCountry
   const topXrecoveredByCountry = data.topXrecoveredByCountry
   const topXdeathsByCountry = data.topXdeathsByCountry
-  const casesByLocationWithNoProvince = data.casesByLocationWithNoProvince
+  const getAllDaysWithCases = data.getAllDaysWithCases
 
   const confirmedVsActiveProgressBar = [
     {
@@ -166,12 +158,7 @@ const InnerPage = ({
 
       <div className="row">
         <div className="col-sm">
-          <p className="heatMapHeader confirmedText">Confirmed cases</p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm">
-          <WorldHeatMap mapDataLabel="Confirmed" showMoreThanOneDataItem={true} caseType="confirmed" data={casesByLocationWithNoProvince} lightColour="#ffeaef" darkColour="#ff6384"/>
+          <HeatMapRangeSlider dates={getAllDaysWithCases}/>
         </div>
       </div>
 
