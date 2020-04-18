@@ -4,9 +4,9 @@ import { gql } from 'apollo-boost'
 
 import WorldHeatMap from './WorldHeatMap'
 
-const getGlobalCasesGivenDate = (date) => gql`
-query {
-  getGlobalCasesByDate(day: "${date}") {
+const getGlobalCasesGivenDate = gql`
+query Test($day: String!) {
+  getGlobalCasesByDate(day: $day) {
     countryCode
     confirmed
     active
@@ -32,7 +32,9 @@ const HeatMapRangeSlider = ({ dates }) => {
 
   let currentDay = dates[sliderValue-1]
   let currentDayAsDate = new Date(currentDay)
-  const { loading, error, data, client } = useQuery(getGlobalCasesGivenDate(currentDay))
+  const { loading, error, data, client } = useQuery(getGlobalCasesGivenDate, {
+    variables: { day: currentDay },
+  })
 
   const prefetchLastFewDays = (sliderValueToPrefetch) => {
     sliderValueToPrefetch = parseInt(sliderValueToPrefetch)
@@ -46,7 +48,8 @@ const HeatMapRangeSlider = ({ dates }) => {
       if (!dateVisited) {
         let dayToQuery = dates[i]
         client.query({
-          query: getGlobalCasesGivenDate(dayToQuery),
+          query: getGlobalCasesGivenDate,
+          variables: { day: dayToQuery }
         })
         datesVisited[i] = true
       }
