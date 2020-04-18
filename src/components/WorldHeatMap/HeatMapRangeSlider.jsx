@@ -79,15 +79,16 @@ const HeatMapRangeSlider = ({ dates }) => {
     <>
     <div className="card bg-light mb-3">
       <div className="card-body pt-0">
-          {content}
-          <label>
-            <span className="heatMapHeader confirmedText">Confirmed cases.</span> Drag the slider below to change heatmap date. Currently viewing cases on&nbsp;
-            <strong>{currentDayAsDate.toLocaleDateString()}</strong>
-          </label>
+        {content}
+        <div className="heatmapSliderHeader d-flex justify-content-end">
+          <span>Confirmed cases on <strong>{currentDayAsDate.toLocaleDateString()}</strong></span>
+        </div>
+        <div className="heatmapSliderControls">
           <input type="range" className="custom-range" min="1" max={timeSeriesLength} id="heatMapDateSlider" value={sliderValue}
             onMouseOver={() => {prefetchLastFewDays(sliderValue)}}
             onChange={changeEvent => { moveSlider(changeEvent.target.value) }}>
           </input>
+        </div>
       </div>
     </div>
     </>
