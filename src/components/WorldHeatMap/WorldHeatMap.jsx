@@ -20,8 +20,8 @@ class WorldHeatMap extends Component {
             item.countryCode, 
             item[caseType], 
             item.confirmedCasesToday, 
-            item.active || 0, 
-            item.recovered || 0, 
+            item.active || 'N/A',
+            item.recovered || 'N/A',
             item.deaths, 
             item.deathsToday
           ])
