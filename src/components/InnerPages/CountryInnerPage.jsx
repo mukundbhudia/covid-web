@@ -154,7 +154,29 @@ const InnerPage = (pData) => {
       }
 
       {getCasesByIdKey.casesByDate &&
-        <TimeSeries lastUpdated={lastUpdated} data={getCasesByIdKey.casesByDate} currentCases={currentCases} />
+        <div className="row">
+          <div className="col-sm">
+            <TimeSeries
+              chartTitle="Time series cases by day"
+              casesToHide={ {confirmed: false, deaths: false, confirmedToday: false, deathsToday: false} }
+              data={getCasesByIdKey.casesByDate}
+              currentCases={currentCases}
+            />
+          </div>
+        </div>
+      }
+      <br/>
+      {getCasesByIdKey.casesByDate &&
+        <div className="row">
+          <div className="col-sm">
+            <TimeSeries
+              chartTitle="Time series cases by day"
+              casesToHide={ {confirmed: true, deaths: true, confirmedToday: false, deathsToday: false} }
+              data={getCasesByIdKey.casesByDate}
+              currentCases={currentCases}
+            />
+          </div>
+        </div>
       }
     </>
   )

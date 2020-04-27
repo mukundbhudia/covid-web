@@ -164,17 +164,50 @@ const InnerPage = ({
 
       <div className="row">
         <div className="col-sm">
-        <TimeSeries lastUpdated={lastUpdated} data={globalTimeSeries} currentCases={totalCases} />
+          <TimeSeries
+            chartTitle="Time series cases by day"
+            casesToHide={ {confirmed: false, deaths: false, confirmedToday: false, deathsToday: false} }
+            data={globalTimeSeries}
+            currentCases={totalCases}
+          />
         </div>
       </div>
 
       <div className="row multiTopBar">
-          <TopXBarGraph data={topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 5 confirmed by country" chartLabel="Confirmed" chartLabelKey="confirmed" labelColor="red" />
-          <TopXBarGraph data={topXactiveByCountry} id="top5active" chartTitle="Top 5 active by country" chartLabel="Active" chartLabelKey="active" labelColor="blue" />
+        <TopXBarGraph
+          data={topXconfirmedByCountry}
+          id="top5confirmed"
+          chartTitle="Top 5 confirmed by country"
+          chartLabel="Confirmed"
+          chartLabelKey="confirmed"
+          labelColor="red"
+        />
+        <TopXBarGraph
+          data={topXactiveByCountry}
+          id="top5active"
+          chartTitle="Top 5 active by country"
+          chartLabel="Active"
+          chartLabelKey="active"
+          labelColor="blue"
+        />
       </div>
       <div className="row multiTopBar">
-          <TopXBarGraph data={topXrecoveredByCountry} id="top5recovered" chartTitle="Top 5 recovered by country" chartLabel="Recovered" chartLabelKey="recovered" labelColor="green" />
-          <TopXBarGraph data={topXdeathsByCountry} id="top5deaths" chartTitle="Top 5 deaths by country" chartLabel="Deaths" chartLabelKey="deaths" labelColor="grey" />
+        <TopXBarGraph
+          data={topXrecoveredByCountry}
+          id="top5recovered"
+          chartTitle="Top 5 recovered by country"
+          chartLabel="Recovered"
+          chartLabelKey="recovered"
+          labelColor="green"
+        />
+        <TopXBarGraph
+          data={topXdeathsByCountry}
+          id="top5deaths"
+          chartTitle="Top 5 deaths by country"
+          chartLabel="Deaths"
+          chartLabelKey="deaths"
+          labelColor="grey"
+        />
       </div>
     </>
   )

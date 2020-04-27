@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Chart from 'chart.js'
 
-const TimeSeries = ({ lastUpdated, data, currentCases }) => {
+const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   const chartRef = React.createRef()
   const [ dataType, ] = useState('linear')
   const [ chartType, ] = useState('line')
@@ -9,10 +9,8 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
   const allDates = []
   let confirmed = []
   let confirmedToday = []
-  // const recovered = []
   let deaths = []
   let deathsToday = []
-  // const active = []
 
   const chartColors = {
     red: 'rgb(255, 99, 132)',
@@ -35,17 +33,13 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
         firstCaseAdded = true
         allDates.push((dateFromString).toLocaleDateString())
         confirmed.push({x: dateFromString, y: previousCase.confirmed})
-        // recovered.push({x: dateFromString, y: previousCase.recovered})
         deaths.push({x: dateFromString, y: previousCase.deaths})
-        // active.push({x: dateFromString, y: previousCase.active})
         confirmedToday.push({x: dateFromString, y: previousCase.confirmedCasesToday})
         deathsToday.push({x: dateFromString, y: previousCase.deathsToday})
       } else {
         allDates.push((dateFromString).toLocaleDateString())
         confirmed.push({x: dateFromString, y: cases.confirmed})
-        // recovered.push({x: dateFromString, y: cases.recovered})
         deaths.push({x: dateFromString, y: cases.deaths})
-        // active.push({x: dateFromString, y: cases.active})   
         confirmedToday.push({x: dateFromString, y: cases.confirmedCasesToday})
         deathsToday.push({x: dateFromString, y: cases.deathsToday})       
       }
@@ -55,12 +49,10 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
   const today = new Date()
   allDates.push((today).toLocaleDateString())
   confirmed.push({x: today, y: currentCases.confirmed})
-  // recovered.push({x: today, y: currentCases.recovered})
   deaths.push({x: today, y: currentCases.deaths})
-  // active.push({x: today, y: currentCases.active})   
   confirmedToday.push({x: today, y: currentCases.confirmedCasesToday})
-  deathsToday.push({x: today, y: currentCases.deathsToday}) 
-  
+  deathsToday.push({x: today, y: currentCases.deathsToday})
+
   const chartConfig = {
     type: chartType,
     data: {
@@ -73,21 +65,8 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
           backgroundColor: chartColors.red,
           borderColor: chartColors.red,
           data: confirmed,
+          hidden: casesToHide['confirmed'],
         },
-        // {
-        //   label: 'Active',
-        //   fill: false,
-        //   backgroundColor: chartColors.blue,
-        //   borderColor: chartColors.blue,
-        //   data: active,
-        // }, 
-        // {
-        //   label: 'Recovered',
-        //   fill: false,
-        //   backgroundColor: chartColors.green,
-        //   borderColor: chartColors.green,
-        //   data: recovered,
-        // }, 
         {
           type : 'line',
           label: 'Cumulative deaths',
@@ -95,6 +74,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
           backgroundColor: chartColors.grey,
           borderColor: chartColors.grey,
           data: deaths,
+          hidden: casesToHide['deaths'],
         },
         {
           type : 'bar',
@@ -103,6 +83,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
           backgroundColor: chartColors.purple,
           borderColor: chartColors.purple,
           data: confirmedToday,
+          hidden: casesToHide['confirmedToday'],
         },
         {
           type : 'bar',
@@ -111,6 +92,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
           backgroundColor: chartColors.yellow,
           borderColor: chartColors.yellow,
           data: deathsToday,
+          hidden: casesToHide['deathsToday'],
         },
       ]
     },
@@ -119,7 +101,7 @@ const TimeSeries = ({ lastUpdated, data, currentCases }) => {
       maintainAspectRatio: false,
       title: {
         display: true,
-        text: 'Time series cases by day'
+        text: chartTitle
       },
       tooltips: {
         mode: 'index',
