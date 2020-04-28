@@ -3,8 +3,8 @@ import Chart from 'chart.js'
 
 const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   const chartRef = React.createRef()
-  const [ dataType, ] = useState('linear')
-  const [ chartType, ] = useState('line')
+  const [ dataType, setDataType] = useState('linear')
+  const [ chartType, setChartType] = useState('line')
 
   const allDates = []
   let confirmed = []
@@ -59,7 +59,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
       labels: allDates,
       datasets: [
         {
-          type: 'line',
+          type: chartType,
           label: 'Cumulative confirmed cases',
           fill: false,
           backgroundColor: chartColors.red,
@@ -68,7 +68,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           hidden: casesToHide['confirmed'],
         },
         {
-          type : 'line',
+          type : chartType,
           label: 'Cumulative deaths',
           fill: false,
           backgroundColor: chartColors.grey,
@@ -152,41 +152,37 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   }, [chartRef, chartConfig])
   
   return (
-    <div className="">
-      <div className="chart timeSeries">
-        <canvas
-          className="canvas"
-          ref={chartRef}
-        ></canvas>
-      </div>
+    <>
+    <div className="chart timeSeries">
+      <canvas
+        className="canvas"
+        ref={chartRef}
+      ></canvas>
+    </div>
 
-      {/* <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-        <label className={`btn btn-sm btn-secondary ${dataType === 'linear' ? 'active' : ''}`}>
+    <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+      <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+        <label className={`btn btn-sm btn-light ${dataType === 'linear' ? 'active' : ''}`}>
           <input type="radio" name="data-type" onClick={() => {
             setDataType('linear')
-            chartRef.current.options.scales.yAxes[0].type = 'linear'
           }} /> Linear
         </label>
-        <label className={`btn btn-sm btn-secondary ${dataType === 'logarithmic' ? 'active' : ''}`}>
+        <label className={`btn btn-sm btn-light ${dataType === 'logarithmic' ? 'active' : ''}`}>
           <input type="radio" name="data-type" onClick={() => {
             setDataType('logarithmic')
-            chartRef.current.options.scales.yAxes[0].type = 'logarithmic'
           }}/> Logarithmic
         </label>
       </div>
       <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-        <label className={`btn btn-sm btn-secondary ${chartType === 'line' ? 'active' : ''}`}>
+        <label className={`btn btn-sm btn-light ${chartType === 'line' ? 'active' : ''}`}>
           <input type="radio" name="chart-type" onClick={() => {setChartType('line')}}/> Line
         </label>
-        <label className={`btn btn-sm btn-secondary ${chartType === 'bar' ? 'active' : ''}`}>
+        <label className={`btn btn-sm btn-light ${chartType === 'bar' ? 'active' : ''}`}>
           <input type="radio" name="chart-type" onClick={() => {setChartType('bar')}}/> Bar
         </label>
       </div>
-
-      <button type="button" className="btn btn-sm btn-primary" id="toggleCurrentCases">Add current cases</button>
-      <br />
-      <br/> */}
     </div>
+    </>
   )
 }
 
