@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
@@ -16,10 +16,35 @@ const getTopCases = () => gql`
   }
 `
 
-const HeatMapsInnerPage = ({
-   title,
-   lastUpdated,
-  }) => {
+const caseMaps = {
+  confirmed: {
+    label: 'Confirmed',
+    lightColour: "#fee0d2",
+    darkColour:"#de2d26",
+    textClassName: 'confirmedText'
+  },
+  active: {
+    label: 'Active',
+    lightColour: "#deebf7",
+    darkColour:"#3182bd",
+    textClassName: 'activeText'
+  },
+  recovered: {
+    label: 'Recovered',
+    lightColour: "#e5f5e0",
+    darkColour:"#31a354",
+    textClassName: 'recoveredText'
+  },
+  deaths: {
+    label: 'Deaths',
+    lightColour: "#f0f0f0",
+    darkColour:"#636363",
+    textClassName: 'deathsText'
+  },
+}
+
+const HeatMapsInnerPage = ({ title, lastUpdated }) => {
+  const [ caseType, setCaseType] = useState('confirmed')
   const { loading, error, data } = useQuery(getTopCases())
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
@@ -35,47 +60,35 @@ const HeatMapsInnerPage = ({
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
 
-      <div className="row">
-        <div className="col-sm">
-          <p className="heatMapHeader confirmedText">Confirmed cases</p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm">
-          <WorldHeatMap mapDataLabel="Confirmed" caseType="confirmed" data={casesByLocationWithNoProvince} lightColour="#fee0d2" darkColour="#de2d26"/>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col-sm">
-          <p className="heatMapHeader activeText">Active cases</p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm">
-          <WorldHeatMap mapDataLabel="Active" caseType="active" data={casesByLocationWithNoProvince} lightColour="#deebf7" darkColour="#3182bd"/>
+      <div className="row justify-content-center mb-4">
+        <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+            <label className={`btn btn-sm btn-light ${caseType === 'confirmed' ? 'active' : ''}`}>
+              <input type="radio" name="chart-type" onClick={() => {setCaseType('confirmed')}}/> {caseMaps.confirmed.label}
+            </label>
+            <label className={`btn btn-sm btn-light ${caseType === 'active' ? 'active' : ''}`}>
+              <input type="radio" name="chart-type" onClick={() => {setCaseType('active')}}/> {caseMaps.active.label}
+            </label>
+            <label className={`btn btn-sm btn-light ${caseType === 'recovered' ? 'active' : ''}`}>
+              <input type="radio" name="chart-type" onClick={() => {setCaseType('recovered')}}/> {caseMaps.recovered.label}
+            </label>
+            <label className={`btn btn-sm btn-light ${caseType === 'deaths' ? 'active' : ''}`}>
+              <input type="radio" name="chart-type" onClick={() => {setCaseType('deaths')}}/> {caseMaps.deaths.label}
+            </label>
+          </div>
         </div>
       </div>
 
       <div className="row">
         <div className="col-sm">
-          <p className="heatMapHeader recoveredText">Recovered cases</p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm">
-          <WorldHeatMap mapDataLabel="Recovered" caseType="recovered" data={casesByLocationWithNoProvince} lightColour="#e5f5e0" darkColour="#31a354"/>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col-sm">
-          <p className="heatMapHeader deathsText">Death cases</p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm">
-          <WorldHeatMap mapDataLabel="Deaths" caseType="deaths" data={casesByLocationWithNoProvince} lightColour="#f0f0f0" darkColour="#636363"/>
+          <WorldHeatMap
+            mapDataLabel="Cases"
+            caseType={caseType}
+            date={caseType}
+            data={casesByLocationWithNoProvince}
+            lightColour={caseMaps[caseType].lightColour}
+            darkColour={caseMaps[caseType].darkColour}
+          />
         </div>
       </div>
     </>
