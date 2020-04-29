@@ -160,7 +160,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
       ></canvas>
     </div>
 
-    <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+    <div className="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
       <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
         <label className={`btn btn-sm btn-light ${dataType === 'linear' ? 'active' : ''}`}>
           <input type="radio" name="data-type" onClick={() => {
