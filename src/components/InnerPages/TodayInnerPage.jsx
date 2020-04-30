@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TopXBarGraph from '../Charts/TopXBarGraph'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
@@ -29,10 +29,23 @@ const getTopCases = () => gql`
   }
 `
 
-const TodayInnerPage = ({
-   title,
-   lastUpdated,
-  }) => {
+const caseMaps = {
+  confirmedCasesToday: {
+    label: 'Confirmed cases today',
+    lightColour: "#efedf5",
+    darkColour:"#756bb1",
+    textClassName: 'confirmedTodayText'
+  },
+  deathsToday: {
+    label: 'Confirmed deaths today',
+    lightColour: "#fff7bc",
+    darkColour:"#d95f0e",
+    textClassName: 'deathsTodayText'
+  },
+}
+
+const TodayInnerPage = ({ title, lastUpdated }) => {
+  const [ caseType, setCaseType] = useState('confirmedCasesToday')
   const { loading, error, data } = useQuery(getTopCases())
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
@@ -45,9 +58,11 @@ const TodayInnerPage = ({
       <div id="global-page" className="">
         <h3>{title} | {(new Date()).toLocaleDateString()}</h3>
       </div>
+
       <div className="row">
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
+
       <div className="row">
         <div className="col-sm">
           <PanelConfirmedToday caseCount={totalCases.confirmedCasesToday}/>
@@ -57,32 +72,50 @@ const TodayInnerPage = ({
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-sm">
-          <p className="heatMapHeader confirmedTodayText">Confirmed cases today</p>
+      <div className="row justify-content-center mb-4">
+        <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+            <label className={`btn btn-sm btn-light ${caseType === 'confirmedCasesToday' ? 'active' : ''}`}>
+              <input type="radio" name="chart-type" onClick={() => {setCaseType('confirmedCasesToday')}}/> {caseMaps.confirmedCasesToday.label}
+            </label>
+            <label className={`btn btn-sm btn-light ${caseType === 'deathsToday' ? 'active' : ''}`}>
+              <input type="radio" name="chart-type" onClick={() => {setCaseType('deathsToday')}}/> {caseMaps.deathsToday.label}
+            </label>
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-sm">
-          <WorldHeatMap mapDataLabel="Confirmed Today" caseType="confirmedCasesToday" data={casesByLocationWithNoProvince} lightColour="#efedf5" darkColour="#756bb1"/>
-        </div>
-      </div>
-      <div className="row">
-          <TopXBarGraph data={data.topXconfirmedTodayByCountry} id="top10confirmedToday" chartTitle="Top 10 confirmed cases today by country" chartLabel="Confirmed cases today" chartLabelKey="confirmedCasesToday" labelColor="purple" />
       </div>
 
       <div className="row">
         <div className="col-sm">
-          <p className="heatMapHeader deathsTodayText">Confirmed deaths today</p>
+          <WorldHeatMap
+            mapDataLabel="Cases"
+            caseType={caseType}
+            date={caseType}
+            data={casesByLocationWithNoProvince}
+            lightColour={caseMaps[caseType].lightColour}
+            darkColour={caseMaps[caseType].darkColour}
+          />
         </div>
       </div>
-      <div className="row">
-        <div className="col-sm">
-          <WorldHeatMap mapDataLabel="Deaths Today" caseType="deathsToday" data={casesByLocationWithNoProvince} lightColour="#fff7bc" darkColour="#d95f0e"/>
-        </div>
-      </div>
-      <div className="row">
-        <TopXBarGraph data={data.topXdeathsTodayByCountry} id="top10deathsToday" chartTitle="Top 10 deaths today by country" chartLabel="Deaths today" chartLabelKey="deathsToday" labelColor="yellow" />
+
+      <div className="row multiTopBar">
+        <TopXBarGraph
+          data={data.topXconfirmedTodayByCountry}
+          id="top10confirmedToday"
+          chartTitle="Top 10 confirmed cases today by country"
+          chartLabel="Confirmed cases today"
+          chartLabelKey="confirmedCasesToday"
+          labelColor="purple"
+        />
+
+        <TopXBarGraph
+          data={data.topXdeathsTodayByCountry}
+          id="top10deathsToday"
+          chartTitle="Top 10 deaths today by country"
+          chartLabel="Deaths today"
+          chartLabelKey="deathsToday"
+          labelColor="yellow"
+        />
       </div>
     </>
   )
