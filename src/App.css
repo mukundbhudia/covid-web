@@ -32,6 +32,10 @@ th.sortableTableHeader:hover {
   cursor: pointer;
 }
 
+td.selectedForSortColumn {
+  font-weight: bold;
+}
+
 /* Desktop size */
 @media (max-width: 575.98px) { 
   .chart.barGraph {
