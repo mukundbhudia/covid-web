@@ -18,6 +18,7 @@ import Footer from './components/Nav/Footer';
 import HeatMapsInnerPage from './components/InnerPages/HeatMapsInnerPage';
 import NavBar from './components/Nav/NavBar';
 import NavSideBar from './components/Nav/NavSideBar';
+import DataTableInnerPage from './components/InnerPages/DataTableInnerPage'
 
 const COVID_TOTALS = gql`
   query {
@@ -35,8 +36,8 @@ const App = () => {
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
-  const lastUpdated =   data.lastUpdated
-  const casesByLocation =   data.casesByLocation
+  const lastUpdated = data.lastUpdated
+  const casesByLocation = data.casesByLocation
 
   return (
     <>
@@ -73,6 +74,12 @@ const App = () => {
                 <Route path="/heatmaps" children={
                   <HeatMapsInnerPage
                     title="Heatmaps"
+                    lastUpdated={lastUpdated}
+                  />
+                } />
+                <Route path="/table" children={
+                  <DataTableInnerPage
+                    title="Data Table"
                     lastUpdated={lastUpdated}
                   />
                 } />

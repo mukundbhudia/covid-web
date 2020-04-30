@@ -42,6 +42,9 @@ const NavBar = ({ searchData }) => {
             <li className="nav-item">
               <Link className="nav-link" to="heatmaps">Heatmaps</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="table">Data&nbsp;table</Link>
+            </li>
           </ul>
         </div>
 
