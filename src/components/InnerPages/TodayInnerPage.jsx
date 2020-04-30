@@ -72,15 +72,17 @@ const TodayInnerPage = ({ title, lastUpdated }) => {
         </div>
       </div>
 
-      <div className="row justify-content-center mb-4">
-        <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-          <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-            <label className={`btn btn-sm btn-light ${caseType === 'confirmedCasesToday' ? 'active' : ''}`}>
-              <input type="radio" name="chart-type" onClick={() => {setCaseType('confirmedCasesToday')}}/> {caseMaps.confirmedCasesToday.label}
-            </label>
-            <label className={`btn btn-sm btn-light ${caseType === 'deathsToday' ? 'active' : ''}`}>
-              <input type="radio" name="chart-type" onClick={() => {setCaseType('deathsToday')}}/> {caseMaps.deathsToday.label}
-            </label>
+      <div className="row mb-4">
+        <div className="col-sm">
+          <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+            <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+              <label className={`btn btn-sm btn-light ${caseType === 'confirmedCasesToday' ? 'active' : ''}`}>
+                <input type="radio" name="chart-type" onClick={() => {setCaseType('confirmedCasesToday')}}/> {caseMaps.confirmedCasesToday.label}
+              </label>
+              <label className={`btn btn-sm btn-light ${caseType === 'deathsToday' ? 'active' : ''}`}>
+                <input type="radio" name="chart-type" onClick={() => {setCaseType('deathsToday')}}/> {caseMaps.deathsToday.label}
+              </label>
+            </div>
           </div>
         </div>
       </div>
