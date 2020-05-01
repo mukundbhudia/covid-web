@@ -18,7 +18,7 @@ import Footer from './components/Nav/Footer';
 import HeatMapsInnerPage from './components/InnerPages/HeatMapsInnerPage';
 import NavBar from './components/Nav/NavBar';
 import NavSideBar from './components/Nav/NavSideBar';
-import DataTableInnerPage from './components/InnerPages/DataTableInnerPage'
+import DataTableInnerPage from './components/InnerPages/DataTableInnerPage/DataTableInnerPage'
 
 const COVID_TOTALS = gql`
   query {
