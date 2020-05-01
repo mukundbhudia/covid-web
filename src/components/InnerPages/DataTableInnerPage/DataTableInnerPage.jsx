@@ -32,12 +32,12 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
   let location = useLocation()
   let query = useUrlQuery(location)
 
-  const keyQueryParam = query.get('key')
-  const directionQueryParam = query.get('direction')
+  const sortQueryParam = query.get('sort')
+  const orderQueryParam = query.get('order')
 
-  let sortParams = { key: 'country', direction: 'ascending' }
-  if (keyQueryParam && directionQueryParam) {
-    sortParams = { key: keyQueryParam, direction: directionQueryParam }
+  let sortParams = { sortKey: 'country', order: 'asc' }
+  if (sortQueryParam && orderQueryParam) {
+    sortParams = { sortKey: sortQueryParam, order: orderQueryParam }
   }
 
   const { loading, error, data } = useQuery(getTopCases())

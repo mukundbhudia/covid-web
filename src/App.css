@@ -28,8 +28,12 @@ canvas{
 }
 
 th.sortableTableHeader:hover {
-  background-color: #fdf2b7;
+  background-color: #fdf2b7 !important;
   cursor: pointer;
+}
+
+th.sortableTableHeader.sorted {
+  background-color: #d4d7db;
 }
 
 td.selectedForSortColumn {

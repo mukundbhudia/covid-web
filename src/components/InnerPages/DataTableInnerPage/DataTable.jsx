@@ -7,8 +7,8 @@ import * as timeago from 'timeago.js'
 
 const setParams = (params) => {
   const searchParams = new URLSearchParams()
-  searchParams.set("key", params.key)
-  searchParams.set("direction", params.direction)
+  searchParams.set("sort", params.sortKey)
+  searchParams.set("order", params.order)
   return searchParams.toString()
 }
 
@@ -19,11 +19,11 @@ const DataTable = ({ sortConfig, tableData }) => {
     let sortableItems = [...tableData]
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1
+        if (a[sortConfig.sortKey] < b[sortConfig.sortKey]) {
+          return sortConfig.order === 'asc' ? -1 : 1
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1
+        if (a[sortConfig.sortKey] > b[sortConfig.sortKey]) {
+          return sortConfig.order === 'asc' ? 1 : -1
         }
         return 0
       })
@@ -31,30 +31,40 @@ const DataTable = ({ sortConfig, tableData }) => {
     return sortableItems
   }
 
-  const requestSort = (key) => {
-    let direction = 'ascending'
+  const requestSort = (sortKey) => {
+    let order = 'asc'
     if (
       sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === 'ascending'
+      sortConfig.sortKey === sortKey &&
+      sortConfig.order === 'asc'
     ) {
-      direction = 'descending'
+      order = 'desc'
     }
-    history.push(`?${setParams({ key, direction })}`)
+    history.push(`?${setParams({ sortKey, order })}`)
   }
 
-  const showLabel = (headerKey) => {
+  const showLabel = (headerSortKey) => {
     let indicator = ''
-    if (sortConfig.key === headerKey) {
-      indicator = sortConfig.direction === 'ascending' ? '(↑)' : '(↓)'
+    if (sortConfig.sortKey === headerSortKey) {
+      indicator = sortConfig.order === 'asc' ? '(↑)' : '(↓)'
     }
     return indicator
   }
 
-  const applySelectedColumnStyle = (headerKey) => {
+  const applySelectedColumnStyle = (headerSortKey) => {
     let style = ''
-    if (sortConfig.key === headerKey) {
+    if (sortConfig.sortKey === headerSortKey) {
       style = 'selectedForSortColumn'
+    }
+    return style
+  }
+
+  const applySelectedColumnHeaderStyle = (headerSortKey) => {
+    let style = ''
+    if (sortConfig.sortKey === headerSortKey) {
+      style = 'sortableTableHeader sorted'
+    } else {
+      style = 'sortableTableHeader'
     }
     return style
   }
@@ -67,14 +77,14 @@ const DataTable = ({ sortConfig, tableData }) => {
         <table className="table table-sm table-hover sortable-data-table">
           <thead className="thead-light">
             <tr>
-              <th scope="col" className="sortableTableHeader" onClick={() => requestSort('country')}>Country {showLabel('country')}</th>
-              <th scope="col" className="sortableTableHeader" onClick={() => requestSort('confirmed')}>Confirmed cases {showLabel('confirmed')}</th>
-              <th scope="col" className="sortableTableHeader" onClick={() => requestSort('confirmedCasesToday')}>Confrimed today {showLabel('confirmedCasesToday')}</th>
-              <th scope="col" className="sortableTableHeader" onClick={() => requestSort('active')}>Active {showLabel('active')}</th>
-              <th scope="col" className="sortableTableHeader" onClick={() => requestSort('recovered')}>Recovered {showLabel('recovered')}</th>
-              <th scope="col" className="sortableTableHeader" onClick={() => requestSort('deaths')}>Deaths {showLabel('deaths')}</th>
-              <th scope="col" className="sortableTableHeader" onClick={() => requestSort('deathsToday')}>Deaths today {showLabel('deathsToday')}</th>
-              <th scope="col" className="sortableTableHeader" onClick={() => requestSort('lastUpdate')}>Last updated {showLabel('lastUpdate')}</th>
+              <th scope="col" className={applySelectedColumnHeaderStyle('country')} onClick={() => requestSort('country')}>Country {showLabel('country')}</th>
+              <th scope="col" className={applySelectedColumnHeaderStyle('confirmed')} onClick={() => requestSort('confirmed')}>Confirmed cases {showLabel('confirmed')}</th>
+              <th scope="col" className={applySelectedColumnHeaderStyle('confirmedCasesToday')} onClick={() => requestSort('confirmedCasesToday')}>Confrimed today {showLabel('confirmedCasesToday')}</th>
+              <th scope="col" className={applySelectedColumnHeaderStyle('active')} onClick={() => requestSort('active')}>Active {showLabel('active')}</th>
+              <th scope="col" className={applySelectedColumnHeaderStyle('recovered')} onClick={() => requestSort('recovered')}>Recovered {showLabel('recovered')}</th>
+              <th scope="col" className={applySelectedColumnHeaderStyle('deaths')} onClick={() => requestSort('deaths')}>Deaths {showLabel('deaths')}</th>
+              <th scope="col" className={applySelectedColumnHeaderStyle('deathsToday')} onClick={() => requestSort('deathsToday')}>Deaths today {showLabel('deathsToday')}</th>
+              <th scope="col" className={applySelectedColumnHeaderStyle('lastUpdate')} onClick={() => requestSort('lastUpdate')}>Last updated {showLabel('lastUpdate')}</th>
             </tr>
           </thead>
           <tbody>
