@@ -92,12 +92,12 @@ const DataTable = ({ sortConfig, tableData }) => {
               return (
                 <tr key={tableRow.idKey}>
                   <th className={applySelectedColumnStyle('country')} scope="row"><Link to={tableRow.idKey}>{tableRow.country}</Link></th>
-                  <td className={applySelectedColumnStyle('confirmed')}>{tableRow.confirmed}</td>
-                  <td className={applySelectedColumnStyle('confirmedCasesToday')}>{tableRow.confirmedCasesToday}</td>
-                  <td className={applySelectedColumnStyle('active')}>{tableRow.active}</td>
-                  <td className={applySelectedColumnStyle('recovered')}>{tableRow.recovered}</td>
-                  <td className={applySelectedColumnStyle('deaths')}>{tableRow.deaths}</td>
-                  <td className={applySelectedColumnStyle('deathsToday')}>{tableRow.deathsToday}</td>
+                  <td className={applySelectedColumnStyle('confirmed')}>{tableRow.confirmed.toLocaleString()}</td>
+                  <td className={applySelectedColumnStyle('confirmedCasesToday')}>{tableRow.confirmedCasesToday.toLocaleString()}</td>
+                  <td className={applySelectedColumnStyle('active')}>{tableRow.active.toLocaleString()}</td>
+                  <td className={applySelectedColumnStyle('recovered')}>{tableRow.recovered.toLocaleString()}</td>
+                  <td className={applySelectedColumnStyle('deaths')}>{tableRow.deaths.toLocaleString()}</td>
+                  <td className={applySelectedColumnStyle('deathsToday')}>{tableRow.deathsToday.toLocaleString()}</td>
                   <td className={applySelectedColumnStyle('lastUpdate')}>{timeago.format(new Date(parseInt(tableRow.lastUpdate)))}</td>
                 </tr>
               )
