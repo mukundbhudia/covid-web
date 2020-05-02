@@ -29,6 +29,10 @@ const getTopCases = () => gql`
   }
 `
 
+const isGreaterThanZero = (array, key) => {
+  return array.filter((element) => { return element[key] > 0 })
+}
+
 const caseMaps = {
   confirmedCasesToday: {
     label: 'Confirmed cases today',
@@ -102,7 +106,7 @@ const TodayInnerPage = ({ title, lastUpdated }) => {
 
       <div className="row multiTopBar">
         <TopXBarGraph
-          data={data.topXconfirmedTodayByCountry}
+          data={isGreaterThanZero(data.topXconfirmedTodayByCountry, 'confirmedCasesToday')}
           id="top10confirmedToday"
           chartTitle="Top 10 confirmed cases today by country"
           chartLabel="Confirmed cases today"
@@ -111,7 +115,7 @@ const TodayInnerPage = ({ title, lastUpdated }) => {
         />
 
         <TopXBarGraph
-          data={data.topXdeathsTodayByCountry}
+          data={isGreaterThanZero(data.topXdeathsTodayByCountry, 'deathsToday')}
           id="top10deathsToday"
           chartTitle="Top 10 deaths today by country"
           chartLabel="Deaths today"
