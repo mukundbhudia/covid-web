@@ -1,7 +1,7 @@
 import React from 'react'
 import TopXBarGraph from '../Charts/TopXBarGraph'
 
-const PanelTopX = ({ data }) => {
+const PanelTopX = ({ data, includeToday }) => {
 
   return (
     <>
@@ -41,6 +41,26 @@ const PanelTopX = ({ data }) => {
           labelColor="grey"
         />
       </div>
+      {includeToday &&
+        <div className="row">
+          <TopXBarGraph
+            data={data.topXconfirmedTodayByCountry.data}
+            id="top5recovered"
+            chartTitle={data.topXconfirmedTodayByCountry.label}
+            chartLabel="Confirmed cases today"
+            chartLabelKey="confirmedCasesToday"
+            labelColor="purple"
+          />
+          <TopXBarGraph
+            data={data.topXdeathsTodayByCountry.data}
+            id="top5deaths"
+            chartTitle={data.topXdeathsTodayByCountry.label}
+            chartLabel="Deaths today"
+            chartLabelKey="deathsToday"
+            labelColor="yellow"
+          />
+        </div>
+      }
     </>
   )
 }

@@ -22,6 +22,14 @@ query TopCases($limit: Int!) {
       country
       deaths
     }
+    topXconfirmedTodayByCountry(limit: $limit) {
+      country
+      confirmedCasesToday
+    }
+    topXdeathsTodayByCountry(limit: $limit) {
+      country
+      deathsToday
+    }
   }
 `
 
@@ -50,6 +58,8 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
     topXactiveByCountry: {data: data.topXactiveByCountry, label: `Top ${topLimit} active by country`},
     topXrecoveredByCountry: {data: data.topXrecoveredByCountry, label: `Top ${topLimit} recovered by country`},
     topXdeathsByCountry: {data: data.topXdeathsByCountry, label: `Top ${topLimit} deaths by country`},
+    topXconfirmedTodayByCountry: {data: data.topXconfirmedTodayByCountry, label: `Top ${topLimit} confirmed cases today by country`},
+    topXdeathsTodayByCountry: {data: data.topXdeathsTodayByCountry, label: `Top ${topLimit} deaths today by country`},
   }
 
   return (
@@ -79,7 +89,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
       </div>
 
       <div className="top-tab-container">
-        <PanelTopX data={topXdata} />
+        <PanelTopX data={topXdata} includeToday={true} />
       </div>
     </>
   )
