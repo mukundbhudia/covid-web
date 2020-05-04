@@ -1,6 +1,7 @@
 # Covid-19 Web Dashboard
 
-COVID-19 Coronavirus dashboard. A dashboard to show global data gathered on the COVID-19 virus pandemic that causes the SARS-CoV-2 disease. 
+COVID-19 Coronavirus dashboard. A dashboard to show global data gathered on the COVID-19 virus pandemic.
+The SARS‑CoV‑2 virus is part of a class of viruses called Coronaviruses. It is SARS‑CoV‑2 that causes the COVID-19 disease.
 Data sources: Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE).
 
 Production build at: https://mukundbhudia.gitlab.io/covid-web/.
