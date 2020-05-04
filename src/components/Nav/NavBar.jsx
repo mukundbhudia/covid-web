@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import {
-  Link,
-} from 'react-router-dom'
+import NavLink from './NavLink'
 import InputSearch from './InputSearch/InputSearch'
-
 
 const NavBar = ({ searchData }) => {
   const [ collapsed, setCollapsed] = useState(true)
+
   let classOne = collapsed ? 'collapse navbar-collapse' : 'collapse navbar-collapse show'
   let classTwo = collapsed ? 'navbar-toggler collapsed' : 'navbar-toggler'
 
@@ -31,19 +29,19 @@ const NavBar = ({ searchData }) => {
         <div className={`${classOne}`} id="navbarsExample04">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="">Global <span className="sr-only">(current)</span></Link>
+              <NavLink path="/" label="Global"/>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="today">Today</Link>
+              <NavLink path="/today" label="Today"/>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="top-cases">Top&nbsp;cases</Link>
+              <NavLink path="/top-cases" label="Top&nbsp;cases"/>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="heatmaps">Heatmaps</Link>
+              <NavLink path="/heatmaps" label="Heatmaps"/>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="table">Data&nbsp;table</Link>
+              <NavLink path="/table" label="Data&nbsp;table"/>
             </li>
           </ul>
         </div>
