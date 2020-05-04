@@ -1,57 +1,85 @@
-import React from 'react'
-import TopXBarGraph from '../Charts/TopXBarGraph'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
+import PanelTopX from '../Panels/PanelTopX'
 
-const getTopCases = () => gql`
-  query {
-    topXconfirmedByCountry(limit: 10) {
+const getTopCases = gql`
+query TopCases($limit: Int!) {
+    topXconfirmedByCountry(limit: $limit) {
       country
       confirmed
     }
-    topXactiveByCountry(limit: 10) {
+    topXactiveByCountry(limit: $limit) {
       country
       active
     }
-    topXrecoveredByCountry(limit: 10) {
+    topXrecoveredByCountry(limit: $limit) {
       country
       recovered
     }
-    topXdeathsByCountry(limit: 10) {
+    topXdeathsByCountry(limit: $limit) {
       country
       deaths
     }
   }
 `
 
-const TopCasesInnerPage = ({
-   title,
-   lastUpdated,
-  }) => {
-  const { loading, error, data } = useQuery(getTopCases())
+const topCaseOptions = [ 5, 10, 15, 20 ]
+
+const TopCasesInnerPage = ({ lastUpdated, }) => {
+  const [ topLimit, setTopLimit] = useState(topCaseOptions[1])
+  const { loading, error, data, client } = useQuery(getTopCases, {
+    variables: { limit: topLimit },
+  })
+
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+
+  const prefetchTopCases = () => {
+    topCaseOptions.forEach(topCaseLimit => {
+      client.query({
+        query: getTopCases,
+        variables: { limit: topCaseLimit },
+      })
+    })
+  }
+
+  const topXdata = {
+    topXconfirmedByCountry: {data: data.topXconfirmedByCountry, label: `Top ${topLimit} confirmed by country`},
+    topXactiveByCountry: {data: data.topXactiveByCountry, label: `Top ${topLimit} active by country`},
+    topXrecoveredByCountry: {data: data.topXrecoveredByCountry, label: `Top ${topLimit} recovered by country`},
+    topXdeathsByCountry: {data: data.topXdeathsByCountry, label: `Top ${topLimit} deaths by country`},
+  }
 
   return (
     <>
       <div id="global-page" className="">
-        <h3>{title}</h3>
+        <h3>Top {topLimit} cases globally</h3>
       </div>
+
       <div className="row">
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
-      <div className="row">
-          <TopXBarGraph data={data.topXconfirmedByCountry} id="top5confirmed" chartTitle="Top 10 confirmed by country" chartLabel="Confirmed" chartLabelKey="confirmed" labelColor="red" />
+
+      <div className="row mb-4">
+        <div className="col-sm">
+          <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+            <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons" onMouseOver={() => {prefetchTopCases()}}>
+              {topCaseOptions.map((item) => {
+                return  (
+                <label key={item} className={`btn btn-sm btn-light ${topLimit === item ? 'active' : ''}`}>
+                  <input type="radio" name="chart-type" onClick={() => {setTopLimit(item)}}/> Top {item}
+                </label>
+                )
+              } )}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="row">
-        <TopXBarGraph data={data.topXactiveByCountry} id="top5active" chartTitle="Top 10 active by country" chartLabel="Active" chartLabelKey="active" labelColor="blue" />
-      </div>
-      <div className="row">
-          <TopXBarGraph data={data.topXrecoveredByCountry} id="top5recovered" chartTitle="Top 10 recovered by country" chartLabel="Recovered" chartLabelKey="recovered" labelColor="green" />
-      </div> 
-      <div className="row">
-          <TopXBarGraph data={data.topXdeathsByCountry} id="top5deaths" chartTitle="Top 10 deaths by country" chartLabel="Deaths" chartLabelKey="deaths" labelColor="grey" />
+
+      <div className="top-tab-container">
+        <PanelTopX data={topXdata} />
       </div>
     </>
   )

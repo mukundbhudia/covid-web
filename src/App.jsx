@@ -61,7 +61,6 @@ const App = () => {
                 </Route>
                 <Route path="/top-cases" children={
                   <TopCasesInnerPage
-                    title="Top cases globally"
                     lastUpdated={lastUpdated}
                   />
                 } />

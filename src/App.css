@@ -20,11 +20,24 @@ canvas{
 }
 
 .chart.barGraph {
-  height: 56vh;
+  height: 40vh;
 }
 
 .multiTopBar > .col-sm > .chart.barGraph {
-  height: 32vh;
+  height: 40vh;
+}
+
+div.nav-link.top-tab-link {
+  cursor: pointer;
+}
+
+div.top-tab-container {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+div.top-tab-container > div.row > div.col-sm > div.chart.barGraph.topx {
+  height: 45vh;
 }
 
 th.sortableTableHeader:hover {
@@ -45,11 +58,18 @@ td.selectedForSortColumn {
   .chart.barGraph {
     height:40vh;
   }
+  .chart.barGraph.topx {
+    height:40vh;
+  }
 }
 
 /* Mobile size */
 @media (max-width: 767.98px) { 
   .chart.barGraph {
+    height:40vh;
+  }
+
+  .chart.barGraph.topx {
     height:40vh;
   }
 
