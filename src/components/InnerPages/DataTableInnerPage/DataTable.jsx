@@ -91,7 +91,7 @@ const DataTable = ({ sortConfig, tableData }) => {
             {sortedTableData.map((tableRow) => {
               return (
                 <tr key={tableRow.idKey}>
-                  <th className={applySelectedColumnStyle('country')} scope="row"><Link to={tableRow.idKey}>{tableRow.country}</Link></th>
+                  <td className={applySelectedColumnStyle('country')}><Link to={tableRow.idKey}>{tableRow.country}</Link></td>
                   <td className={applySelectedColumnStyle('confirmed')}>{tableRow.confirmed.toLocaleString()}</td>
                   <td className={applySelectedColumnStyle('confirmedCasesToday')}>{tableRow.confirmedCasesToday.toLocaleString()}</td>
                   <td className={applySelectedColumnStyle('active')}>{tableRow.active.toLocaleString()}</td>

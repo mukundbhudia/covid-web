@@ -23,6 +23,8 @@ const getTopCases = () => gql`
   }
 `
 
+let sortParams = { sortKey: 'country', order: 'asc' }
+
 const useUrlQuery = (loc) => {
   let urlParams = new URLSearchParams(loc.search);
   return urlParams
@@ -35,7 +37,6 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
   const sortQueryParam = query.get('sort')
   const orderQueryParam = query.get('order')
 
-  let sortParams = { sortKey: 'country', order: 'asc' }
   if (sortQueryParam && orderQueryParam) {
     sortParams = { sortKey: sortQueryParam, order: orderQueryParam }
   }
