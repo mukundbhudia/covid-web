@@ -34,9 +34,11 @@ query TopCases($limit: Int!) {
 `
 
 const topCaseOptions = [ 5, 10, 15, 20 ]
+let topLimitState = topCaseOptions[1]
 
 const TopCasesInnerPage = ({ lastUpdated, }) => {
-  const [ topLimit, setTopLimit] = useState(topCaseOptions[1])
+  const [ topLimit, setTopLimit] = useState(topLimitState)
+  topLimitState = topLimit
   const { loading, error, data, client } = useQuery(getTopCases, {
     variables: { limit: topLimit },
   })

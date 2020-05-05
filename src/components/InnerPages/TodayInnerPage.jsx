@@ -48,8 +48,11 @@ const caseMaps = {
   },
 }
 
+let caseTypeState = 'confirmedCasesToday'
+
 const TodayInnerPage = ({ title, lastUpdated }) => {
-  const [ caseType, setCaseType] = useState('confirmedCasesToday')
+  const [ caseType, setCaseType] = useState(caseTypeState)
+  caseTypeState = caseType
   const { loading, error, data } = useQuery(getTopCases())
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
