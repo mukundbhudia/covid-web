@@ -9,7 +9,7 @@ const NavSideBar = ({ casesByLocation }) => {
 
   return (
     <>
-    <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+    <nav className="col-md-2 d-none d-md-block sidebar">
       <div className="sidebar-sticky">
         <ul className="nav flex-column">
           <li className="nav-item">

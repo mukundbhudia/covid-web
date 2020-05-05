@@ -9,6 +9,10 @@ canvas{
   -ms-user-select: none;
 }
 
+nav.col-md-2.d-none.d-md-block.sidebar {
+  background-color: #eff1f2;
+}
+
 .chart {
   position: relative;
   margin: auto;
