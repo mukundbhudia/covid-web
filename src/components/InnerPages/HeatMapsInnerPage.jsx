@@ -12,6 +12,8 @@ const getTopCases = () => gql`
       active
       recovered
       deaths
+      confirmedCasesToday
+      deathsToday
     }
   }
 `
@@ -41,6 +43,18 @@ const caseMaps = {
     darkColour:"#636363",
     textClassName: 'deathsText'
   },
+  confirmedCasesToday: {
+    label: 'Confirmed today',
+    lightColour: "#efedf5",
+    darkColour:"#756bb1",
+    textClassName: 'confirmedTodayText'
+  },
+  deathsToday: {
+    label: 'Deaths today',
+    lightColour: "#fff7bc",
+    darkColour:"#d95f0e",
+    textClassName: 'deathsTodayText'
+  },
 }
 
 let caseTypeState = 'confirmed'
@@ -67,18 +81,14 @@ const HeatMapsInnerPage = ({ title, lastUpdated }) => {
         <div className="col-sm">
           <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
             <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-              <label className={`btn btn-sm btn-light ${caseType === 'confirmed' ? 'active' : ''}`}>
-                <input type="radio" name="chart-type" onClick={() => {setCaseType('confirmed')}}/> {caseMaps.confirmed.label}
-              </label>
-              <label className={`btn btn-sm btn-light ${caseType === 'active' ? 'active' : ''}`}>
-                <input type="radio" name="chart-type" onClick={() => {setCaseType('active')}}/> {caseMaps.active.label}
-              </label>
-              <label className={`btn btn-sm btn-light ${caseType === 'recovered' ? 'active' : ''}`}>
-                <input type="radio" name="chart-type" onClick={() => {setCaseType('recovered')}}/> {caseMaps.recovered.label}
-              </label>
-              <label className={`btn btn-sm btn-light ${caseType === 'deaths' ? 'active' : ''}`}>
-                <input type="radio" name="chart-type" onClick={() => {setCaseType('deaths')}}/> {caseMaps.deaths.label}
-              </label>
+              {Object.keys(caseMaps).map((caseKey) => {
+                const item = caseMaps[caseKey]
+                return  (
+                <label key={item.label} className={`btn btn-sm btn-light ${caseType === caseKey ? 'active' : ''}`}>
+                  <input type="radio" name="chart-type" onClick={() => {setCaseType(caseKey)}}/>{item.label}
+                </label>
+                )
+              } )}
             </div>
           </div>
         </div>

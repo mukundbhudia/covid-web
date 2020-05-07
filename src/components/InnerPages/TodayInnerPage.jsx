@@ -83,12 +83,14 @@ const TodayInnerPage = ({ title, lastUpdated }) => {
         <div className="col-sm">
           <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
             <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-              <label className={`btn btn-sm btn-light ${caseType === 'confirmedCasesToday' ? 'active' : ''}`}>
-                <input type="radio" name="chart-type" onClick={() => {setCaseType('confirmedCasesToday')}}/> {caseMaps.confirmedCasesToday.label}
-              </label>
-              <label className={`btn btn-sm btn-light ${caseType === 'deathsToday' ? 'active' : ''}`}>
-                <input type="radio" name="chart-type" onClick={() => {setCaseType('deathsToday')}}/> {caseMaps.deathsToday.label}
-              </label>
+              {Object.keys(caseMaps).map((caseKey) => {
+                const item = caseMaps[caseKey]
+                return  (
+                <label key={item.label} className={`btn btn-sm btn-light ${caseType === caseKey ? 'active' : ''}`}>
+                  <input type="radio" name="chart-type" onClick={() => {setCaseType(caseKey)}}/>{item.label}
+                </label>
+                )
+              } )}
             </div>
           </div>
         </div>
