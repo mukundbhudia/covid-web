@@ -5,26 +5,36 @@ import './WorldHeatMap.css'
 
 class WorldHeatMap extends Component {
 
-  processMapData(casesByLocationWithNoProvince, lightColour, darkColour, caseType, showMoreThanOneDataItem) {
+  isValidCase(caseNumberToParse) {
+    if (caseNumberToParse >= 0) {
+      return true
+    } else {
+      return false
+    }
+  }
 
+  processMapData(casesByLocationWithNoProvince, lightColour, darkColour, caseType, showMoreThanOneDataItem) {
     const heatMapData = []
     casesByLocationWithNoProvince.forEach((item, i) => {
       if (item.countryCode) {
-        if (!showMoreThanOneDataItem) {
-          return heatMapData.push([
-            item.countryCode,
-            item[caseType]
-          ])
-        } else if (showMoreThanOneDataItem) {
-          return heatMapData.push([
-            item.countryCode, 
-            item[caseType], 
-            item.confirmedCasesToday, 
-            item.active || 'N/A',
-            item.recovered || 'N/A',
-            item.deaths, 
-            item.deathsToday
-          ])
+        let mainCaseNumberToShow = parseInt(item[caseType])
+        if (this.isValidCase(mainCaseNumberToShow)) {
+          if (!showMoreThanOneDataItem) {
+            return heatMapData.push([
+              item.countryCode,
+              mainCaseNumberToShow
+            ])
+          } else if (showMoreThanOneDataItem) {
+            return heatMapData.push([
+              item.countryCode, 
+              mainCaseNumberToShow,
+              parseInt(item.confirmedCasesToday), 
+              parseInt(item.active) || 'N/A',
+              parseInt(item.recovered) || 'N/A',
+              parseInt(item.deaths), 
+              parseInt(item.deathsToday)
+            ])
+          }
         }
       }
     })
