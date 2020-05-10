@@ -4,7 +4,7 @@ COVID-19 Coronavirus dashboard. A dashboard to show global data gathered on the 
 The SARS‑CoV‑2 virus is part of a class of viruses called Coronaviruses. It is SARS‑CoV‑2 that causes the COVID-19 disease.
 Data sources: Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE).
 
-Production build at: https://mukundbhudia.gitlab.io/covid-web/.
+Production build at: https://mukundbhudia.gitlab.io/covid-web/ and https://mukundbhudia.github.io/covid-web/.
 
 ![Global page on the Covid-19 dashboard](https://github.com/mukundbhudia/covid-web/raw/master/screenshots/global-dashboard.png)
 

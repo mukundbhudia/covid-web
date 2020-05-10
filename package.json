@@ -29,9 +29,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "REACT_APP_GQL_URI=https://covid19-dash-api.herokuapp.com npm run build",
+    "deploy": "gh-pages -d build"
   },
-  "homepage": ".",
+  "homepage": "https://mukundbhudia.github.io/covid-web",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -46,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
   }
 }
