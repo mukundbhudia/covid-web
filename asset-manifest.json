@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/mukundbhudia/covid-web/static/css/main.4402605b.chunk.css",
+    "main.js": "/mukundbhudia/covid-web/static/js/main.2e8b6f12.chunk.js",
+    "main.js.map": "/mukundbhudia/covid-web/static/js/main.2e8b6f12.chunk.js.map",
+    "runtime-main.js": "/mukundbhudia/covid-web/static/js/runtime-main.9f558eba.js",
+    "runtime-main.js.map": "/mukundbhudia/covid-web/static/js/runtime-main.9f558eba.js.map",
+    "static/css/2.74189dbb.chunk.css": "/mukundbhudia/covid-web/static/css/2.74189dbb.chunk.css",
+    "static/js/2.e9c011b5.chunk.js": "/mukundbhudia/covid-web/static/js/2.e9c011b5.chunk.js",
+    "static/js/2.e9c011b5.chunk.js.map": "/mukundbhudia/covid-web/static/js/2.e9c011b5.chunk.js.map",
+    "index.html": "/mukundbhudia/covid-web/index.html",
+    "precache-manifest.720bbdfb6591d62cb949f9a45862e097.js": "/mukundbhudia/covid-web/precache-manifest.720bbdfb6591d62cb949f9a45862e097.js",
+    "service-worker.js": "/mukundbhudia/covid-web/service-worker.js",
+    "static/css/2.74189dbb.chunk.css.map": "/mukundbhudia/covid-web/static/css/2.74189dbb.chunk.css.map",
+    "static/css/main.4402605b.chunk.css.map": "/mukundbhudia/covid-web/static/css/main.4402605b.chunk.css.map",
+    "static/js/2.e9c011b5.chunk.js.LICENSE.txt": "/mukundbhudia/covid-web/static/js/2.e9c011b5.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9f558eba.js",
+    "static/css/2.74189dbb.chunk.css",
+    "static/js/2.e9c011b5.chunk.js",
+    "static/css/main.4402605b.chunk.css",
+    "static/js/main.2e8b6f12.chunk.js"
+  ]
+}
