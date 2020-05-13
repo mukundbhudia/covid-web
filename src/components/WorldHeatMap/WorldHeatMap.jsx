@@ -18,23 +18,21 @@ class WorldHeatMap extends Component {
     casesByLocationWithNoProvince.forEach((item, i) => {
       if (item.countryCode) {
         let mainCaseNumberToShow = parseInt(item[caseType])
-        if (this.isValidCase(mainCaseNumberToShow)) {
-          if (!showMoreThanOneDataItem) {
-            return heatMapData.push([
-              item.countryCode,
-              mainCaseNumberToShow
-            ])
-          } else if (showMoreThanOneDataItem) {
-            return heatMapData.push([
-              item.countryCode, 
-              mainCaseNumberToShow,
-              parseInt(item.confirmedCasesToday), 
-              parseInt(item.active) || 'N/A',
-              parseInt(item.recovered) || 'N/A',
-              parseInt(item.deaths), 
-              parseInt(item.deathsToday)
-            ])
-          }
+        if (!showMoreThanOneDataItem) {
+          return heatMapData.push([
+            item.countryCode,
+            this.isValidCase(mainCaseNumberToShow) ? mainCaseNumberToShow : 0
+          ])
+        } else if (showMoreThanOneDataItem) {
+          return heatMapData.push([
+            item.countryCode, 
+            mainCaseNumberToShow,
+            parseInt(item.confirmedCasesToday), 
+            parseInt(item.active) || 'N/A',
+            parseInt(item.recovered) || 'N/A',
+            parseInt(item.deaths), 
+            parseInt(item.deathsToday)
+          ])
         }
       }
     })
