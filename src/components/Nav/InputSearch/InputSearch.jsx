@@ -13,7 +13,7 @@ const state = {
   highlightOnlyResult: false,
   minLength: 2,
   open: undefined,
-  selectHintOnEnter: false,
+  // selectHintOnEnter: false,
 }
 let history = useHistory()
   return (
