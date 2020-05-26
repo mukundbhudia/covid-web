@@ -233,9 +233,6 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
             display: true,
             labelString: 'Date'
           },
-          ticks: {
-            maxTicksLimit: 25,
-        },
         }],
         yAxes: [{
           display: true,
