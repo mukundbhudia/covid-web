@@ -1,6 +1,56 @@
 import React, { useEffect, useState } from 'react'
 import Chart from 'chart.js'
 
+const isNumeric = subject => typeof subject === 'number'
+
+/**
+ * Moving average
+ * --------------
+ * Courtesy of `kaelzhang`_, under MIT License.
+ *
+ * .. _kaelzhang: https://github.com/kaelzhang/moving-averages
+ *
+ * With alterations and optimisation by Pouria Hadjibagheri.
+ *
+ * @param data { Array<number> } Array of numbers
+ * @param size { number } Size of the moving window
+ * @returns { Array<number> } Array of moving averages
+ */
+const movingAverage = ( data, size ) => {
+  const
+      length = data.length,
+      prepare = size - 1,
+      ret = Array(length).fill(NaN);
+
+  let
+      sum = 0,
+      i = 0,
+      counter = 0,
+      datum;
+
+  for ( ; i < length && counter < prepare; i++ ) {
+      datum = data[i]
+
+      if ( isNumeric(datum) ) {
+          sum += datum;
+          counter++
+      }
+  }
+
+  for ( ; i < length; i++ ) {
+      datum = data[i]
+
+      if ( isNumeric(datum) )
+          sum += datum;
+
+      if ( isNumeric(data[i - size]) )
+          sum -= data[i - size];
+
+      ret[i] = sum / size
+  }
+  return ret.slice(size - 1)
+}
+
 const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   const chartRef = React.createRef()
   const [ dataType, setDataType] = useState('linear')
@@ -19,7 +69,9 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     green: 'rgb(75, 192, 192)',
     blue: 'rgb(54, 162, 235)',
     purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)'
+    darkPurple: 'rgb(102, 68, 170)',
+    grey: 'rgb(201, 203, 207)',
+    darkGrey: 'rgb(160, 161, 164)',
   }
 
   let firstCaseAdded = false
@@ -53,6 +105,30 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   confirmedToday.push({x: today, y: currentCases.confirmedCasesToday})
   deathsToday.push({x: today, y: currentCases.deathsToday})
 
+  const confirmedTodayArray = data.map((element, i) => {
+    return element.confirmedCasesToday
+  })
+
+  const deathsTodayArray = data.map((element, i) => {
+    return element.deathsToday
+  })
+
+  const movingAverageConfirmedToday = movingAverage(confirmedTodayArray, 7)
+  const movingAverageDeathsToday = movingAverage(deathsTodayArray, 7)
+
+  const movingAverageConfirmedTodayChartData = allDates.map((element, i) => {
+    const date = new Date(element)
+    const average = movingAverageConfirmedToday[i]
+    return { x: date, y: average }
+  })
+
+  const movingAverageDeathsTodayChartData = allDates.map((element, i) => {
+    const date = new Date(element)
+    const average = movingAverageDeathsToday[i]
+    return { x: date, y: average }
+  })
+  
+
   const chartConfig = {
     type: chartType,
     data: {
@@ -64,6 +140,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           fill: false,
           backgroundColor: chartColors.red,
           borderColor: chartColors.red,
+          order: 0,
           data: confirmed,
           hidden: casesToHide['confirmed'],
         },
@@ -73,6 +150,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           fill: false,
           backgroundColor: chartColors.grey,
           borderColor: chartColors.grey,
+          order: 1,
           data: deaths,
           hidden: casesToHide['deaths'],
         },
@@ -82,8 +160,19 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           fill: false,
           backgroundColor: chartColors.purple,
           borderColor: chartColors.purple,
+          order: 3,
           data: confirmedToday,
           hidden: casesToHide['confirmedToday'],
+        },
+        {
+          type : 'line',
+          label: 'Daily confirmed 7 day moving average',
+          fill: false,
+          backgroundColor: chartColors.darkPurple,
+          borderColor: chartColors.darkPurple,
+          order: 2,
+          data: movingAverageConfirmedTodayChartData.slice(3, -3),
+          hidden: casesToHide['confirmedTodayMovingAverage'],
         },
         {
           type : 'bar',
@@ -91,8 +180,19 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           fill: false,
           backgroundColor: chartColors.yellow,
           borderColor: chartColors.yellow,
+          order: 5,
           data: deathsToday,
           hidden: casesToHide['deathsToday'],
+        },
+        {
+          type : 'line',
+          label: 'Daily deaths 7 day moving average',
+          fill: false,
+          backgroundColor: chartColors.darkGrey,
+          borderColor: chartColors.darkGrey,
+          order: 4,
+          data: movingAverageDeathsTodayChartData.slice(3, -3),
+          hidden: casesToHide['deathsTodayMovingAverage'],
         },
       ]
     },
@@ -117,6 +217,11 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           },
         },
       },
+      elements: {
+        point: {
+            radius: 0
+        }
+      },
       hover: {
         mode: 'nearest',
         intersect: true
@@ -127,7 +232,10 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           scaleLabel: {
             display: true,
             labelString: 'Date'
-          }
+          },
+          ticks: {
+            maxTicksLimit: 25,
+        },
         }],
         yAxes: [{
           display: true,

@@ -158,7 +158,14 @@ const InnerPage = (pData) => {
           <div className="col-sm">
             <TimeSeries
               chartTitle="Time series cases by day"
-              casesToHide={ {confirmed: false, deaths: false, confirmedToday: false, deathsToday: false} }
+              casesToHide={ {
+                confirmed: false,
+                deaths: false,
+                confirmedToday: false,
+                confirmedTodayMovingAverage: true,
+                deathsToday: false,
+                deathsTodayMovingAverage: true,
+              } }
               data={getCasesByIdKey.casesByDate}
               currentCases={currentCases}
             />
@@ -170,8 +177,15 @@ const InnerPage = (pData) => {
         <div className="row">
           <div className="col-sm">
             <TimeSeries
-              chartTitle="Time series cases by day"
-              casesToHide={ {confirmed: true, deaths: true, confirmedToday: false, deathsToday: false} }
+              chartTitle="Time series daily cases by day"
+              casesToHide={ {
+                confirmed: true,
+                deaths: true,
+                confirmedToday: false,
+                confirmedTodayMovingAverage: false,
+                deathsToday: false,
+                deathsTodayMovingAverage: false,
+              } }
               data={getCasesByIdKey.casesByDate}
               currentCases={currentCases}
             />
