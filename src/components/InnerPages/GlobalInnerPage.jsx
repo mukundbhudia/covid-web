@@ -144,7 +144,7 @@ const InnerPage = ({
       <div className="row">
         <div className="col-sm">
           <TimeSeries
-            chartTitle="Time series cases by day"
+            chartTitle="Global time series cases by day"
             casesToHide={ {
               confirmed: false,
               deaths: false,
@@ -162,7 +162,7 @@ const InnerPage = ({
       <div className="row">
         <div className="col-sm">
           <TimeSeries
-            chartTitle="Time series daily cases by day"
+            chartTitle="Global time series daily cases by day"
             casesToHide={ {
               confirmed: true,
               deaths: true,

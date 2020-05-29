@@ -108,10 +108,12 @@ const InnerPage = (pData) => {
     deathsToday: getCasesByIdKey.deathsToday,
   }
 
+  const pageTitle = genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)
+
   return (
     <>
       <div id={idKey} className="">
-        <h3>{genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)}</h3>
+        <h3>{pageTitle}</h3>
       </div>
       <div className="row">
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
@@ -157,7 +159,7 @@ const InnerPage = (pData) => {
         <div className="row">
           <div className="col-sm">
             <TimeSeries
-              chartTitle="Time series cases by day"
+              chartTitle={ `Time series cases by day for ${pageTitle}` }
               casesToHide={ {
                 confirmed: false,
                 deaths: false,
@@ -177,7 +179,7 @@ const InnerPage = (pData) => {
         <div className="row">
           <div className="col-sm">
             <TimeSeries
-              chartTitle="Time series daily cases by day"
+              chartTitle={ `Time series daily cases by day for ${pageTitle}` }
               casesToHide={ {
                 confirmed: true,
                 deaths: true,
