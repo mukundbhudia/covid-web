@@ -9,13 +9,13 @@
   margin-bottom: 3px;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input.heatMap[type=range]::-webkit-slider-thumb {
   background:  #ea2550;
 }
-input[type=range]::-moz-range-thumb {
+input.heatMap[type=range]::-moz-range-thumb {
   background:  #ea2550;
 }
-input[type=range]::-ms-thumb {
+input.heatMap[type=range]::-ms-thumb {
   background:  #ea2550;
 }
 

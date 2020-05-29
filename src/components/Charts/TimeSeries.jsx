@@ -200,6 +200,9 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        duration: 0
+      },
       title: {
         display: true,
         text: chartTitle
@@ -267,6 +270,17 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     </div>
 
     <div className="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+      <div className="btn-group btn-group-toggle mr-1" data-tip={`Moving average period in days (${movingAveragePeriod})`}>
+        <input
+          type="range"
+          className="movingAverage custom-range"
+          min="1"
+          max={30}
+          id="movingAverageSlider"
+          value={movingAveragePeriod}
+          onChange={changeEvent => { setMovingAveragePeriod(changeEvent.target.value) }}>
+        </input>
+      </div>
       <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
         <label className={`btn btn-sm btn-light ${dataType === 'linear' ? 'active' : ''}`}>
           <input type="radio" name="data-type" onClick={() => {
