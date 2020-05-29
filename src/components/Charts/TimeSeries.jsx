@@ -55,6 +55,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   const chartRef = React.createRef()
   const [ dataType, setDataType] = useState('linear')
   const [ chartType, setChartType] = useState('line')
+  const [ movingAveragePeriod, setMovingAveragePeriod] = useState(7)
 
   const allDates = []
   let confirmed = []
@@ -113,8 +114,8 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     return element.deathsToday
   })
 
-  const movingAverageConfirmedToday = movingAverage(confirmedTodayArray, 7)
-  const movingAverageDeathsToday = movingAverage(deathsTodayArray, 7)
+  const movingAverageConfirmedToday = movingAverage(confirmedTodayArray, movingAveragePeriod)
+  const movingAverageDeathsToday = movingAverage(deathsTodayArray, movingAveragePeriod)
 
   const movingAverageConfirmedTodayChartData = allDates.map((element, i) => {
     const date = new Date(element)
@@ -166,7 +167,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
         },
         {
           type : 'line',
-          label: 'Daily confirmed 7 day moving average',
+          label: `Daily confirmed ${movingAveragePeriod} day moving average`,
           fill: false,
           backgroundColor: chartColors.darkPurple,
           borderColor: chartColors.darkPurple,
@@ -186,7 +187,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
         },
         {
           type : 'line',
-          label: 'Daily deaths 7 day moving average',
+          label: `Daily deaths ${movingAveragePeriod} day moving average`,
           fill: false,
           backgroundColor: chartColors.darkGrey,
           borderColor: chartColors.darkGrey,
