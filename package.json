@@ -31,9 +31,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "REACT_APP_GQL_URI=https://covid19-dash-api.herokuapp.com npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "webdeploy": "webdeploy/deploy.sh"
   },
-  "homepage": "https://mukundbhudia.github.io/covid-web",
+  "homepage": ".",
   "eslintConfig": {
     "extends": "react-app"
   },
