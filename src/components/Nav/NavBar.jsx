@@ -38,6 +38,9 @@ const NavBar = ({ searchData }) => {
               <NavLink path="/top-cases" label="Top&nbsp;cases"/>
             </li>
             <li className="nav-item">
+              <NavLink path="/compare" label="Compare"/>
+            </li>
+            <li className="nav-item">
               <NavLink path="/heatmaps" label="Heatmaps"/>
             </li>
             <li className="nav-item">
