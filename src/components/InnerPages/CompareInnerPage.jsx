@@ -5,8 +5,8 @@ import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import TimeSeries from '../Charts/TimeSeries'
 
 const getCountry = gql`
-  query GetCases($idKey: String!) {
-    getCasesByIdKey(idKey: $idKey){
+  query GetCases($idKeys: [String]!) {
+    getManyCasesByIdKey(idKeys: $idKeys){
       country
       province
       confirmed
@@ -27,7 +27,7 @@ const getCountry = gql`
   }
 `
 
-let initialComparisonIdKeys = [ 
+let initialComparisonCountries = [ 
   { 
     idKey: 'belgium',
     countryName: 'Belgium',
@@ -55,27 +55,42 @@ let initialComparisonIdKeys = [
   },
 ]
 
+const getCheckedCountries = (countries) => {
+  return countries.filter((country) => {
+    return country.checked
+  }).map((country) => {
+    return country.idKey
+  })
+}
+
 const CompareInnerPage = ({ lastUpdated, }) => {
-  const [ comparisonIdKeys, setComparisonIdKeys] = useState(initialComparisonIdKeys)
-  initialComparisonIdKeys = comparisonIdKeys
-  let id = comparisonIdKeys[0].idKey
+  const [ comparisonCountries, setComparisonCountries] = useState(initialComparisonCountries)
+  initialComparisonCountries = comparisonCountries
+
+  let ids = getCheckedCountries(comparisonCountries)
+  
   const { loading, error, data, client } = useQuery(getCountry, {
-    variables: { idKey: id },
+    variables: { idKeys: ids },
   })
 
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
-  let getCasesByIdKey = data && data.getCasesByIdKey[0]
+  const tickCountryBox = (checked, idKey) => {
+    comparisonCountries.forEach(country => {
+      if (country.idKey === idKey) {
+        country.checked = checked
+      }
+    })
+    setComparisonCountries(comparisonCountries)
+    client.query({
+      query: getCountry,
+      variables: { idKeys: getCheckedCountries(comparisonCountries) },
+    })
+  }
 
-  // const prefetchTopCases = () => {
-  //   topCaseOptions.forEach(topCaseLimit => {
-  //     client.query({
-  //       query: getCountry,
-  //       variables: { limit: topCaseLimit },
-  //     })
-  //   })
-  // }
+  // TODO: Need to manage array of data for time series
+  let getCasesByIdKey = data && data.getManyCasesByIdKey[0]
 
   const currentCases = {
     confirmed: getCasesByIdKey.confirmed,
@@ -84,10 +99,6 @@ const CompareInnerPage = ({ lastUpdated, }) => {
     deaths: getCasesByIdKey.deaths,
     confirmedCasesToday: getCasesByIdKey.confirmedCasesToday,
     deathsToday: getCasesByIdKey.deathsToday,
-  }
-
-  const tickCountryBox = (checked, idKey) => {
-    console.log(checked, idKey)
   }
 
   return (
@@ -104,7 +115,7 @@ const CompareInnerPage = ({ lastUpdated, }) => {
         <div className="col-sm">
           <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
             <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-              {comparisonIdKeys.map((item, i) => {
+              {comparisonCountries.map((item, i) => {
                 return  (
                   <div key={item.idKey} className="form-check form-check-inline">
                     <input
