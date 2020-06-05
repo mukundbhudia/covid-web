@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
-import TimeSeries from '../Charts/TimeSeries'
+// import TimeSeries from '../Charts/TimeSeries'
+import MultiCountryTimeSeries from '../Charts/MultiCountryTimeSeries'
 
 const getCountry = gql`
   query GetCases($idKeys: [String]!) {
     getManyCasesByIdKey(idKeys: $idKeys){
+      idKey
       country
       province
       confirmed
@@ -90,16 +92,22 @@ const CompareInnerPage = ({ lastUpdated, }) => {
   }
 
   // TODO: Need to manage array of data for time series
-  let getCasesByIdKey = data && data.getManyCasesByIdKey[0]
+  let getCasesByIdKey = data && data.getManyCasesByIdKey
 
-  const currentCases = {
-    confirmed: getCasesByIdKey.confirmed,
-    active: getCasesByIdKey.active,
-    recovered: getCasesByIdKey.recovered,
-    deaths: getCasesByIdKey.deaths,
-    confirmedCasesToday: getCasesByIdKey.confirmedCasesToday,
-    deathsToday: getCasesByIdKey.deathsToday,
-  }
+  const currentCases = getCasesByIdKey.map((caseByIdKey) => {
+    return {
+      idKey: caseByIdKey.idKey,
+      country: caseByIdKey.country,
+      confirmed: caseByIdKey.confirmed,
+      active: caseByIdKey.active,
+      recovered: caseByIdKey.recovered,
+      deaths: caseByIdKey.deaths,
+      confirmedCasesToday: caseByIdKey.confirmedCasesToday,
+      deathsToday: caseByIdKey.deathsToday,
+    }
+  })
+// console.log(currentCases)
+// console.log(getCasesByIdKey)
 
   return (
     <>
@@ -135,27 +143,27 @@ const CompareInnerPage = ({ lastUpdated, }) => {
         </div>
       </div>
 
-      {getCasesByIdKey.casesByDate &&
+      {getCasesByIdKey.length > 0 &&
         <div className="row">
           <div className="col-sm">
-            <TimeSeries
-              chartTitle={ `Time series daily cases by day for ${getCasesByIdKey.country}` }
+            <MultiCountryTimeSeries
+              chartTitle={ `Time series daily cases by day for ${getCasesByIdKey.map((caseByIdKey) => { return caseByIdKey.country }).join(', ')}` }
               casesToHide={ {
                 confirmed: false,
                 deaths: false,
                 confirmedToday: true,
-                confirmedTodayMovingAverage: true,
+                confirmedTodayMovingAverage: false,
                 deathsToday: true,
-                deathsTodayMovingAverage: true,
+                deathsTodayMovingAverage: false,
               } }
-              data={getCasesByIdKey.casesByDate}
-              currentCases={currentCases}
+              data={ getCasesByIdKey }
+              currentCases={ currentCases }
             />
           </div>
         </div>
       }
 
-      {getCasesByIdKey.casesByDate &&
+      {/* {getCasesByIdKey.casesByDate &&
         <div className="row">
           <div className="col-sm">
             <TimeSeries
@@ -173,7 +181,7 @@ const CompareInnerPage = ({ lastUpdated, }) => {
             />
           </div>
         </div>
-      }
+      } */}
     </>
   )
 }

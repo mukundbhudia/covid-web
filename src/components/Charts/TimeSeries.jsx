@@ -140,6 +140,10 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      legend: {
+        display: true,
+        position: 'top'
+      },
       animation: {
         duration: 0
       },
