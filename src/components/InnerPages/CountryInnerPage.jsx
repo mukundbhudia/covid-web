@@ -95,7 +95,7 @@ const InnerPage = (pData) => {
     {
       data: getCasesByIdKey.deaths,
       label: 'deaths',
-      color: 'grey',
+      color: 'progressBadGrey',
     },
   ]
 

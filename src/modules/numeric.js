@@ -1,5 +1,23 @@
 const isNumeric = subject => typeof subject === 'number'
 
+const getPercentageFromDataSet = (dataSet) => {
+  return dataSet.map((item, i) => {
+    const total = dataSet.reduce((count, dataItem) => {
+      return count + dataItem.data
+    }, 0)
+    if (total === 0) {
+      return 0
+    } else {
+      if (i+1 === dataSet.length) {
+        item.percentage = Math.ceil((item.data/(total))*100) - 1
+      } else {
+        item.percentage = Math.ceil((item.data/(total))*100)
+      }
+      return item
+    }
+  })
+}
+
 /**
  * Moving average
  * --------------
@@ -48,4 +66,4 @@ const movingAverage = ( data, size ) => {
   return ret.slice(size - 1)
 }
 
-export { movingAverage }
+export { movingAverage, getPercentageFromDataSet }
