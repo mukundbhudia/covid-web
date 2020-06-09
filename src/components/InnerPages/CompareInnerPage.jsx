@@ -66,33 +66,66 @@ const getCheckedCountries = (countries) => {
 }
 
 const CompareInnerPage = ({ lastUpdated, }) => {
-  const [ comparisonCountries, setComparisonCountries] = useState(initialComparisonCountries)
-  initialComparisonCountries = comparisonCountries
+  const [ comparisonCountries, setComparisonCountries] = useState(getCheckedCountries(initialComparisonCountries))
+  // initialComparisonCountries = comparisonCountries
+console.log(comparisonCountries);
 
-  let ids = getCheckedCountries(comparisonCountries)
+  // let ids = getCheckedCountries(comparisonCountries)
   
   const { loading, error, data, client } = useQuery(getCountry, {
-    variables: { idKeys: ids },
+    variables: { idKeys: comparisonCountries },
   })
 
-  if (loading) return <p>Loading data for dashboard ...</p>
-  if (error) return <p>{JSON.stringify(error, null, 2)}</p>
-
   const tickCountryBox = (checked, idKey) => {
-    comparisonCountries.forEach(country => {
-      if (country.idKey === idKey) {
-        country.checked = checked
-      }
-    })
-    setComparisonCountries(comparisonCountries)
+    console.log(checked, idKey)
+    let test = []
+
+    if (checked === true) {
+      initialComparisonCountries.forEach((country, i) => {
+        if (country.idKey === idKey) {
+          country.checked = checked
+          comparisonCountries.push(idKey)
+        }
+      })
+      test = comparisonCountries
+    } else {
+      test = comparisonCountries.filter((comparisonIdKey) => {
+        return comparisonIdKey !== idKey
+      })
+    }
+
+    setComparisonCountries(test)
+    console.log(test);
+    
     client.query({
       query: getCountry,
-      variables: { idKeys: getCheckedCountries(comparisonCountries) },
+      variables: { idKeys: test },
     })
   }
 
-  // TODO: Need to manage array of data for time series
+let content
+
+if (loading) {
+  content = (
+    <MultiCountryTimeSeries
+      chartTitle={ `Time series daily cases by day` }
+      casesToHide={ {
+        confirmed: false,
+        deaths: false,
+        confirmedToday: true,
+        confirmedTodayMovingAverage: false,
+        deathsToday: true,
+        deathsTodayMovingAverage: false,
+      } }
+      data={ [] }
+      currentCases={ [] }
+    />
+  )
+} else if (error) {
+  content = (<p>{JSON.stringify(error, null, 2)}</p>)
+} else {
   let getCasesByIdKey = data && data.getManyCasesByIdKey
+// console.log(getCasesByIdKey);
 
   const currentCases = getCasesByIdKey.map((caseByIdKey) => {
     return {
@@ -106,8 +139,16 @@ const CompareInnerPage = ({ lastUpdated, }) => {
       deathsToday: caseByIdKey.deathsToday,
     }
   })
-// console.log(currentCases)
-// console.log(getCasesByIdKey)
+
+  content = (
+    <MultiCountryTimeSeries
+      chartTitle={ `Time series daily cases by day for ${getCasesByIdKey.map((caseByIdKey) => { return caseByIdKey.country }).join(', ')}` }
+      casesToHide={ {} }
+      data={ getCasesByIdKey }
+      currentCases={ currentCases }
+    />
+  )
+}
 
   return (
     <>
@@ -123,7 +164,7 @@ const CompareInnerPage = ({ lastUpdated, }) => {
         <div className="col-sm">
           <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
             <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-              {comparisonCountries.map((item, i) => {
+              {initialComparisonCountries.map((item, i) => {
                 return  (
                   <div key={item.idKey} className="form-check form-check-inline">
                     <input
@@ -143,45 +184,11 @@ const CompareInnerPage = ({ lastUpdated, }) => {
         </div>
       </div>
 
-      {getCasesByIdKey.length > 0 &&
-        <div className="row">
-          <div className="col-sm">
-            <MultiCountryTimeSeries
-              chartTitle={ `Time series daily cases by day for ${getCasesByIdKey.map((caseByIdKey) => { return caseByIdKey.country }).join(', ')}` }
-              casesToHide={ {
-                confirmed: false,
-                deaths: false,
-                confirmedToday: true,
-                confirmedTodayMovingAverage: false,
-                deathsToday: true,
-                deathsTodayMovingAverage: false,
-              } }
-              data={ getCasesByIdKey }
-              currentCases={ currentCases }
-            />
-          </div>
+      <div className="row">
+        <div className="col-sm">
+          { content }
         </div>
-      }
-
-      {/* {getCasesByIdKey.casesByDate &&
-        <div className="row">
-          <div className="col-sm">
-            <TimeSeries
-              chartTitle={ `Time series daily cases by day for ${getCasesByIdKey.country}` }
-              casesToHide={ {
-                confirmed: true,
-                deaths: true,
-                confirmedToday: false,
-                confirmedTodayMovingAverage: false,
-                deathsToday: false,
-                deathsTodayMovingAverage: false,
-              } }
-              data={getCasesByIdKey.casesByDate}
-              currentCases={currentCases}
-            />
-          </div>
-        </div>
-      } */}
+      </div>
     </>
   )
 }

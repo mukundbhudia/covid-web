@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../covid-service"
+		},
+		{
+			"path": "../covid-api"
+		},
+		{
+			"path": "."
+		}
+	]
+}
