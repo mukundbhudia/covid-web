@@ -31,6 +31,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     let confirmedToday = []
     let deaths = []
     let deathsToday = []
+
     countryData.casesByDate.forEach((cases) => {     
       const dateFromString = new Date(cases.day)
       if (allDates.length < countryData.casesByDate.length) {
@@ -43,7 +44,9 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     })
   
     const today = new Date()
-    allDates.push((today).toLocaleDateString())
+    if (allDates.length <= countryData.casesByDate.length ) {
+      allDates.push((today).toLocaleDateString())
+    }
     confirmed.push({x: today, y: currentCases[j].confirmed})
     deaths.push({x: today, y: currentCases[j].deaths})
     confirmedToday.push({x: today, y: currentCases[j].confirmedCasesToday})
@@ -83,77 +86,74 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     })
   })
 
-const generateDataSets = (countryData) => {
-  let outputDataSet = []
-  countryData.forEach((country) => {    
-    outputDataSet.push(
-      {
-        type: chartType,
-        label: `Cumulative confirmed cases ${country.country}`,
-        fill: false,
-        backgroundColor: countryColours[country.country],
-        borderColor: countryColours[country.country],
-        order: 0,
-        data: country.confirmed,
-        hidden: casesToHide['confirmed'],
-      },
-      // {
-      //   type : chartType,
-      //   label: `Cumulative deaths ${country.country}`,
-      //   fill: false,
-      //   backgroundColor: chartColors.grey,
-      //   borderColor: chartColors.grey,
-      //   order: 1,
-      //   data: country.deaths,
-      //   hidden: casesToHide['deaths'],
-      // },
-      // {
-      //   type : 'bar',
-      //   label: `Daily confirmed cases ${country.country}`,
-      //   fill: false,
-      //   backgroundColor: chartColors.purple,
-      //   borderColor: chartColors.purple,
-      //   order: 3,
-      //   data: country.confirmedToday,
-      //   hidden: casesToHide['confirmedToday'],
-      // },
-      // {
-      //   type : 'line',
-      //   label: `Daily confirmed ${movingAveragePeriod} day moving average ${country.country}`,
-      //   fill: false,
-      //   backgroundColor: chartColors.darkPurple,
-      //   borderColor: chartColors.darkPurple,
-      //   order: 2,
-      //   data: country.movingAverageConfirmedTodayChartData.slice(3, -3),
-      //   hidden: casesToHide['confirmedTodayMovingAverage'],
-      // },
-      // {
-      //   type : 'bar',
-      //   label: `Daily deaths ${country.country}`,
-      //   fill: false,
-      //   backgroundColor: chartColors.yellow,
-      //   borderColor: chartColors.yellow,
-      //   order: 5,
-      //   data: country.deathsToday,
-      //   hidden: casesToHide['deathsToday'],
-      // },
-      // {
-      //   type : 'line',
-      //   label: `Daily deaths ${movingAveragePeriod} day moving average ${country.country}`,
-      //   fill: false,
-      //   backgroundColor: chartColors.darkGrey,
-      //   borderColor: chartColors.darkGrey,
-      //   order: 4,
-      //   data: country.movingAverageDeathsTodayChartData.slice(3, -3),
-      //   hidden: casesToHide['deathsTodayMovingAverage'],
-      // },
-    )
-  })
-  return outputDataSet
-}
-console.log(processedCountryData);
-
-console.log(allDates)
+  const generateDataSets = (countryData) => {
+    let outputDataSet = []
+    countryData.forEach((country) => {    
+      outputDataSet.push(
+        {
+          type: chartType,
+          label: `Cumulative confirmed cases ${country.country}`,
+          fill: false,
+          backgroundColor: countryColours[country.country],
+          borderColor: countryColours[country.country],
+          order: 0,
+          data: country.confirmed,
+          hidden: casesToHide['confirmed'],
+        },
+        // {
+        //   type : chartType,
+        //   label: `Cumulative deaths ${country.country}`,
+        //   fill: false,
+        //   backgroundColor: chartColors.grey,
+        //   borderColor: chartColors.grey,
+        //   order: 1,
+        //   data: country.deaths,
+        //   hidden: casesToHide['deaths'],
+        // },
+        // {
+        //   type : 'bar',
+        //   label: `Daily confirmed cases ${country.country}`,
+        //   fill: false,
+        //   backgroundColor: chartColors.purple,
+        //   borderColor: chartColors.purple,
+        //   order: 3,
+        //   data: country.confirmedToday,
+        //   hidden: casesToHide['confirmedToday'],
+        // },
+        // {
+        //   type : 'line',
+        //   label: `Daily confirmed ${movingAveragePeriod} day moving average ${country.country}`,
+        //   fill: false,
+        //   backgroundColor: chartColors.darkPurple,
+        //   borderColor: chartColors.darkPurple,
+        //   order: 2,
+        //   data: country.movingAverageConfirmedTodayChartData.slice(3, -3),
+        //   hidden: casesToHide['confirmedTodayMovingAverage'],
+        // },
+        // {
+        //   type : 'bar',
+        //   label: `Daily deaths ${country.country}`,
+        //   fill: false,
+        //   backgroundColor: chartColors.yellow,
+        //   borderColor: chartColors.yellow,
+        //   order: 5,
+        //   data: country.deathsToday,
+        //   hidden: casesToHide['deathsToday'],
+        // },
+        // {
+        //   type : 'line',
+        //   label: `Daily deaths ${movingAveragePeriod} day moving average ${country.country}`,
+        //   fill: false,
+        //   backgroundColor: chartColors.darkGrey,
+        //   borderColor: chartColors.darkGrey,
+        //   order: 4,
+        //   data: country.movingAverageDeathsTodayChartData.slice(3, -3),
+        //   hidden: casesToHide['deathsTodayMovingAverage'],
+        // },
+      )
+    })
+    return outputDataSet
+  }
 
   const chartConfig = {
     type: chartType,
