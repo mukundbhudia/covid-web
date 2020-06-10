@@ -91,34 +91,34 @@ const CompareInnerPage = ({ lastUpdated, }) => {
   }
 
   const tickCountryBox = (checked, idKey) => {
-    console.log(checked, idKey)
     setComparisonCountries(updateCountryList(checked, idKey))
   }
 
-let content
+let cumulativeConfirmed
+let cumulativeDeaths
+let dailyConfirmedMovingAverage
+let dailyDeathsMovingAverage
 
 if (loading) {
-  content = (
+  cumulativeConfirmed = (
     <MultiCountryTimeSeries
       chartTitle={ `Time series daily cases by day` }
-      casesToHide={ {
-        confirmed: false,
-        deaths: false,
-        confirmedToday: true,
-        confirmedTodayMovingAverage: false,
-        deathsToday: true,
-        deathsTodayMovingAverage: false,
-      } }
+      casesToHide={ {} }
       data={ [] }
       currentCases={ [] }
     />
   )
+  cumulativeDeaths = cumulativeConfirmed
+  dailyConfirmedMovingAverage = cumulativeConfirmed
+  dailyDeathsMovingAverage = cumulativeConfirmed
 } else if (error) {
-  content = (<p>{JSON.stringify(error, null, 2)}</p>)
+  cumulativeConfirmed = (<p>{JSON.stringify(error, null, 2)}</p>)
+  cumulativeDeaths = cumulativeConfirmed
+  dailyConfirmedMovingAverage = cumulativeConfirmed
+  dailyDeathsMovingAverage = cumulativeConfirmed
 } else {
   let getCasesByIdKey = data && data.getManyCasesByIdKey
-// console.log(getCasesByIdKey);
-
+  const countryNamesAsList = getCasesByIdKey.map((caseByIdKey) => { return caseByIdKey.country }).join(', ')
   const currentCases = getCasesByIdKey.map((caseByIdKey) => {
     return {
       idKey: caseByIdKey.idKey,
@@ -132,10 +132,65 @@ if (loading) {
     }
   })
 
-  content = (
+  cumulativeConfirmed = (
     <MultiCountryTimeSeries
-      chartTitle={ `Time series daily cases by day for ${getCasesByIdKey.map((caseByIdKey) => { return caseByIdKey.country }).join(', ')}` }
-      casesToHide={ {} }
+      chartTitle={ `Time series cumulative confirmed cases by day for ${countryNamesAsList}` }
+      casesToHide={ {
+        confirmed: false,
+        deaths: true,
+        confirmedToday: true,
+        confirmedTodayMovingAverage: true,
+        deathsToday: true,
+        deathsTodayMovingAverage: true,
+      } }
+      data={ getCasesByIdKey }
+      currentCases={ currentCases }
+    />
+  )
+
+  cumulativeDeaths = (
+    <MultiCountryTimeSeries
+      chartTitle={ `Time series cumulative deaths by day for ${countryNamesAsList}` }
+      casesToHide={ {
+        confirmed: true,
+        deaths: false,
+        confirmedToday: true,
+        confirmedTodayMovingAverage: true,
+        deathsToday: true,
+        deathsTodayMovingAverage: true,
+      } }
+      data={ getCasesByIdKey }
+      currentCases={ currentCases }
+    />
+  )
+
+  dailyConfirmedMovingAverage = (
+    <MultiCountryTimeSeries
+      chartTitle={ `Daily cumulative deaths by day for ${countryNamesAsList}` }
+      casesToHide={ {
+        confirmed: true,
+        deaths: true,
+        confirmedToday: true,
+        confirmedTodayMovingAverage: false,
+        deathsToday: true,
+        deathsTodayMovingAverage: true,
+      } }
+      data={ getCasesByIdKey }
+      currentCases={ currentCases }
+    />
+  )
+
+  dailyDeathsMovingAverage = (
+    <MultiCountryTimeSeries
+      chartTitle={ `Daily cumulative deaths by day for ${countryNamesAsList}` }
+      casesToHide={ {
+        confirmed: true,
+        deaths: true,
+        confirmedToday: true,
+        confirmedTodayMovingAverage: true,
+        deathsToday: true,
+        deathsTodayMovingAverage: false,
+      } }
       data={ getCasesByIdKey }
       currentCases={ currentCases }
     />
@@ -178,7 +233,29 @@ if (loading) {
 
       <div className="row">
         <div className="col-sm">
-          { content }
+          <div className="row justify-content-center"><h6>Cumulative confirmed cases</h6></div>
+          { cumulativeConfirmed }
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-sm">
+        <div className="row justify-content-center"><h6>Cumulative deaths</h6></div>
+          { cumulativeDeaths }
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-sm">
+        <div className="row justify-content-center"><h6>Daily confirmed moving average</h6></div>
+          { dailyConfirmedMovingAverage }
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-sm">
+        <div className="row justify-content-center"><h6>Daily deaths moving average</h6></div>
+          { dailyDeathsMovingAverage }
         </div>
       </div>
     </>
