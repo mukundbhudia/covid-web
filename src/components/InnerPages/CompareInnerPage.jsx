@@ -67,40 +67,32 @@ const getCheckedCountries = (countries) => {
 
 const CompareInnerPage = ({ lastUpdated, }) => {
   const [ comparisonCountries, setComparisonCountries] = useState(getCheckedCountries(initialComparisonCountries))
-  // initialComparisonCountries = comparisonCountries
-console.log(comparisonCountries);
-
-  // let ids = getCheckedCountries(comparisonCountries)
   
   const { loading, error, data, client } = useQuery(getCountry, {
     variables: { idKeys: comparisonCountries },
   })
 
-  const tickCountryBox = (checked, idKey) => {
-    console.log(checked, idKey)
-    let test = []
-
+  const updateCountryList = (checked, idKey) => {
+    let list = getCheckedCountries(initialComparisonCountries)
     if (checked === true) {
       initialComparisonCountries.forEach((country, i) => {
         if (country.idKey === idKey) {
           country.checked = checked
-          comparisonCountries.push(idKey)
+          list.push(idKey)
         }
       })
-      test = comparisonCountries
     } else {
-      test = comparisonCountries.filter((comparisonIdKey) => {
+      let newList = list.filter((comparisonIdKey) => {
         return comparisonIdKey !== idKey
       })
+      list = newList
     }
+    return list
+  }
 
-    setComparisonCountries(test)
-    console.log(test);
-    
-    client.query({
-      query: getCountry,
-      variables: { idKeys: test },
-    })
+  const tickCountryBox = (checked, idKey) => {
+    console.log(checked, idKey)
+    setComparisonCountries(updateCountryList(checked, idKey))
   }
 
 let content
