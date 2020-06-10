@@ -55,6 +55,11 @@ let initialComparisonCountries = [
     countryName: 'Qatar',
     checked: false,
   },
+  { 
+    idKey: 'us',
+    countryName: 'US',
+    checked: false,
+  },
 ]
 
 const getCheckedCountries = (countries) => {
@@ -68,7 +73,7 @@ const getCheckedCountries = (countries) => {
 const CompareInnerPage = ({ lastUpdated, }) => {
   const [ comparisonCountries, setComparisonCountries] = useState(getCheckedCountries(initialComparisonCountries))
   
-  const { loading, error, data, client } = useQuery(getCountry, {
+  const { loading, error, data } = useQuery(getCountry, {
     variables: { idKeys: comparisonCountries },
   })
 
