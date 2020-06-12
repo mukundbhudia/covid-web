@@ -29,43 +29,7 @@ const getCountry = gql`
   }
 `
 
-let initialComparisonCountries = [ 
-  { 
-    idKey: 'belgium',
-    countryName: 'Belgium',
-    checked: true,
-  },
-  { 
-    idKey: 'italy',
-    countryName: 'Italy',
-    checked: false,
-  },
-  { 
-    idKey: 'australia',
-    countryName: 'Australia',
-    checked: true,
-  },
-  { 
-    idKey: 'bosnia-and-herzegovina',
-    countryName: 'Bosnia and Herzegovina',
-    checked: false,
-  },
-  { 
-    idKey: 'qatar',
-    countryName: 'Qatar',
-    checked: false,
-  },
-  { 
-    idKey: 'us',
-    countryName: 'US',
-    checked: false,
-  },
-  { 
-    idKey: 'brazil',
-    countryName: 'Brazil',
-    checked: false,
-  },
-]
+let initialComparisonCountries = []
 
 const getCheckedCountries = (countries) => {
   return countries.filter((country) => {
@@ -77,7 +41,8 @@ const getCheckedCountries = (countries) => {
 
 const MAX_CHECKED_ALLOWED = 5
 
-const CompareInnerPage = ({ lastUpdated, }) => {
+const CompareInnerPage = ({ lastUpdated, countries,}) => {
+  initialComparisonCountries = countries
   const [ comparisonCountries, setComparisonCountries] = useState(getCheckedCountries(initialComparisonCountries))
   
   const { loading, error, data } = useQuery(getCountry, {
@@ -228,8 +193,8 @@ if (loading) {
       <div className="row mb-4">
         <div className="col-sm">
           <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-            <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-              {initialComparisonCountries.map((item, i) => {
+            <div className="" data-toggle="buttons">
+              {initialComparisonCountries.map((item, i) => {   
                 return  (
                   <div key={item.idKey} className="form-check form-check-inline">
                     <input
@@ -241,7 +206,7 @@ if (loading) {
                       defaultChecked={ item.checked }
                       disabled={ (item.checked) || (comparisonCountries.length < MAX_CHECKED_ALLOWED) ? false : true }
                     />
-                    <label className="form-check-label" htmlFor={`inlineCheckbox${i}`}>{ item.countryName }</label>
+                    <label className="form-check-label" htmlFor={`inlineCheckbox${i}`}>{ item.country }</label>
                   </div>
                 )
               } )}
