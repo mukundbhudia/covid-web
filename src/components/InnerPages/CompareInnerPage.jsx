@@ -60,6 +60,11 @@ let initialComparisonCountries = [
     countryName: 'US',
     checked: false,
   },
+  { 
+    idKey: 'brazil',
+    countryName: 'Brazil',
+    checked: false,
+  },
 ]
 
 const getCheckedCountries = (countries) => {
@@ -90,13 +95,19 @@ const CompareInnerPage = ({ lastUpdated, }) => {
       let newList = list.filter((comparisonIdKey) => {
         return comparisonIdKey !== idKey
       })
+      initialComparisonCountries.forEach((country) => {
+        if (country.idKey === idKey) {
+          country.checked = checked
+        }
+      })
       list = newList
     }
     return list
   }
 
   const tickCountryBox = (checked, idKey) => {
-    setComparisonCountries(updateCountryList(checked, idKey))
+    const updatedCountryList = updateCountryList(checked, idKey)
+    setComparisonCountries(updatedCountryList)
   }
 
 let cumulativeConfirmed
