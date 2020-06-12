@@ -75,6 +75,8 @@ const getCheckedCountries = (countries) => {
   })
 }
 
+const MAX_CHECKED_ALLOWED = 5
+
 const CompareInnerPage = ({ lastUpdated, }) => {
   const [ comparisonCountries, setComparisonCountries] = useState(getCheckedCountries(initialComparisonCountries))
   
@@ -237,6 +239,7 @@ if (loading) {
                       value={`option${i}`}
                       onChange={ changeEvent => { tickCountryBox(changeEvent.target.checked, item.idKey) } }
                       defaultChecked={ item.checked }
+                      disabled={ (item.checked) || (comparisonCountries.length < MAX_CHECKED_ALLOWED) ? false : true }
                     />
                     <label className="form-check-label" htmlFor={`inlineCheckbox${i}`}>{ item.countryName }</label>
                   </div>
