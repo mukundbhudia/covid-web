@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Chart from 'chart.js'
 import { movingAverage } from '../../modules/numeric'
-// import { chartColors } from './chartSettings'
+import { multiChartColours } from './chartSettings'
 
-const generateRandomColour = (max) => {
-  // return Math.floor(Math.random() * Math.floor(max))
-  const letters = '0123456789ABCDEF'
-  let color = '#'
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)]
-  }
-  return color
-}
-
-const countryColours = {}
+const countryColours = Object.keys(multiChartColours)
 
 const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
 
@@ -74,7 +64,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
       const average = movingAverageDeathsToday[i]
       return { x: date, y: average }
     })
-    countryColours[countryData.country] = generateRandomColour()
+    countryColours[countryData.country] = countryColours[j]
     processedCountryData.push({
       country: countryData.country,
       confirmed,
