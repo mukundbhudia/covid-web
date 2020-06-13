@@ -3,7 +3,7 @@ import Chart from 'chart.js'
 import { movingAverage } from '../../modules/numeric'
 import { multiChartColours } from './chartSettings'
 
-const countryColours = Object.keys(multiChartColours)
+const dataSetColours = Object.keys(multiChartColours)
 
 const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
 
@@ -64,7 +64,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
       const average = movingAverageDeathsToday[i]
       return { x: date, y: average }
     })
-    countryColours[countryData.country] = countryColours[j]
+
     processedCountryData.push({
       country: countryData.country,
       confirmed,
@@ -73,6 +73,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
       deathsToday,
       movingAverageConfirmedTodayChartData,
       movingAverageDeathsTodayChartData,
+      dataSetColour: multiChartColours[dataSetColours[j]]
     })
   })
 
@@ -84,8 +85,8 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           type: chartType,
           label: `Cumulative confirmed cases ${country.country}`,
           fill: false,
-          backgroundColor: countryColours[country.country],
-          borderColor: countryColours[country.country],
+          backgroundColor: country.dataSetColour,
+          borderColor: country.dataSetColour,
           order: 0,
           data: country.confirmed,
           hidden: casesToHide['confirmed'],
@@ -94,8 +95,8 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           type : chartType,
           label: `Cumulative deaths ${country.country}`,
           fill: false,
-          backgroundColor: countryColours[country.country],
-          borderColor: countryColours[country.country],
+          backgroundColor: country.dataSetColour,
+          borderColor: country.dataSetColour,
           order: 1,
           data: country.deaths,
           hidden: casesToHide['deaths'],
@@ -114,8 +115,8 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           type : 'line',
           label: `Daily confirmed ${movingAveragePeriod} day moving average ${country.country}`,
           fill: false,
-          backgroundColor: countryColours[country.country],
-          borderColor: countryColours[country.country],
+          backgroundColor: country.dataSetColour,
+          borderColor: country.dataSetColour,
           order: 2,
           data: country.movingAverageConfirmedTodayChartData.slice(3, -3),
           hidden: casesToHide['confirmedTodayMovingAverage'],
@@ -134,8 +135,8 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           type : 'line',
           label: `Daily deaths ${movingAveragePeriod} day moving average ${country.country}`,
           fill: false,
-          backgroundColor: countryColours[country.country],
-          borderColor: countryColours[country.country],
+          backgroundColor: country.dataSetColour,
+          borderColor: country.dataSetColour,
           order: 4,
           data: country.movingAverageDeathsTodayChartData.slice(3, -3),
           hidden: casesToHide['deathsTodayMovingAverage'],
