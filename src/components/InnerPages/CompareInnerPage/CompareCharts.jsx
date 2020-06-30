@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
+import DataUpdatedTimeStamp from '../../Nav/DataUpdatedTimeStamp'
 // import TimeSeries from '../Charts/TimeSeries'
-import MultiCountryTimeSeries from '../Charts/MultiCountryTimeSeries'
+import MultiCountryTimeSeries from '../../Charts/MultiCountryTimeSeries'
 
 const getCountry = gql`
   query GetCases($idKeys: [String]!) {
@@ -29,53 +29,11 @@ const getCountry = gql`
   }
 `
 
-let initialComparisonCountries = []
-
-const getCheckedCountries = (countries) => {
-  return countries.filter((country) => {
-    return country.checked
-  }).map((country) => {
-    return country.idKey
-  })
-}
-
-const MAX_CHECKED_ALLOWED = 5
-
 const CompareInnerPage = ({ lastUpdated, countries,}) => {
-  initialComparisonCountries = countries
-  const [ comparisonCountries, setComparisonCountries] = useState(getCheckedCountries(initialComparisonCountries))
   
   const { loading, error, data } = useQuery(getCountry, {
-    variables: { idKeys: comparisonCountries },
+    variables: { idKeys: countries },
   })
-
-  const updateCountryList = (checked, idKey) => {
-    let list = getCheckedCountries(initialComparisonCountries)
-    if (checked === true) {
-      initialComparisonCountries.forEach((country, i) => {
-        if (country.idKey === idKey) {
-          country.checked = checked
-          list.push(idKey)
-        }
-      })
-    } else {
-      let newList = list.filter((comparisonIdKey) => {
-        return comparisonIdKey !== idKey
-      })
-      initialComparisonCountries.forEach((country) => {
-        if (country.idKey === idKey) {
-          country.checked = checked
-        }
-      })
-      list = newList
-    }
-    return list
-  }
-
-  const tickCountryBox = (checked, idKey) => {
-    const updatedCountryList = updateCountryList(checked, idKey)
-    setComparisonCountries(updatedCountryList)
-  }
 
 let cumulativeConfirmed
 let cumulativeDeaths
@@ -182,39 +140,6 @@ if (loading) {
 
   return (
     <>
-      <div id="global-page" className="">
-        <h3>Compare countries</h3>
-      </div>
-
-      <div className="row">
-        <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
-      </div>
-
-      <div className="row mb-4">
-        <div className="col-sm">
-          <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-            <div className="" data-toggle="buttons">
-              {initialComparisonCountries.map((item, i) => {   
-                return  (
-                  <div key={item.idKey} className="form-check form-check-inline">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id={`inlineCheckbox${i}`}
-                      value={`option${i}`}
-                      onChange={ changeEvent => { tickCountryBox(changeEvent.target.checked, item.idKey) } }
-                      defaultChecked={ item.checked }
-                      disabled={ (item.checked) || (comparisonCountries.length < MAX_CHECKED_ALLOWED) ? false : true }
-                    />
-                    <label className="form-check-label" htmlFor={`inlineCheckbox${i}`}>{ item.country }</label>
-                  </div>
-                )
-              } )}
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="row">
         <div className="col-sm">
           <div className="row justify-content-center"><h6>Cumulative confirmed cases</h6></div>

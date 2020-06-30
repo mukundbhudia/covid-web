@@ -19,7 +19,7 @@ import HeatMapsInnerPage from './components/InnerPages/HeatMapsInnerPage';
 import NavBar from './components/Nav/NavBar';
 import NavSideBar from './components/Nav/NavSideBar';
 import DataTableInnerPage from './components/InnerPages/DataTableInnerPage/DataTableInnerPage'
-import CompareInnerPage from './components/InnerPages/CompareInnerPage'
+import CompareInnerPage from './components/InnerPages/CompareInnerPage/CompareInnerPage'
 
 const COVID_TOTALS = gql`
   query {
