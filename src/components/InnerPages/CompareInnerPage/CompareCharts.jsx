@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import DataUpdatedTimeStamp from '../../Nav/DataUpdatedTimeStamp'
-// import TimeSeries from '../Charts/TimeSeries'
 import MultiCountryTimeSeries from '../../Charts/MultiCountryTimeSeries'
 
 const getCountry = gql`
