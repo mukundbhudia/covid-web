@@ -8,8 +8,6 @@ import { gql } from 'apollo-boost'
 
 import CountryNotFound from './CountryNotFound'
 import TimeSeries from '../Charts/TimeSeries'
-// import TopXBarGraph from './TopXBarGraph'
-// import PieChart from '../components/PieChart'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp';
 import ProvincesMenu from '../Nav/ProvincesMenu';
 import PanelConfirmedCount from '../Panels/PanelConfirmedCount';
@@ -21,9 +19,9 @@ import PanelConfirmedToday from '../Panels/PanelConfirmedToday';
 import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive';
 import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths';
 
-const getCountry = (idKey) => gql`
-  query {
-    getCasesByIdKey(idKey: "${idKey}"){
+const getCountry = gql`
+  query GetCases($idKey: String!) {
+    getCasesByIdKey(idKey: $idKey){
       country
       province
       confirmed
@@ -53,7 +51,9 @@ const getCountry = (idKey) => gql`
 
 const InnerPage = (pData) => {
   let { id } = useParams()
-  const { loading, error, data } = useQuery(getCountry(id))
+  const { loading, error, data } = useQuery(getCountry, {
+     variables: { idKey: id }
+  })
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
@@ -95,7 +95,7 @@ const InnerPage = (pData) => {
     {
       data: getCasesByIdKey.deaths,
       label: 'deaths',
-      color: 'grey',
+      color: 'progressBadGrey',
     },
   ]
 

@@ -22,6 +22,9 @@ const NavSideBar = ({ casesByLocation }) => {
             <NavLink path="/top-cases" label="Top&nbsp;cases" icon="chart"/>
           </li>
           <li className="nav-item">
+            <NavLink path="/compare" label="Compare" icon="chart"/>
+          </li>
+          <li className="nav-item">
             <NavLink path="/heatmaps" label="Heatmaps" icon="report"/>
           </li>
           <li className="nav-item">

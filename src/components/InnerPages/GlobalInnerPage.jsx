@@ -92,7 +92,7 @@ const InnerPage = ({
     {
       data: totalCases.deaths,
       label: 'deaths',
-      color: 'grey',
+      color: 'progressBadGrey',
     },
   ]
 
