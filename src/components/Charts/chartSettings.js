@@ -11,4 +11,31 @@ const chartColors = {
   progressBadGrey: '#b0b0b0',
 }
 
-export { chartColors }
+const multiChartColours = {
+  purple: '#4527a0',
+  red: '#d32f2f',
+  green: '#00c853',
+  blue: '#0277bd',
+  yellow: '#fbc02d',
+}
+
+const generateRandomColour = (max) => {
+  const letters = '0123456789ABCDEF'
+  let color = '#'
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
+const chooseRandomColours = (listOfColours) => {
+  const randomNumberFromList = Math.floor(Math.random() * Math.floor(listOfColours.length))
+  return Object.keys(listOfColours)[randomNumberFromList]
+}
+
+export { 
+  chartColors,
+  multiChartColours,
+  generateRandomColour,
+  chooseRandomColours,
+}

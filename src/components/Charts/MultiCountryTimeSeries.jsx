@@ -1,149 +1,164 @@
 import React, { useEffect, useState } from 'react'
 import Chart from 'chart.js'
 import { movingAverage } from '../../modules/numeric'
-import { chartColors } from './chartSettings'
+import { multiChartColours } from './chartSettings'
+
+const dataSetColours = Object.keys(multiChartColours)
 
 const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
+
   const chartRef = React.createRef()
   const [ dataType, setDataType] = useState('linear')
   const [ chartType, setChartType] = useState('line')
   const [ movingAveragePeriod, setMovingAveragePeriod] = useState(7)
 
   const allDates = []
-  let confirmed = []
-  let confirmedToday = []
-  let deaths = []
-  let deathsToday = []
 
-  let firstCaseAdded = false
-  data.forEach((element, i) => {
-    const cases = element
-    if (cases.confirmed > 0) {
+  let processedCountryData = []
+
+  data.forEach((countryData, j) => {
+    let confirmed = []
+    let confirmedToday = []
+    let deaths = []
+    let deathsToday = []
+
+    countryData.casesByDate.forEach((cases) => {     
       const dateFromString = new Date(cases.day)
-      if (!firstCaseAdded && i > 0) {
-        const previousCase = data[i-1]        
-        const dateFromString = new Date(previousCase.day)
-        firstCaseAdded = true
+      if (allDates.length < countryData.casesByDate.length) {
         allDates.push((dateFromString).toLocaleDateString())
-        confirmed.push({x: dateFromString, y: previousCase.confirmed})
-        deaths.push({x: dateFromString, y: previousCase.deaths})
-        confirmedToday.push({x: dateFromString, y: previousCase.confirmedCasesToday})
-        deathsToday.push({x: dateFromString, y: previousCase.deathsToday})
-      } else {
-        allDates.push((dateFromString).toLocaleDateString())
-        confirmed.push({x: dateFromString, y: cases.confirmed})
-        deaths.push({x: dateFromString, y: cases.deaths})
-        confirmedToday.push({x: dateFromString, y: cases.confirmedCasesToday})
-        deathsToday.push({x: dateFromString, y: cases.deathsToday})       
       }
-    }
-  })
-
-  const today = new Date()
-  allDates.push((today).toLocaleDateString())
-  confirmed.push({x: today, y: currentCases.confirmed})
-  deaths.push({x: today, y: currentCases.deaths})
-  confirmedToday.push({x: today, y: currentCases.confirmedCasesToday})
-  deathsToday.push({x: today, y: currentCases.deathsToday})
-
-  const confirmedTodayArray = data.map((element, i) => {
-    return element.confirmedCasesToday
-  })
-
-  const deathsTodayArray = data.map((element, i) => {
-    return element.deathsToday
-  })
-
-  const movingAverageConfirmedToday = movingAverage(confirmedTodayArray, movingAveragePeriod)
-  const movingAverageDeathsToday = movingAverage(deathsTodayArray, movingAveragePeriod)
-
-  const movingAverageConfirmedTodayChartData = allDates.map((element, i) => {
-    const date = new Date(element)
-    const average = movingAverageConfirmedToday[i]
-    return { x: date, y: average }
-  })
-
-  const movingAverageDeathsTodayChartData = allDates.map((element, i) => {
-    const date = new Date(element)
-    const average = movingAverageDeathsToday[i]
-    return { x: date, y: average }
-  })
+      confirmed.push({x: dateFromString, y: cases.confirmed})
+      deaths.push({x: dateFromString, y: cases.deaths})
+      confirmedToday.push({x: dateFromString, y: cases.confirmedCasesToday})
+      deathsToday.push({x: dateFromString, y: cases.deathsToday})       
+    })
   
+    const today = new Date()
+    if (allDates.length <= countryData.casesByDate.length ) {
+      allDates.push((today).toLocaleDateString())
+    }
+    confirmed.push({x: today, y: currentCases[j].confirmed})
+    deaths.push({x: today, y: currentCases[j].deaths})
+    confirmedToday.push({x: today, y: currentCases[j].confirmedCasesToday})
+    deathsToday.push({x: today, y: currentCases[j].deathsToday})
+  
+    const confirmedTodayArray = countryData.casesByDate.map((element) => {
+      return element.confirmedCasesToday
+    })
+  
+    const deathsTodayArray = countryData.casesByDate.map((element) => {
+      return element.deathsToday
+    })
+  
+    const movingAverageConfirmedToday = movingAverage(confirmedTodayArray, movingAveragePeriod)
+    const movingAverageDeathsToday = movingAverage(deathsTodayArray, movingAveragePeriod)
+
+    const movingAverageConfirmedTodayChartData = allDates.map((element, i) => {
+      const date = new Date(element)
+      const average = movingAverageConfirmedToday[i]
+      return { x: date, y: average }
+    })
+  
+    const movingAverageDeathsTodayChartData = allDates.map((element, i) => {
+      const date = new Date(element)
+      const average = movingAverageDeathsToday[i]
+      return { x: date, y: average }
+    })
+
+    processedCountryData.push({
+      country: countryData.country,
+      confirmed,
+      confirmedToday,
+      deaths,
+      deathsToday,
+      movingAverageConfirmedTodayChartData,
+      movingAverageDeathsTodayChartData,
+      dataSetColour: multiChartColours[dataSetColours[j]]
+    })
+  })
+
+  const generateDataSets = (countryData) => {
+    let outputDataSet = []
+    countryData.forEach((country) => {    
+      outputDataSet.push(
+        {
+          type: chartType,
+          label: `Cumulative confirmed cases ${country.country}`,
+          fill: false,
+          backgroundColor: country.dataSetColour,
+          borderColor: country.dataSetColour,
+          order: 0,
+          data: country.confirmed,
+          hidden: casesToHide['confirmed'],
+        },
+        {
+          type : chartType,
+          label: `Cumulative deaths ${country.country}`,
+          fill: false,
+          backgroundColor: country.dataSetColour,
+          borderColor: country.dataSetColour,
+          order: 1,
+          data: country.deaths,
+          hidden: casesToHide['deaths'],
+        },
+        // {
+        //   type : 'bar',
+        //   label: `Daily confirmed cases ${country.country}`,
+        //   fill: false,
+        //   backgroundColor: countryColours[country.country],
+        //   borderColor: countryColours[country.country],
+        //   order: 3,
+        //   data: country.confirmedToday,
+        //   hidden: casesToHide['confirmedToday'],
+        // },
+        {
+          type : 'line',
+          label: `Daily confirmed ${movingAveragePeriod} day moving average ${country.country}`,
+          fill: false,
+          backgroundColor: country.dataSetColour,
+          borderColor: country.dataSetColour,
+          order: 2,
+          data: country.movingAverageConfirmedTodayChartData.slice(3, -3),
+          hidden: casesToHide['confirmedTodayMovingAverage'],
+        },
+        // {
+        //   type : 'bar',
+        //   label: `Daily deaths ${country.country}`,
+        //   fill: false,
+        //   backgroundColor: chartColors.yellow,
+        //   borderColor: chartColors.yellow,
+        //   order: 5,
+        //   data: country.deathsToday,
+        //   hidden: casesToHide['deathsToday'],
+        // },
+        {
+          type : 'line',
+          label: `Daily deaths ${movingAveragePeriod} day moving average ${country.country}`,
+          fill: false,
+          backgroundColor: country.dataSetColour,
+          borderColor: country.dataSetColour,
+          order: 4,
+          data: country.movingAverageDeathsTodayChartData.slice(3, -3),
+          hidden: casesToHide['deathsTodayMovingAverage'],
+        },
+      )
+    })
+    return outputDataSet
+  }
 
   const chartConfig = {
     type: chartType,
     data: {
       labels: allDates,
-      datasets: [
-        {
-          type: chartType,
-          label: 'Cumulative confirmed cases',
-          fill: false,
-          backgroundColor: chartColors.red,
-          borderColor: chartColors.red,
-          order: 0,
-          data: confirmed,
-          hidden: casesToHide['confirmed'],
-        },
-        {
-          type : chartType,
-          label: 'Cumulative deaths',
-          fill: false,
-          backgroundColor: chartColors.grey,
-          borderColor: chartColors.grey,
-          order: 1,
-          data: deaths,
-          hidden: casesToHide['deaths'],
-        },
-        {
-          type : 'bar',
-          label: 'Daily confirmed cases',
-          fill: false,
-          backgroundColor: chartColors.purple,
-          borderColor: chartColors.purple,
-          order: 3,
-          data: confirmedToday,
-          hidden: casesToHide['confirmedToday'],
-        },
-        {
-          type : 'line',
-          label: `Daily confirmed ${movingAveragePeriod} day moving average`,
-          fill: false,
-          backgroundColor: chartColors.darkPurple,
-          borderColor: chartColors.darkPurple,
-          order: 2,
-          data: movingAverageConfirmedTodayChartData.slice(3, -3),
-          hidden: casesToHide['confirmedTodayMovingAverage'],
-        },
-        {
-          type : 'bar',
-          label: 'Daily deaths',
-          fill: false,
-          backgroundColor: chartColors.yellow,
-          borderColor: chartColors.yellow,
-          order: 5,
-          data: deathsToday,
-          hidden: casesToHide['deathsToday'],
-        },
-        {
-          type : 'line',
-          label: `Daily deaths ${movingAveragePeriod} day moving average`,
-          fill: false,
-          backgroundColor: chartColors.darkGrey,
-          borderColor: chartColors.darkGrey,
-          order: 4,
-          data: movingAverageDeathsTodayChartData.slice(3, -3),
-          hidden: casesToHide['deathsTodayMovingAverage'],
-        },
-      ]
+      datasets: generateDataSets(processedCountryData)
     },
     options: {
+      legend: {
+        display: false,
+        position: 'bottom'
+      },
       responsive: true,
       maintainAspectRatio: false,
-      legend: {
-        display: true,
-        position: 'top'
-      },
       animation: {
         duration: 0
       },
@@ -152,7 +167,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
         text: chartTitle
       },
       tooltips: {
-        mode: 'index',
+        mode: 'nearest',
         intersect: false,
         callbacks: {
           label: (tooltipItem, data) => {

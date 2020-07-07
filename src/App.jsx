@@ -19,7 +19,7 @@ import HeatMapsInnerPage from './components/InnerPages/HeatMapsInnerPage';
 import NavBar from './components/Nav/NavBar';
 import NavSideBar from './components/Nav/NavSideBar';
 import DataTableInnerPage from './components/InnerPages/DataTableInnerPage/DataTableInnerPage'
-import CompareInnerPage from './components/InnerPages/CompareInnerPage'
+import CompareInnerPage from './components/InnerPages/CompareInnerPage/CompareInnerPage'
 
 const COVID_TOTALS = gql`
   query {
@@ -68,6 +68,25 @@ const App = () => {
                 <Route path="/compare" children={
                   <CompareInnerPage
                     lastUpdated={lastUpdated}
+                    countries={casesByLocation.filter((country, i) => {
+                      if (i === 20 || i === 100) {
+                        country.checked = true
+                      } else {
+                        country.checked = false
+                      }
+                      return country.province === null
+                    }).sort((a, b) => {
+                      const countryA = a.country.toUpperCase();
+                      const countryB = b.country.toUpperCase();
+          
+                      let comparison = 0;
+                      if (countryA > countryB) {
+                        comparison = 1;
+                      } else if (countryA < countryB) {
+                        comparison = -1;
+                      }
+                      return comparison;
+                    })}
                   />
                 } />
                 <Route path="/today" children={
