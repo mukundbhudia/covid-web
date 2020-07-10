@@ -42,6 +42,7 @@ const CompareSelectAndChart = ({ countries,}) => {
     <>
       <div className="row mb-4">
         <div className="col-sm">
+          <p>Choose { MAX_CHECKED_ALLOWED } or fewer countries to compare with one another:</p>
           <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
             <div className="" data-toggle="buttons">
               {comparisonCountries.map((item, i) => {   
