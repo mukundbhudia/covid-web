@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import {
+  useHistory,
+  useLocation,
+} from 'react-router-dom'
 import CompareCharts from './CompareCharts'
 
 const getCheckedCountries = (countries) => {
@@ -9,10 +13,32 @@ const getCheckedCountries = (countries) => {
   })
 }
 
+// let chosenCountries = new Set()
+
+const useUrlQuery = (loc) => {
+  let urlParams = new URLSearchParams(loc.search);
+  return urlParams
+}
+
+const setParams = (params) => {
+  const searchParams = new URLSearchParams()
+  searchParams.set("countries", params.countries.toString())
+  return searchParams.toString()
+}
+
 const MAX_CHECKED_ALLOWED = 5
 
 const CompareSelectAndChart = ({ countries,}) => {
+  let history = useHistory()
+  let location = useLocation()
+  let query = useUrlQuery(location)
 
+  const countryQueryParams = query.get('countries')
+
+  if (countryQueryParams) {
+    let chosenCountries = new Set(countryQueryParams.split(','))
+    console.log(chosenCountries);
+  }
   const [ comparisonCountries, setComparisonCountries] = useState(countries)
 
   const updateCountryList = (countries, checked, idKey) => {
@@ -36,8 +62,16 @@ const CompareSelectAndChart = ({ countries,}) => {
     let countriesToUpdate = [...comparisonCountries]
     const updatedCountryList = updateCountryList(countriesToUpdate, checked, idKey)
     setComparisonCountries(updatedCountryList)
+    history.push(`?${setParams({ countries: getCheckedCountries(comparisonCountries) })}`)
   }
-
+// console.log(chosenCountries);
+// console.log(getCheckedCountries(comparisonCountries).length);
+  // if (getCheckedCountries(comparisonCountries).length !== chosenCountries.size) {
+  //   for (let countryIdKey of chosenCountries) {
+  //     // console.log(countryIdKey);
+  //     tickCountryBox(true, countryIdKey)
+  //   }
+  // }
   return (
     <>
       <div className="row mb-4">
