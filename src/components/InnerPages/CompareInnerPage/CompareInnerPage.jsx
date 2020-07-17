@@ -23,7 +23,11 @@ const CompareInnerPage = ({ lastUpdated, countries,}) => {
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 
   initialComparisonCountries = data.casesByLocationWithNoProvince.filter((country, i) => {
-    if (country.idKey === 'brazil' || country.idKey === 'germany') {
+    if (country.idKey === 'germany' || 
+        country.idKey === 'mexico' ||
+        country.idKey === 'peru' || 
+        country.idKey === 'south-africa'
+    ) {
       country.checked = true
     } else {
       country.checked = false
@@ -53,7 +57,6 @@ const CompareInnerPage = ({ lastUpdated, countries,}) => {
       </div>
 
       <CompareSelectAndChart countries={initialComparisonCountries}/>
-
     </>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   useHistory,
-  useLocation,
+  // useLocation,
 } from 'react-router-dom'
 import CompareCharts from './CompareCharts'
 
@@ -15,10 +15,10 @@ const getCheckedCountries = (countries) => {
 
 // let chosenCountries = new Set()
 
-const useUrlQuery = (loc) => {
-  let urlParams = new URLSearchParams(loc.search);
-  return urlParams
-}
+// const useUrlQuery = (loc) => {
+//   let urlParams = new URLSearchParams(loc.search);
+//   return urlParams
+// }
 
 const setParams = (params) => {
   const searchParams = new URLSearchParams()
@@ -26,19 +26,19 @@ const setParams = (params) => {
   return searchParams.toString()
 }
 
-const MAX_CHECKED_ALLOWED = 5
+const MAX_CHECKED_ALLOWED = 6
 
 const CompareSelectAndChart = ({ countries,}) => {
   let history = useHistory()
-  let location = useLocation()
-  let query = useUrlQuery(location)
+  // let location = useLocation()
+  // let query = useUrlQuery(location)
 
-  const countryQueryParams = query.get('countries')
+  // const countryQueryParams = query.get('countries')
 
-  if (countryQueryParams) {
-    let chosenCountries = new Set(countryQueryParams.split(','))
-    console.log(chosenCountries);
-  }
+  // if (countryQueryParams) {
+  //   let chosenCountries = new Set(countryQueryParams.split(','))
+  //   console.log(chosenCountries);
+  // }
   const [ comparisonCountries, setComparisonCountries] = useState(countries)
 
   const updateCountryList = (countries, checked, idKey) => {
@@ -76,7 +76,7 @@ const CompareSelectAndChart = ({ countries,}) => {
     <>
       <div className="row mb-4">
         <div className="col-sm">
-          <p>Choose { MAX_CHECKED_ALLOWED } or fewer countries to compare with one another:</p>
+          <p>Choose <strong>{ MAX_CHECKED_ALLOWED }</strong> or fewer countries to compare with one another:</p>
           <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
             <div className="" data-toggle="buttons">
               {comparisonCountries.map((item, i) => {   

@@ -17,6 +17,7 @@ const multiChartColours = {
   green: '#00c853',
   blue: '#0277bd',
   yellow: '#fbc02d',
+  orange: '#ff7043',
 }
 
 const generateRandomColour = (max) => {
