@@ -37,6 +37,15 @@ const CompareSelectAndChart = ({ countries,}) => {
 
   if (countryQueryParams) {
     chosenCountries = new Set(countryQueryParams.split(','))
+    if (chosenCountries.size > MAX_CHECKED_ALLOWED) {
+      let i = 0
+      chosenCountries.forEach((countryIdKey) => {
+        if (i >= MAX_CHECKED_ALLOWED) {
+          chosenCountries.delete(countryIdKey)
+        }
+        i++
+      })
+    }
     countries.forEach(country => {
       if (chosenCountries.has(country.idKey)) {
         country.checked = true
