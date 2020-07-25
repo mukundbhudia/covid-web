@@ -2,56 +2,25 @@ import React from 'react'
 import {
   useParams
 } from "react-router-dom";
-
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 
 import CountryNotFound from './CountryNotFound'
 import TimeSeries from '../Charts/TimeSeries'
-import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp';
-import ProvincesMenu from '../Nav/ProvincesMenu';
-import PanelConfirmedCount from '../Panels/PanelConfirmedCount';
-import PanelActiveCount from '../Panels/PanelActiveCount';
-import PanelRecoveredCount from '../Panels/PanelRecoveredCount';
-import PanelDeathCount from '../Panels/PanelDeathCount';
-import PanelDeathsToday from '../Panels/PanelDeathsToday';
-import PanelConfirmedToday from '../Panels/PanelConfirmedToday';
-import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive';
-import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths';
+import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
+import ProvincesMenu from '../Nav/ProvincesMenu'
+import PanelConfirmedCount from '../Panels/PanelConfirmedCount'
+import PanelActiveCount from '../Panels/PanelActiveCount'
+import PanelRecoveredCount from '../Panels/PanelRecoveredCount'
+import PanelDeathCount from '../Panels/PanelDeathCount'
+import PanelDeathsToday from '../Panels/PanelDeathsToday'
+import PanelConfirmedToday from '../Panels/PanelConfirmedToday'
+import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
+import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
+import { getCountryCasesByIdKey } from '../../modules/queries'
 
-const getCountry = gql`
-  query GetCases($idKey: String!) {
-    getCasesByIdKey(idKey: $idKey){
-      country
-      province
-      confirmed
-      active
-      recovered
-      deaths
-      confirmedCasesToday
-      deathsToday
-      latitude
-      longitude
-      lastUpdate
-      casesByDate {
-        confirmed
-        deaths
-        confirmedCasesToday
-        deathsToday
-        day
-      }
-      provincesList {
-        idKey
-        province
-      }
-      hasProvince
-    }
-  }
-`
-
-const InnerPage = (pData) => {
+const InnerPage = () => {
   let { id } = useParams()
-  const { loading, error, data } = useQuery(getCountry, {
+  const { loading, error, data } = useQuery(getCountryCasesByIdKey, {
      variables: { idKey: id }
   })
   if (loading) return <p>Loading data for dashboard ...</p>

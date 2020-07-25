@@ -1,33 +1,12 @@
 import React, { useState } from 'react'
 import TopXBarGraph from '../Charts/TopXBarGraph'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelConfirmedToday from '../Panels/PanelConfirmedToday'
 import PanelDeathsToday from '../Panels/PanelDeathsToday'
 import WorldHeatMap from '../WorldHeatMap/WorldHeatMap'
-
-const getTopCases = () => gql`
-  query {
-    totalCases {
-      confirmedCasesToday
-      deathsToday
-    }
-    topXconfirmedTodayByCountry(limit: 10) {
-      country
-      confirmedCasesToday
-    }
-    topXdeathsTodayByCountry(limit: 10) {
-      country
-      deathsToday
-    }
-    casesByLocationWithNoProvince {
-      countryCode
-      confirmedCasesToday
-      deathsToday
-    }
-  }
-`
+import { getTodayTopCases } from '../../modules/queries'
 
 const isGreaterThanZero = (array, key) => {
   return array.filter((element) => { return element[key] > 0 })
@@ -53,7 +32,7 @@ let caseTypeState = 'confirmedCasesToday'
 const TodayInnerPage = ({ title, lastUpdated }) => {
   const [ caseType, setCaseType] = useState(caseTypeState)
   caseTypeState = caseType
-  const { loading, error, data } = useQuery(getTopCases())
+  const { loading, error, data } = useQuery(getTodayTopCases)
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 

@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom'
 
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 
 import './App.css'
 import GlobalInnerPage from './components/InnerPages/GlobalInnerPage'
@@ -20,17 +19,7 @@ import NavBar from './components/Nav/NavBar';
 import NavSideBar from './components/Nav/NavSideBar';
 import DataTableInnerPage from './components/InnerPages/DataTableInnerPage/DataTableInnerPage'
 import CompareInnerPage from './components/InnerPages/CompareInnerPage/CompareInnerPage'
-
-const COVID_TOTALS = gql`
-  query {
-    lastUpdated
-    casesByLocation {
-      idKey
-      country
-      province
-    }
-  }
-`
+import { COVID_TOTALS } from './modules/queries'
 
 const App = () => {
   const { loading, error, data } = useQuery(COVID_TOTALS)

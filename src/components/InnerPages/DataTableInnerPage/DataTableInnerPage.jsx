@@ -1,27 +1,12 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import {
   useLocation,
 } from 'react-router-dom'
+
 import DataUpdatedTimeStamp from '../../Nav/DataUpdatedTimeStamp'
 import DataTable from './DataTable'
-
-const getTopCases = () => gql`
-  query {
-    casesByLocationWithNoProvince {
-      idKey
-      country
-      confirmed
-      confirmedCasesToday
-      active
-      recovered
-      deaths
-      deathsToday
-      lastUpdate
-    }
-  }
-`
+import { getDataTableCases } from '../../../modules/queries'
 
 let sortParams = { sortKey: 'country', order: 'asc' }
 
@@ -41,7 +26,7 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
     sortParams = { sortKey: sortQueryParam, order: orderQueryParam }
   }
 
-  const { loading, error, data } = useQuery(getTopCases())
+  const { loading, error, data } = useQuery(getDataTableCases)
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 

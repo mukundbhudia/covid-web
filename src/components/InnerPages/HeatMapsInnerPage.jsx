@@ -1,22 +1,9 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import WorldHeatMap from '../WorldHeatMap/WorldHeatMap'
-
-const getTopCases = () => gql`
-  query {
-    casesByLocationWithNoProvince {
-      countryCode
-      confirmed
-      active
-      recovered
-      deaths
-      confirmedCasesToday
-      deathsToday
-    }
-  }
-`
+import { getHeatMapCases } from '../../modules/queries'
 
 const caseMaps = {
   confirmed: {
@@ -62,7 +49,7 @@ let caseTypeState = 'confirmed'
 const HeatMapsInnerPage = ({ title, lastUpdated }) => {
   const [ caseType, setCaseType] = useState(caseTypeState)
   caseTypeState = caseType
-  const { loading, error, data } = useQuery(getTopCases())
+  const { loading, error, data } = useQuery(getHeatMapCases)
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 

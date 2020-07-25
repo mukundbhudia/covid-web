@@ -1,37 +1,9 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelTopX from '../Panels/PanelTopX'
-
-const getTopCases = gql`
-query TopCases($limit: Int!) {
-    topXconfirmedByCountry(limit: $limit) {
-      country
-      confirmed
-    }
-    topXactiveByCountry(limit: $limit) {
-      country
-      active
-    }
-    topXrecoveredByCountry(limit: $limit) {
-      country
-      recovered
-    }
-    topXdeathsByCountry(limit: $limit) {
-      country
-      deaths
-    }
-    topXconfirmedTodayByCountry(limit: $limit) {
-      country
-      confirmedCasesToday
-    }
-    topXdeathsTodayByCountry(limit: $limit) {
-      country
-      deathsToday
-    }
-  }
-`
+import { getTopCasesByLimit } from '../../modules/queries'
 
 const topCaseOptions = [ 5, 10, 15, 20 ]
 let topLimitState = topCaseOptions[1]
@@ -39,7 +11,7 @@ let topLimitState = topCaseOptions[1]
 const TopCasesInnerPage = ({ lastUpdated, }) => {
   const [ topLimit, setTopLimit] = useState(topLimitState)
   topLimitState = topLimit
-  const { loading, error, data, client } = useQuery(getTopCases, {
+  const { loading, error, data, client } = useQuery(getTopCasesByLimit, {
     variables: { limit: topLimit },
   })
 
@@ -49,7 +21,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
   const prefetchTopCases = () => {
     topCaseOptions.forEach(topCaseLimit => {
       client.query({
-        query: getTopCases,
+        query: getTopCasesByLimit,
         variables: { limit: topCaseLimit },
       })
     })

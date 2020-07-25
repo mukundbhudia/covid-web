@@ -1,6 +1,5 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 
 import TimeSeries from '../Charts/TimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
@@ -14,43 +13,7 @@ import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
 import HeatMapRangeSlider from '../WorldHeatMap/HeatMapRangeSlider'
 import PanelTopX from '../Panels/PanelTopX'
-
-const COVID_GLOBAL_PAGE = gql`
-  query {
-    totalCases {
-      confirmed
-      active
-      recovered
-      deaths
-      confirmedCasesToday
-      deathsToday
-    }
-    globalTimeSeries {
-      confirmed
-      deaths
-      confirmedCasesToday
-      deathsToday
-      day
-    }
-    getAllDaysWithCases
-    topXconfirmedByCountry(limit: 5) {
-      country
-      confirmed
-    }
-    topXactiveByCountry(limit: 5) {
-      country
-      active
-    }
-    topXrecoveredByCountry(limit: 5) {
-      country
-      recovered
-    }
-    topXdeathsByCountry(limit: 5) {
-      country
-      deaths
-    }
-  }
-`
+import { COVID_GLOBAL_PAGE } from '../../modules/queries'
 
 const InnerPage = ({
    title,

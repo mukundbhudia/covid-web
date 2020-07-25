@@ -1,23 +1,14 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import DataUpdatedTimeStamp from '../../Nav/DataUpdatedTimeStamp'
 import CompareSelectAndChart from '../CompareInnerPage/CompareSelectAndChart'
-
-const getCountry = gql`
-  query {
-    casesByLocationWithNoProvince {
-      idKey
-      country
-    }
-  }
-`
+import { getCountryWithNoProvince } from '../../../modules/queries'
 
 let initialComparisonCountries = []
 
 const CompareInnerPage = ({ lastUpdated, countries,}) => {
   
-  const { loading, error, data } = useQuery(getCountry)
+  const { loading, error, data } = useQuery(getCountryWithNoProvince)
 
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>

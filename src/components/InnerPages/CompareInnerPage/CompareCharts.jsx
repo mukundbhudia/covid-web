@@ -1,35 +1,11 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import MultiCountryTimeSeries from '../../Charts/MultiCountryTimeSeries'
-
-const getCountry = gql`
-  query GetCases($idKeys: [String]!) {
-    getManyCasesByIdKey(idKeys: $idKeys){
-      idKey
-      country
-      province
-      confirmed
-      active
-      recovered
-      deaths
-      confirmedCasesToday
-      deathsToday
-      lastUpdate
-      casesByDate {
-        confirmed
-        deaths
-        confirmedCasesToday
-        deathsToday
-        day
-      }
-    }
-  }
-`
+import { getCasesByIdKey } from '../../../modules/queries'
 
 const CompareInnerPage = ({ lastUpdated, countries,}) => {
   
-  const { loading, error, data } = useQuery(getCountry, {
+  const { loading, error, data } = useQuery(getCasesByIdKey, {
     variables: { idKeys: countries },
   })
 

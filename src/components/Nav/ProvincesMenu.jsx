@@ -3,26 +3,14 @@ import {
   Link,
 } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
-import ProvincesBarGraph from '../Charts/ProvincesBarGraph'
 
-const getProvincesGivenCountryName = (countryName) => gql`
-  query {
-    getProvincesGivenCountryName(country: "${countryName}") {
-      province
-      idKey
-      active
-      confirmed
-      deaths
-      confirmedCasesToday
-      deathsToday
-      recovered
-    }
-  }
-`
+import ProvincesBarGraph from '../Charts/ProvincesBarGraph'
+import { getProvincesGivenCountryName } from '../../modules/queries'
 
 const ProvincesMenu = ({ countryName, idKey }) => {
-  const { loading, error, data } = useQuery(getProvincesGivenCountryName(countryName))
+  const { loading, error, data } = useQuery(getProvincesGivenCountryName, {
+    variables: { countryName },
+  })
   if (loading) return <p>Loading provinces data ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
 

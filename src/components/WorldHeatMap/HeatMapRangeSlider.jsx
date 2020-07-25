@@ -1,22 +1,8 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 
 import WorldHeatMap from './WorldHeatMap'
-
-const getGlobalCasesGivenDate = gql`
-query Test($day: String!) {
-  getGlobalCasesByDate(day: $day) {
-    countryCode
-    confirmed
-    active
-    recovered
-    deaths
-    confirmedCasesToday
-    deathsToday
-  }
-}
-`
+import { getGlobalCasesGivenDate } from '../../modules/queries'
 
 const clamp = (number, min, max) => {
   return Math.min(Math.max(number, min), max)
