@@ -14,6 +14,7 @@ const getCheckedCountries = (countries) => {
 }
 
 let chosenCountries = new Set()
+let totalChosenCountries = 0
 
 const useUrlQuery = (loc) => {
   let urlParams = new URLSearchParams(loc.search);
@@ -54,7 +55,9 @@ const CompareSelectAndChart = ({ countries,}) => {
       }
     })
   }
+
   const [ comparisonCountries, setComparisonCountries] = useState(countries)
+  totalChosenCountries = getCheckedCountries(comparisonCountries).length
 
   const updateCountryList = (countries, checked, idKey) => {
     if (checked === true) {
@@ -84,7 +87,12 @@ const CompareSelectAndChart = ({ countries,}) => {
     <>
       <div className="row mb-4">
         <div className="col-sm">
-          <p>Choose <strong>{ MAX_CHECKED_ALLOWED }</strong> or fewer countries to compare with one another:</p>
+          <p>
+            Compare countries with one another.&nbsp;
+            <span style={ {'fontWeight': (totalChosenCountries < MAX_CHECKED_ALLOWED) ? 'unset' : 'bold'} }>
+              { totalChosenCountries }
+            </span> out of a maximum of <strong>{ MAX_CHECKED_ALLOWED }</strong> chosen:
+          </p>
           <div className="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
             <div className="" data-toggle="buttons">
               {comparisonCountries.map((item, i) => {   
@@ -97,7 +105,7 @@ const CompareSelectAndChart = ({ countries,}) => {
                       value={`option${i}`}
                       onChange={ changeEvent => { tickCountryBox(changeEvent.target.checked, item.idKey) } }
                       defaultChecked={ item.checked }
-                      disabled={ (item.checked) || (getCheckedCountries(comparisonCountries).length < MAX_CHECKED_ALLOWED) ? false : true }
+                      disabled={ (item.checked) || (totalChosenCountries < MAX_CHECKED_ALLOWED) ? false : true }
                     />
                     <label className="form-check-label" htmlFor={`inlineCheckbox${i}`}>{ item.country }</label>
                   </div>
