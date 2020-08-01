@@ -1,7 +1,4 @@
-image: node:13.12.0 # change to match your node version
-
-variables:
-    PUBLIC_URL: "/covid-web"
+image: node:14.7.0 # change to match your node version
 
 cache:
   paths:
@@ -14,8 +11,8 @@ pages:
   stage: deploy
   variables:
       PUBLIC_URL: "/covid-web"
+      REACT_APP_GQL_URI: "https://covid19-dash-api.herokuapp.com"
   script:
-    - export REACT_APP_GQL_URI=https://covid19-dash-api.herokuapp.com # set REACT_APP variables before build command
     - CI=true npm run build
     - rm -rf public
     - mv build public
