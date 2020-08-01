@@ -48,7 +48,6 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
   const [ topLimit, setTopLimit] = useState(defaultLimit)
   useEffect(() => {
     return history.listen((location) => {
-      console.log(`You changed the page to: ${location.search}`)
       const urlParams = new URLSearchParams(location.search);
       const topCasesLimitQueryParam = urlParams.get('top')
       let topCasesLimit = null
@@ -63,7 +62,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
           console.error(error)
         }
       }
-      console.log( topCasesLimit )
+
       if ( topCasesLimit ) {
         setTopLimit(topCasesLimit)
       } else {
