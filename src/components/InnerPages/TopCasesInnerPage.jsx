@@ -8,13 +8,27 @@ import { useQuery } from '@apollo/react-hooks'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelTopX from '../Panels/PanelTopX'
 import { getTopCasesByLimit } from '../../modules/queries'
+import { useEffect } from 'react'
 
 const topCaseOptions = [ 5, 10, 15, 20 ]
 let defaultLimit = topCaseOptions[1]
 
 const useUrlQuery = (loc) => {
-  let urlParams = new URLSearchParams(loc.search);
-  return urlParams
+  const urlParams = new URLSearchParams(loc.search);
+  const topCasesLimitQueryParam = urlParams.get('top')
+  let topCasesLimit = null
+
+  if (topCasesLimitQueryParam) {
+    try {
+      const parsedTopCasesLimit = parseInt(topCasesLimitQueryParam)
+      if (parsedTopCasesLimit && topCaseOptions.includes(parsedTopCasesLimit)) {
+        topCasesLimit = parsedTopCasesLimit
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  return topCasesLimit
 }
 
 const setParams = (params) => {
@@ -26,20 +40,37 @@ const setParams = (params) => {
 const TopCasesInnerPage = ({ lastUpdated, }) => {
   let history = useHistory()
   let location = useLocation()
-  let query = useUrlQuery(location)
-  const topCasesLimitQueryParam = query.get('top')
+  const topCasesLimitQueryParam = useUrlQuery(location)
 
   if (topCasesLimitQueryParam) {
-    try {
-      const parsedTopCasesLimit = parseInt(topCasesLimitQueryParam)
-      if (parsedTopCasesLimit && topCaseOptions.includes(parsedTopCasesLimit)) {
-        defaultLimit = parsedTopCasesLimit
-      }
-    } catch (error) {
-      console.error(error)
-    }
+    defaultLimit = topCasesLimitQueryParam
   }
   const [ topLimit, setTopLimit] = useState(defaultLimit)
+  useEffect(() => {
+    return history.listen((location) => {
+      console.log(`You changed the page to: ${location.search}`)
+      const urlParams = new URLSearchParams(location.search);
+      const topCasesLimitQueryParam = urlParams.get('top')
+      let topCasesLimit = null
+    
+      if (topCasesLimitQueryParam) {
+        try {
+          const parsedTopCasesLimit = parseInt(topCasesLimitQueryParam)
+          if (parsedTopCasesLimit && topCaseOptions.includes(parsedTopCasesLimit)) {
+            topCasesLimit = parsedTopCasesLimit
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      console.log( topCasesLimit )
+      if ( topCasesLimit ) {
+        setTopLimit(topCasesLimit)
+      } else {
+        setTopLimit(defaultLimit)
+      }
+    })
+  }, [history, topLimit])
 
   const { loading, error, data, client } = useQuery(getTopCasesByLimit, {
     variables: { limit: topLimit },
