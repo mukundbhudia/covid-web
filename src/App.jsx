@@ -57,25 +57,7 @@ const App = () => {
                 <Route path="/compare" children={
                   <CompareInnerPage
                     lastUpdated={lastUpdated}
-                    countries={casesByLocation.filter((country, i) => {
-                      if (i === 20 || i === 100) {
-                        country.checked = true
-                      } else {
-                        country.checked = false
-                      }
-                      return country.province === null
-                    }).sort((a, b) => {
-                      const countryA = a.country.toUpperCase();
-                      const countryB = b.country.toUpperCase();
-          
-                      let comparison = 0;
-                      if (countryA > countryB) {
-                        comparison = 1;
-                      } else if (countryA < countryB) {
-                        comparison = -1;
-                      }
-                      return comparison;
-                    })}
+                    countries={casesByLocation}
                   />
                 } />
                 <Route path="/today" children={
