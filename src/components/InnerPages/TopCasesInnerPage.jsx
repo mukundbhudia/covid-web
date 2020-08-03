@@ -52,7 +52,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
       if ( topCasesLimit ) {
         setTopLimit(topCasesLimit)
       } else {
-        setTopLimit(defaultLimit)
+        setTopLimit(10)
       }
     })
   }, [history, topLimit])

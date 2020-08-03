@@ -71,7 +71,6 @@ const HeatMapsInnerPage = ({ title, lastUpdated }) => {
   }
 
   const [ caseType, setCaseType] = useState(caseTypeState)
-  // caseTypeState = caseType
 
   useEffect(() => {
     return history.listen((location) => {
@@ -80,7 +79,7 @@ const HeatMapsInnerPage = ({ title, lastUpdated }) => {
     
       if (mapTypeQueryParam) {
         try {
-          mapType = parseInt(mapTypeQueryParam)
+          mapType = mapTypeQueryParam
         } catch (error) {
           console.error(error)
         }
@@ -89,7 +88,7 @@ const HeatMapsInnerPage = ({ title, lastUpdated }) => {
       if ( mapType ) {
         setCaseType(mapType)
       } else {
-        setCaseType(caseTypeState)
+        setCaseType('confirmed')
       }
     })
   }, [caseType, history])
@@ -100,7 +99,6 @@ const HeatMapsInnerPage = ({ title, lastUpdated }) => {
 
   const setMapType = (mapType) => {
     if (caseType !== mapType) {
-      console.log(`change here: ${mapType}`);
       setCaseType(mapType)
       history.push(`?${setParams({ mapType }, 'mapType')}`)
     }
