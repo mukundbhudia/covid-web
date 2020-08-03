@@ -33,6 +33,16 @@ const caseMaps = {
 
 let caseTypeState = 'confirmedCasesToday'
 
+const validateQueryParams = (objectsToCheck, paramKeyGiven) => {
+  const objectKeys = Object.keys(objectsToCheck)
+  const isValidQueryParam = objectKeys.includes(paramKeyGiven)
+  if (isValidQueryParam) {
+    return paramKeyGiven
+  } else {
+    return objectKeys[0]
+  }
+}
+
 const getUrlQuery = (loc, paramToGet) => {
   const urlParams = new URLSearchParams(loc.search);
   return urlParams.get(paramToGet)
@@ -50,7 +60,7 @@ const TodayInnerPage = ({ title, lastUpdated }) => {
   const mapTypeQueryParam = getUrlQuery(location, 'mapType')
 
   if (mapTypeQueryParam) {
-    caseTypeState = mapTypeQueryParam
+    caseTypeState = validateQueryParams(caseMaps, mapTypeQueryParam)
   }
   const [ caseType, setCaseType] = useState(caseTypeState)
 
@@ -61,7 +71,7 @@ const TodayInnerPage = ({ title, lastUpdated }) => {
     
       if (mapTypeQueryParam) {
         try {
-          mapType = mapTypeQueryParam
+          mapType = validateQueryParams(caseMaps, mapTypeQueryParam)
         } catch (error) {
           console.error(error)
         }

@@ -12,6 +12,21 @@ import { getTopCasesByLimit } from '../../modules/queries'
 const topCaseOptions = [ 5, 10, 15, 20 ]
 let defaultLimit = topCaseOptions[1]
 
+const validateQueryParams = (objectsToCheck, paramKeyGiven) => {
+  try {
+    const paramAsInt = parseInt(paramKeyGiven)
+    const isValidQueryParam = objectsToCheck.includes(paramAsInt)
+    if (isValidQueryParam) {
+      return paramAsInt
+    } else {
+      return objectsToCheck[1]
+    }
+  } catch (error) {
+    console.error(error)
+    return objectsToCheck[1]
+  }
+}
+
 const getUrlQuery = (loc, paramToGet) => {
   const urlParams = new URLSearchParams(loc.search);
   return urlParams.get(paramToGet)
@@ -29,7 +44,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
   const topCasesLimitQueryParam = getUrlQuery(location, 'top')
 
   if (topCasesLimitQueryParam) {
-    defaultLimit = parseInt(topCasesLimitQueryParam)
+    defaultLimit = validateQueryParams(topCaseOptions, topCasesLimitQueryParam)
   }
 
   const [ topLimit, setTopLimit] = useState(defaultLimit)
@@ -40,10 +55,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
     
       if (topCasesLimitQueryParam) {
         try {
-          const parsedTopCasesLimit = parseInt(topCasesLimitQueryParam)
-          if (parsedTopCasesLimit && topCaseOptions.includes(parsedTopCasesLimit)) {
-            topCasesLimit = parsedTopCasesLimit
-          }
+          topCasesLimit = validateQueryParams(topCaseOptions, topCasesLimitQueryParam)
         } catch (error) {
           console.error(error)
         }
