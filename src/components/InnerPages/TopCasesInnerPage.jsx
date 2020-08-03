@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   useHistory,
   useLocation,
@@ -8,48 +8,34 @@ import { useQuery } from '@apollo/react-hooks'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelTopX from '../Panels/PanelTopX'
 import { getTopCasesByLimit } from '../../modules/queries'
-import { useEffect } from 'react'
 
 const topCaseOptions = [ 5, 10, 15, 20 ]
 let defaultLimit = topCaseOptions[1]
 
-const useUrlQuery = (loc) => {
+const getUrlQuery = (loc, paramToGet) => {
   const urlParams = new URLSearchParams(loc.search);
-  const topCasesLimitQueryParam = urlParams.get('top')
-  let topCasesLimit = null
-
-  if (topCasesLimitQueryParam) {
-    try {
-      const parsedTopCasesLimit = parseInt(topCasesLimitQueryParam)
-      if (parsedTopCasesLimit && topCaseOptions.includes(parsedTopCasesLimit)) {
-        topCasesLimit = parsedTopCasesLimit
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  return topCasesLimit
+  return urlParams.get(paramToGet)
 }
 
-const setParams = (params) => {
+const setParams = (params, paramToSet) => {
   const searchParams = new URLSearchParams()
-  searchParams.set('top', params.limit)
+  searchParams.set(paramToSet, params.limit)
   return searchParams.toString()
 }
 
 const TopCasesInnerPage = ({ lastUpdated, }) => {
   let history = useHistory()
   let location = useLocation()
-  const topCasesLimitQueryParam = useUrlQuery(location)
+  const topCasesLimitQueryParam = getUrlQuery(location, 'top')
 
   if (topCasesLimitQueryParam) {
-    defaultLimit = topCasesLimitQueryParam
+    defaultLimit = parseInt(topCasesLimitQueryParam)
   }
+
   const [ topLimit, setTopLimit] = useState(defaultLimit)
   useEffect(() => {
     return history.listen((location) => {
-      const urlParams = new URLSearchParams(location.search);
-      const topCasesLimitQueryParam = urlParams.get('top')
+      const topCasesLimitQueryParam = getUrlQuery(location, 'top')
       let topCasesLimit = null
     
       if (topCasesLimitQueryParam) {
@@ -81,7 +67,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
   const setTopCasesLimit = (limit) => {
     if (topLimit !== limit) {
       setTopLimit(limit)
-      history.push(`?${setParams({ limit })}`)
+      history.push(`?${setParams({ limit }, 'top')}`)
     }
   }
 

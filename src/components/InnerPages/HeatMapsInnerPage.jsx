@@ -1,4 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import {
+  useHistory,
+  useLocation,
+} from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
@@ -46,12 +50,61 @@ const caseMaps = {
 
 let caseTypeState = 'confirmed'
 
+const getUrlQuery = (loc, paramToGet) => {
+  const urlParams = new URLSearchParams(loc.search);
+  return urlParams.get(paramToGet)
+}
+
+const setParams = (params, paramToSet) => {
+  const searchParams = new URLSearchParams()
+  searchParams.set(paramToSet, params.mapType)
+  return searchParams.toString()
+}
+
 const HeatMapsInnerPage = ({ title, lastUpdated }) => {
+  let location = useLocation()
+  let history = useHistory()
+  const mapTypeQueryParam = getUrlQuery(location, 'mapType')
+
+  if (mapTypeQueryParam) {
+    caseTypeState = mapTypeQueryParam
+  }
+
   const [ caseType, setCaseType] = useState(caseTypeState)
-  caseTypeState = caseType
+  // caseTypeState = caseType
+
+  useEffect(() => {
+    return history.listen((location) => {
+      const mapTypeQueryParam = getUrlQuery(location, 'mapType')
+      let mapType = null
+    
+      if (mapTypeQueryParam) {
+        try {
+          mapType = parseInt(mapTypeQueryParam)
+        } catch (error) {
+          console.error(error)
+        }
+      }
+
+      if ( mapType ) {
+        setCaseType(mapType)
+      } else {
+        setCaseType(caseTypeState)
+      }
+    })
+  }, [caseType, history])
+
   const { loading, error, data } = useQuery(getHeatMapCases)
   if (loading) return <p>Loading data for dashboard ...</p>
   if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+
+  const setMapType = (mapType) => {
+    if (caseType !== mapType) {
+      console.log(`change here: ${mapType}`);
+      setCaseType(mapType)
+      history.push(`?${setParams({ mapType }, 'mapType')}`)
+    }
+  }
 
   const casesByLocationWithNoProvince = data.casesByLocationWithNoProvince
 
@@ -72,7 +125,7 @@ const HeatMapsInnerPage = ({ title, lastUpdated }) => {
                 const item = caseMaps[caseKey]
                 return  (
                 <label key={item.label} className={`btn btn-sm btn-light ${caseType === caseKey ? 'active' : ''}`}>
-                  <input type="radio" name="chart-type" onClick={() => {setCaseType(caseKey)}}/>{item.label}
+                  <input type="radio" name="chart-type" onClick={() => { setMapType(caseKey) }}/>{item.label}
                 </label>
                 )
               } )}
