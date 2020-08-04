@@ -3,11 +3,13 @@ import Chart from 'chart.js'
 import { movingAverage } from '../../modules/numeric'
 import { chartColors } from './chartSettings'
 
+const DEFAULT_MOVING_AVERAGE_PERIOD_IN_DAYS = 7
+
 const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   const chartRef = React.createRef()
   const [ dataType, setDataType] = useState('linear')
   const [ chartType, setChartType] = useState('line')
-  const [ movingAveragePeriod, setMovingAveragePeriod] = useState(7)
+  const [ movingAveragePeriod, setMovingAveragePeriod] = useState(DEFAULT_MOVING_AVERAGE_PERIOD_IN_DAYS)
 
   const allDates = []
   let confirmed = []
@@ -15,36 +17,34 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   let deaths = []
   let deathsToday = []
 
+  const pushDataToCasesArray = (date, caseToPush) => {
+    allDates.push((date).toLocaleDateString())
+    confirmed.push({x: date, y: caseToPush.confirmed})
+    deaths.push({x: date, y: caseToPush.deaths})
+    confirmedToday.push({x: date, y: caseToPush.confirmedCasesToday})
+    deathsToday.push({x: date, y: caseToPush.deathsToday})
+  }
+
   let firstCaseAdded = false
   data.forEach((element, i) => {
     const cases = element
     if (cases.confirmed > 0) {
-      const dateFromString = new Date(cases.day)
+      let dateFromString = new Date(cases.day)
       if (!firstCaseAdded && i > 0) {
-        const previousCase = data[i-1]        
-        const dateFromString = new Date(previousCase.day)
+        const previousCase = data[i-1]
+        dateFromString = new Date(previousCase.day)
         firstCaseAdded = true
-        allDates.push((dateFromString).toLocaleDateString())
-        confirmed.push({x: dateFromString, y: previousCase.confirmed})
-        deaths.push({x: dateFromString, y: previousCase.deaths})
-        confirmedToday.push({x: dateFromString, y: previousCase.confirmedCasesToday})
-        deathsToday.push({x: dateFromString, y: previousCase.deathsToday})
+        pushDataToCasesArray(dateFromString, previousCase)
+        dateFromString = new Date(cases.day)
+        pushDataToCasesArray(dateFromString, cases)
       } else {
-        allDates.push((dateFromString).toLocaleDateString())
-        confirmed.push({x: dateFromString, y: cases.confirmed})
-        deaths.push({x: dateFromString, y: cases.deaths})
-        confirmedToday.push({x: dateFromString, y: cases.confirmedCasesToday})
-        deathsToday.push({x: dateFromString, y: cases.deathsToday})       
+        pushDataToCasesArray(dateFromString, cases)
       }
     }
   })
 
   const today = new Date()
-  allDates.push((today).toLocaleDateString())
-  confirmed.push({x: today, y: currentCases.confirmed})
-  deaths.push({x: today, y: currentCases.deaths})
-  confirmedToday.push({x: today, y: currentCases.confirmedCasesToday})
-  deathsToday.push({x: today, y: currentCases.deathsToday})
+  pushDataToCasesArray(today, currentCases)
 
   const confirmedTodayArray = data.map((element, i) => {
     return element.confirmedCasesToday
