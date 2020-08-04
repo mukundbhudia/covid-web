@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 
+import ErrorInnerPage from './ErrorInnerPage'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import WorldHeatMap from '../WorldHeatMap/WorldHeatMap'
 import { getHeatMapCases } from '../../modules/queries'
@@ -105,7 +106,7 @@ const HeatMapsInnerPage = ({ title, lastUpdated }) => {
 
   const { loading, error, data } = useQuery(getHeatMapCases)
   if (loading) return <p>Loading data for dashboard ...</p>
-  if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+  if (error) return <ErrorInnerPage errorData={error} />
 
   const setMapType = (mapType) => {
     if (caseType !== mapType) {

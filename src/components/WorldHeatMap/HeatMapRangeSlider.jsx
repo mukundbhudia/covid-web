@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
+import ErrorInnerPage from '../InnerPages/ErrorInnerPage'
 import WorldHeatMap from './WorldHeatMap'
 import { getGlobalCasesGivenDate } from '../../modules/queries'
 
@@ -53,7 +54,7 @@ const HeatMapRangeSlider = ({ dates }) => {
       <WorldHeatMap mapDataLabel="Confirmed" showMoreThanOneDataItem={true} caseType="confirmed" data={[]} date={""} lightColour="#ffeaef" darkColour="#ff6384"/>
     )
   } else if (error) {
-    content = (<p>{JSON.stringify(error, null, 2)}</p>)
+    content = (<ErrorInnerPage errorData={error} />)
   } else {
     const getGlobalCasesByDate = data.getGlobalCasesByDate
     content = (

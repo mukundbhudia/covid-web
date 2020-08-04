@@ -1,5 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
+
+import ErrorInnerPage from '../ErrorInnerPage'
 import DataUpdatedTimeStamp from '../../Nav/DataUpdatedTimeStamp'
 import CompareSelectAndChart from '../CompareInnerPage/CompareSelectAndChart'
 import { getCountryWithNoProvince } from '../../../modules/queries'
@@ -11,7 +13,7 @@ const CompareInnerPage = ({ lastUpdated, countries,}) => {
   const { loading, error, data } = useQuery(getCountryWithNoProvince)
 
   if (loading) return <p>Loading data for dashboard ...</p>
-  if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+  if (error) return <ErrorInnerPage errorData={error} />
 
   initialComparisonCountries = data.casesByLocationWithNoProvince.filter((country, i) => {
     if (country.idKey === 'germany' || 

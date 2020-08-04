@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 
+import ErrorInnerPage from '../InnerPages/ErrorInnerPage'
 import ProvincesBarGraph from '../Charts/ProvincesBarGraph'
 import { getProvincesGivenCountryName } from '../../modules/queries'
 
@@ -12,7 +13,7 @@ const ProvincesMenu = ({ countryName, idKey }) => {
     variables: { countryName },
   })
   if (loading) return <p>Loading provinces data ...</p>
-  if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+  if (error) return <ErrorInnerPage errorData={error} />
 
   let provinceList = []
   if (data) {

@@ -1,5 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
+
+import ErrorInnerPage from '../ErrorInnerPage'
 import MultiCountryTimeSeries from '../../Charts/MultiCountryTimeSeries'
 import { getCasesByIdKey } from '../../../modules/queries'
 
@@ -27,7 +29,7 @@ if (loading) {
   dailyConfirmedMovingAverage = cumulativeConfirmed
   dailyDeathsMovingAverage = cumulativeConfirmed
 } else if (error) {
-  cumulativeConfirmed = (<p>{JSON.stringify(error, null, 2)}</p>)
+  cumulativeConfirmed = (<ErrorInnerPage errorData={error} />)
   cumulativeDeaths = cumulativeConfirmed
   dailyConfirmedMovingAverage = cumulativeConfirmed
   dailyDeathsMovingAverage = cumulativeConfirmed

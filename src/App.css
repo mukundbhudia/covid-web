@@ -13,6 +13,15 @@ nav.col-md-2.d-none.d-md-block.sidebar {
   background-color: #eff1f2;
 }
 
+.error {
+  margin-bottom: 0;
+  background-color: #f8f9fa !important;
+}
+
+.error-border {
+  border-color: #d79ba0 !important;
+}
+
 .chart {
   position: relative;
   margin: auto;

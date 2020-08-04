@@ -3,6 +3,7 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
 import './App.css'
+import ErrorInnerPage from './components/InnerPages/ErrorInnerPage'
 import HomeInnerPage from '../src/components/InnerPages/HomeInnerPage'
 import { COVID_TOTALS } from './modules/queries'
 
@@ -15,7 +16,7 @@ const App = () => {
       <HomeInnerPage casesByLocation={[]} lastUpdated={''}/>
     )
   } else if (error) {
-    content = (<p>{JSON.stringify(error, null, 2)}</p>)
+    content = (<ErrorInnerPage errorData={error}/>)
   } else {
     const lastUpdated = data.lastUpdated
     const casesByLocation = data.casesByLocation

@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 
+import ErrorInnerPage from './ErrorInnerPage'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelTopX from '../Panels/PanelTopX'
 import { getTopCasesByLimit } from '../../modules/queries'
@@ -74,7 +75,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
   })
 
   if (loading) return <p>Loading data for dashboard ...</p>
-  if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+  if (error) return <ErrorInnerPage errorData={error} />
 
   const setTopCasesLimit = (limit) => {
     if (topLimit !== limit) {

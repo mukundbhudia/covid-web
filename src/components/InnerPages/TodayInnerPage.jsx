@@ -6,6 +6,7 @@ import {
 import TopXBarGraph from '../Charts/TopXBarGraph'
 import { useQuery } from '@apollo/react-hooks'
 
+import ErrorInnerPage from './ErrorInnerPage'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelConfirmedToday from '../Panels/PanelConfirmedToday'
 import PanelDeathsToday from '../Panels/PanelDeathsToday'
@@ -87,7 +88,7 @@ const TodayInnerPage = ({ title, lastUpdated }) => {
 
   const { loading, error, data } = useQuery(getTodayTopCases)
   if (loading) return <p>Loading data for dashboard ...</p>
-  if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+  if (error) return <ErrorInnerPage errorData={error} />
 
   const setMapType = (mapType) => {
     if (caseType !== mapType) {

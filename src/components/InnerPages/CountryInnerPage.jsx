@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import { useQuery } from '@apollo/react-hooks'
 
+import ErrorInnerPage from './ErrorInnerPage';
 import CountryNotFound from './CountryNotFound'
 import TimeSeries from '../Charts/TimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
@@ -24,7 +25,7 @@ const InnerPage = () => {
      variables: { idKey: id }
   })
   if (loading) return <p>Loading data for dashboard ...</p>
-  if (error) return <p>{JSON.stringify(error, null, 2)}</p>
+  if (error) return <ErrorInnerPage errorData={error} />
 
   let getCasesByIdKey = data && data.getCasesByIdKey[0]
 
