@@ -36,7 +36,7 @@ const NavSideBar = ({ casesByLocation }) => {
           <span>Reports by country</span>
         </h6>
         <ul className="nav flex-column mb-2">
-          {casesByLocation.sort((a, b) => {
+          {casesByLocation && casesByLocation.sort((a, b) => {
             const countryA = a.country.toUpperCase();
             const countryB = b.country.toUpperCase();
 
