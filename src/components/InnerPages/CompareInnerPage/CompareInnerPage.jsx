@@ -8,7 +8,7 @@ import { getCountryWithNoProvince } from '../../../modules/queries'
 
 let initialComparisonCountries = []
 
-const CompareInnerPage = ({ lastUpdated, countries,}) => {
+const CompareInnerPage = ({ lastUpdated }) => {
   
   const { loading, error, data } = useQuery(getCountryWithNoProvince)
 
@@ -26,17 +26,6 @@ const CompareInnerPage = ({ lastUpdated, countries,}) => {
       country.checked = false
     }
     return country
-  }).sort((a, b) => {
-    const countryA = a.country.toUpperCase();
-    const countryB = b.country.toUpperCase();
-
-    let comparison = 0;
-    if (countryA > countryB) {
-      comparison = 1;
-    } else if (countryA < countryB) {
-      comparison = -1;
-    }
-    return comparison;
   })
 
   return (
