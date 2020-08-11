@@ -6,6 +6,7 @@ import {
 import { useQuery } from '@apollo/react-hooks'
 
 import ErrorInnerPage from './ErrorInnerPage'
+import LoadingInnerPage from './LoadingInnerPage'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelTopX from '../Panels/PanelTopX'
 import { getTopCasesByLimit } from '../../modules/queries'
@@ -74,7 +75,7 @@ const TopCasesInnerPage = ({ lastUpdated, }) => {
     variables: { limit: topLimit },
   })
 
-  if (loading) return <p>Loading data for dashboard ...</p>
+  if (loading) return <LoadingInnerPage/>
   if (error) return <ErrorInnerPage errorData={error} />
 
   const setTopCasesLimit = (limit) => {

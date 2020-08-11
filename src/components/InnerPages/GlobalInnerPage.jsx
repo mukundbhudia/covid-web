@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
 import ErrorInnerPage from './ErrorInnerPage'
+import LoadingInnerPage from './LoadingInnerPage'
 import TimeSeries from '../Charts/TimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelDeathsToday from '../Panels/PanelDeathsToday'
@@ -21,7 +22,7 @@ const InnerPage = ({
    lastUpdated,
   }) => {
   const { loading, error, data } = useQuery(COVID_GLOBAL_PAGE)
-  if (loading) return <p>Loading data for dashboard ...</p>
+  if (loading) return <LoadingInnerPage/>
   if (error) return <ErrorInnerPage errorData={error} />
 
   const totalCases = data.totalCases

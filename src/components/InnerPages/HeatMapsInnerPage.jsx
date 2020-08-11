@@ -6,6 +6,7 @@ import {
 import { useQuery } from '@apollo/react-hooks'
 
 import ErrorInnerPage from './ErrorInnerPage'
+import LoadingInnerPage from './LoadingInnerPage'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import WorldHeatMap from '../WorldHeatMap/WorldHeatMap'
 import { getHeatMapCases } from '../../modules/queries'
@@ -105,7 +106,7 @@ const HeatMapsInnerPage = ({ title, lastUpdated }) => {
   }, [caseType, history])
 
   const { loading, error, data } = useQuery(getHeatMapCases)
-  if (loading) return <p>Loading data for dashboard ...</p>
+  if (loading) return <LoadingInnerPage/>
   if (error) return <ErrorInnerPage errorData={error} />
 
   const setMapType = (mapType) => {

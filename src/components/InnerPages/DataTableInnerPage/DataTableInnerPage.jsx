@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 
 import ErrorInnerPage from '../ErrorInnerPage'
+import LoadingInnerPage from '../LoadingInnerPage'
 import DataUpdatedTimeStamp from '../../Nav/DataUpdatedTimeStamp'
 import DataTable from './DataTable'
 import { getDataTableCases } from '../../../modules/queries'
@@ -28,7 +29,7 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
   }
 
   const { loading, error, data } = useQuery(getDataTableCases)
-  if (loading) return <p>Loading data for dashboard ...</p>
+  if (loading) return <LoadingInnerPage/>
   if (error) return <ErrorInnerPage errorData={error} />
 
   return (

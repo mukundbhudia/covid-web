@@ -4,7 +4,9 @@ import {
 } from "react-router-dom";
 import { useQuery } from '@apollo/react-hooks'
 
-import ErrorInnerPage from './ErrorInnerPage';
+import ErrorInnerPage from './ErrorInnerPage'
+import LoadingInnerPage from './LoadingInnerPage'
+import { getCountryCasesByIdKey } from '../../modules/queries'
 import CountryNotFound from './CountryNotFound'
 import TimeSeries from '../Charts/TimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
@@ -17,14 +19,13 @@ import PanelDeathsToday from '../Panels/PanelDeathsToday'
 import PanelConfirmedToday from '../Panels/PanelConfirmedToday'
 import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
-import { getCountryCasesByIdKey } from '../../modules/queries'
 
 const InnerPage = () => {
   let { id } = useParams()
   const { loading, error, data } = useQuery(getCountryCasesByIdKey, {
      variables: { idKey: id }
   })
-  if (loading) return <p>Loading data for dashboard ...</p>
+  if (loading) return <LoadingInnerPage/>
   if (error) return <ErrorInnerPage errorData={error} />
 
   let getCasesByIdKey = data && data.getCasesByIdKey[0]
