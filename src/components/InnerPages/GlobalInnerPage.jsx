@@ -15,6 +15,7 @@ import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
 import HeatMapRangeSlider from '../WorldHeatMap/HeatMapRangeSlider'
 import PanelTopX from '../Panels/PanelTopX'
+import { calculateCaseScores } from '../../modules/numeric'
 import { COVID_GLOBAL_PAGE } from '../../modules/queries'
 
 const InnerPage = ({
@@ -60,7 +61,7 @@ const InnerPage = ({
       color: 'progressBadGrey',
     },
   ]
-
+console.log(calculateCaseScores(globalTimeSeries, totalCases));
   return (
     <>
       <div id="global-page" className="">

@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/react-hooks'
 import ErrorInnerPage from './ErrorInnerPage'
 import LoadingInnerPage from './LoadingInnerPage'
 import { getCountryCasesByIdKey } from '../../modules/queries'
+import { calculateCaseScores } from '../../modules/numeric'
 import CountryNotFound from './CountryNotFound'
 import TimeSeries from '../Charts/TimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
@@ -80,7 +81,7 @@ const InnerPage = () => {
   }
 
   const pageTitle = genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)
-
+  console.log(calculateCaseScores(getCasesByIdKey.casesByDate, currentCases));
   return (
     <>
       <div id={idKey} className="">

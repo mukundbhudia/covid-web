@@ -66,4 +66,47 @@ const movingAverage = ( data, size ) => {
   return ret.slice(size - 1)
 }
 
-export { movingAverage, getPercentageFromDataSet }
+const calculateCaseScores = (casesArray, currentCases) => {
+  const result = {
+    firstCase: null,
+    firstDeath: null,
+    highestCases: null,
+    highestDeaths: null
+  }
+  let lookForDeaths = true
+  if (currentCases.deaths === 0) {
+    lookForDeaths = false
+  }
+
+  let i = 1
+  let topCase = 0
+  let topDeath = 0
+  while (i < casesArray.length) {
+    if (result.firstCase === null) {
+      if (casesArray[i-1].confirmedCasesToday > casesArray[i].confirmedCasesToday) {
+        result.firstCase = casesArray[i-1].day
+      }
+    }
+    if (casesArray[i].confirmedCasesToday > topCase) {
+      topCase = casesArray[i].confirmedCasesToday
+      result.highestCases = casesArray[i].day
+    }
+    if (lookForDeaths) {
+      if (casesArray[i-1].deathsToday > casesArray[i].deathsToday && result.firstDeath === null) {
+        result.firstDeath = casesArray[i-1].day
+      }
+      if (casesArray[i].deathsToday > topDeath) {
+        topDeath = casesArray[i].deathsToday
+        result.highestDeaths = casesArray[i].day
+      }
+    }
+    i++
+  }
+  return result
+}
+
+export {
+  movingAverage,
+  getPercentageFromDataSet,
+  calculateCaseScores,
+}
