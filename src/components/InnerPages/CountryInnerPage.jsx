@@ -7,7 +7,6 @@ import { useQuery } from '@apollo/react-hooks'
 import ErrorInnerPage from './ErrorInnerPage'
 import LoadingInnerPage from './LoadingInnerPage'
 import { getCountryCasesByIdKey } from '../../modules/queries'
-import { calculateCaseScores } from '../../modules/numeric'
 import CountryNotFound from './CountryNotFound'
 import TimeSeries from '../Charts/TimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
@@ -20,6 +19,7 @@ import PanelDeathsToday from '../Panels/PanelDeathsToday'
 import PanelConfirmedToday from '../Panels/PanelConfirmedToday'
 import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
+import MultiPanelNotableDates from '../Panels/MultiPanelNotableDates'
 
 const InnerPage = () => {
   let { id } = useParams()
@@ -81,7 +81,7 @@ const InnerPage = () => {
   }
 
   const pageTitle = genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)
-  console.log(calculateCaseScores(getCasesByIdKey.casesByDate, currentCases));
+
   return (
     <>
       <div id={idKey} className="">
@@ -105,6 +105,7 @@ const InnerPage = () => {
           <PanelDeathCount caseCount={currentCases.deaths}/>
         </div>
       </div>
+
       <div className="row">
         <div className="col-sm">
           <PanelConfirmedToday caseCount={currentCases.confirmedCasesToday}/>
@@ -113,6 +114,12 @@ const InnerPage = () => {
           <PanelDeathsToday caseCount={currentCases.deathsToday}/>
         </div>
       </div>
+
+      <MultiPanelNotableDates
+        cases={ getCasesByIdKey.casesByDate }
+        currentCases={ currentCases }
+      />
+
       <div className="row">
         <div className="col-sm">
           <PanelConfirmedVsActive data={confirmedVsActiveProgressBar}/>

@@ -11,11 +11,11 @@ import PanelConfirmedCount from '../Panels/PanelConfirmedCount'
 import PanelActiveCount from '../Panels/PanelActiveCount'
 import PanelRecoveredCount from '../Panels/PanelRecoveredCount'
 import PanelDeathCount from '../Panels/PanelDeathCount'
+import MultiPanelNotableDates from '../Panels/MultiPanelNotableDates'
 import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
 import HeatMapRangeSlider from '../WorldHeatMap/HeatMapRangeSlider'
 import PanelTopX from '../Panels/PanelTopX'
-import { calculateCaseScores } from '../../modules/numeric'
 import { COVID_GLOBAL_PAGE } from '../../modules/queries'
 
 const InnerPage = ({
@@ -61,15 +61,17 @@ const InnerPage = ({
       color: 'progressBadGrey',
     },
   ]
-console.log(calculateCaseScores(globalTimeSeries, totalCases));
+
   return (
     <>
-      <div id="global-page" className="">
+      <div id="global-page">
         <h3>{title}</h3>
       </div>
+
       <div className="row">
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
+
       <div className="row">
         <div className="col-sm">
           <PanelConfirmedCount caseCount={totalCases.confirmed}/>
@@ -84,6 +86,7 @@ console.log(calculateCaseScores(globalTimeSeries, totalCases));
           <PanelDeathCount caseCount={totalCases.deaths}/>
         </div>
       </div>
+
       <div className="row">
         <div className="col-sm">
           <PanelConfirmedToday caseCount={totalCases.confirmedCasesToday}/>
@@ -92,6 +95,12 @@ console.log(calculateCaseScores(globalTimeSeries, totalCases));
           <PanelDeathsToday caseCount={totalCases.deathsToday} />
         </div>
       </div>
+
+      <MultiPanelNotableDates
+        cases={ globalTimeSeries }
+        currentCases={ totalCases }
+      />
+
       <div className="row">
         <div className="col-sm">
           <PanelConfirmedVsActive data={confirmedVsActiveProgressBar}/>

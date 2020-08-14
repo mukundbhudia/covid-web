@@ -47,9 +47,11 @@ input.movingAverage {
 input.movingAverage[type=range]::-webkit-slider-thumb {
   background: #919090;
 }
+
 input.movingAverage[type=range]::-moz-range-thumb {
   background: #919090;
 }
+
 input.movingAverage[type=range]::-ms-thumb {
   background: #919090;
 }
@@ -175,6 +177,16 @@ td.selectedForSortColumn {
 
 .text-purple {
   color: #5b037b;
+}
+
+.alert-notable {
+  background-color: #e9f4ff;
+  border-color: #d5e6fb;
+}
+
+.text-notable {
+  font-size: 11px;
+  color: #304f77;
 }
 
 .footer {
