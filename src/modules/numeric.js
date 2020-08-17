@@ -67,13 +67,18 @@ const movingAverage = ( data, size ) => {
 }
 
 const calculateCaseScores = (casesArray, currentCases) => {
+  let lookForDeaths = true
+  currentCases.day = new Date()
+  casesArray.push(currentCases)
+
   const result = {
     firstCase: null,
     firstDeath: null,
     highestCases: null,
     highestDeaths: null
   }
-  let lookForDeaths = true
+
+  // If a country has no reported deaths yet, there's no need to look for a maximum
   if (currentCases.deaths === 0) {
     lookForDeaths = false
   }
@@ -81,16 +86,19 @@ const calculateCaseScores = (casesArray, currentCases) => {
   let i = 1
   let topCase = 0
   let topDeath = 0
+
   while (i < casesArray.length) {
     if (result.firstCase === null) {
       if (casesArray[i-1].confirmedCasesToday > casesArray[i].confirmedCasesToday) {
         result.firstCase = casesArray[i-1].day
       }
     }
+
     if (casesArray[i].confirmedCasesToday > topCase) {
       topCase = casesArray[i].confirmedCasesToday
       result.highestCases = casesArray[i].day
     }
+
     if (lookForDeaths) {
       if (casesArray[i-1].deathsToday > casesArray[i].deathsToday && result.firstDeath === null) {
         result.firstDeath = casesArray[i-1].day
@@ -100,8 +108,10 @@ const calculateCaseScores = (casesArray, currentCases) => {
         result.highestDeaths = casesArray[i].day
       }
     }
+
     i++
   }
+  console.log(result);
   return result
 }
 
