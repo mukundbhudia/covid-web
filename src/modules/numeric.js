@@ -66,6 +66,7 @@ const movingAverage = ( data, size ) => {
   return ret.slice(size - 1)
 }
 
+// Finds out the first and highest number of confirmed cases and deaths
 const calculateCaseScores = (casesArray, currentCases) => {
   let lookForDeaths = true
   currentCases.day = new Date()
@@ -89,7 +90,7 @@ const calculateCaseScores = (casesArray, currentCases) => {
 
   while (i < casesArray.length) {
     if (result.firstCase === null) {
-      if (casesArray[i-1].confirmedCasesToday > casesArray[i].confirmedCasesToday) {
+      if (casesArray[i-1].confirmedCasesToday > 0) {
         result.firstCase = casesArray[i-1].day
       }
     }
@@ -100,7 +101,7 @@ const calculateCaseScores = (casesArray, currentCases) => {
     }
 
     if (lookForDeaths) {
-      if (casesArray[i-1].deathsToday > casesArray[i].deathsToday && result.firstDeath === null) {
+      if (casesArray[i-1].deathsToday > 0 && result.firstDeath === null) {
         result.firstDeath = casesArray[i-1].day
       }
       if (casesArray[i].deathsToday > topDeath) {
@@ -111,7 +112,6 @@ const calculateCaseScores = (casesArray, currentCases) => {
 
     i++
   }
-  console.log(result);
   return result
 }
 
