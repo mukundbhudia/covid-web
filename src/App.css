@@ -189,6 +189,10 @@ td.selectedForSortColumn {
   color: #304f77;
 }
 
+.notable-tooltip {
+  border-bottom: #304f77 dotted 1px;
+}
+
 .footer {
   font-size: 11px;
   background-color: #e3e3e3;

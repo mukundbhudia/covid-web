@@ -15,7 +15,8 @@ const PanelNotableDates = ({ data, message }) => {
     renderedDate = (
       <>
         { data.count ? data.count.toLocaleString() : 'N/A' }
-        <span style={ {textDecorationStyle: 'dashed'} } data-tip={ notableDate.toLocaleDateString() }> ({ timeAgoDate })</span>
+        &nbsp;
+        <span className="notable-tooltip" data-tip={ notableDate.toLocaleDateString() }>({ timeAgoDate })</span>
       </>
     )
   }
