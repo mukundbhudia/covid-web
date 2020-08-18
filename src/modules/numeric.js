@@ -68,9 +68,9 @@ const movingAverage = ( data, size ) => {
 
 // Finds out the first and highest number of confirmed cases and deaths
 const calculateCaseScores = (casesArray, currentCases) => {
+  const casesArrayIncludingCurrent = [...casesArray, currentCases]
   let lookForDeaths = true
   currentCases.day = new Date()
-  casesArray.push(currentCases)
 
   const result = {
     firstCase: null,
@@ -88,25 +88,25 @@ const calculateCaseScores = (casesArray, currentCases) => {
   let topCase = 0
   let topDeath = 0
 
-  while (i < casesArray.length) {
+  while (i < casesArrayIncludingCurrent.length) {
     if (result.firstCase === null) {
-      if (casesArray[i-1].confirmedCasesToday > 0) {
-        result.firstCase = casesArray[i-1].day
+      if (casesArrayIncludingCurrent[i-1].confirmedCasesToday > 0) {
+        result.firstCase = casesArrayIncludingCurrent[i-1].day
       }
     }
 
-    if (casesArray[i].confirmedCasesToday > topCase) {
-      topCase = casesArray[i].confirmedCasesToday
-      result.highestCases = casesArray[i].day
+    if (casesArrayIncludingCurrent[i].confirmedCasesToday > topCase) {
+      topCase = casesArrayIncludingCurrent[i].confirmedCasesToday
+      result.highestCases = casesArrayIncludingCurrent[i].day
     }
 
     if (lookForDeaths) {
-      if (casesArray[i-1].deathsToday > 0 && result.firstDeath === null) {
-        result.firstDeath = casesArray[i-1].day
+      if (casesArrayIncludingCurrent[i-1].deathsToday > 0 && result.firstDeath === null) {
+        result.firstDeath = casesArrayIncludingCurrent[i-1].day
       }
-      if (casesArray[i].deathsToday > topDeath) {
-        topDeath = casesArray[i].deathsToday
-        result.highestDeaths = casesArray[i].day
+      if (casesArrayIncludingCurrent[i].deathsToday > topDeath) {
+        topDeath = casesArrayIncludingCurrent[i].deathsToday
+        result.highestDeaths = casesArrayIncludingCurrent[i].day
       }
     }
 
