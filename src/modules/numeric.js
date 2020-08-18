@@ -73,10 +73,10 @@ const calculateCaseScores = (casesArray, currentCases) => {
   currentCases.day = new Date()
 
   const result = {
-    firstCase: null,
-    firstDeath: null,
-    highestCases: null,
-    highestDeaths: null
+    firstCase: { count: null, day: null },
+    firstDeath: { count: null, day: null },
+    highestCases: { count: null, day: null },
+    highestDeaths: { count: null, day: null },
   }
 
   // If a country has no reported deaths yet, there's no need to look for a maximum
@@ -89,24 +89,28 @@ const calculateCaseScores = (casesArray, currentCases) => {
   let topDeath = 0
 
   while (i < casesArrayIncludingCurrent.length) {
-    if (result.firstCase === null) {
+    if (result.firstCase.count === null) {
       if (casesArrayIncludingCurrent[i-1].confirmedCasesToday > 0) {
-        result.firstCase = casesArrayIncludingCurrent[i-1].day
+        result.firstCase.day = casesArrayIncludingCurrent[i-1].day
+        result.firstCase.count = casesArrayIncludingCurrent[i-1].confirmedCasesToday
       }
     }
 
     if (casesArrayIncludingCurrent[i].confirmedCasesToday > topCase) {
       topCase = casesArrayIncludingCurrent[i].confirmedCasesToday
-      result.highestCases = casesArrayIncludingCurrent[i].day
+      result.highestCases.day = casesArrayIncludingCurrent[i].day
+      result.highestCases.count = topCase
     }
 
     if (lookForDeaths) {
-      if (casesArrayIncludingCurrent[i-1].deathsToday > 0 && result.firstDeath === null) {
-        result.firstDeath = casesArrayIncludingCurrent[i-1].day
+      if (casesArrayIncludingCurrent[i-1].deathsToday > 0 && result.firstDeath.count === null) {
+        result.firstDeath.day = casesArrayIncludingCurrent[i-1].day
+        result.firstDeath.count = casesArrayIncludingCurrent[i-1].deathsToday
       }
       if (casesArrayIncludingCurrent[i].deathsToday > topDeath) {
         topDeath = casesArrayIncludingCurrent[i].deathsToday
-        result.highestDeaths = casesArrayIncludingCurrent[i].day
+        result.highestDeaths.day = casesArrayIncludingCurrent[i].day
+        result.highestDeaths.count = topDeath
       }
     }
 

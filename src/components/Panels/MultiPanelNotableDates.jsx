@@ -10,16 +10,28 @@ const MultiPanelNotableDates = ({ cases, currentCases }) => {
     <>
       <div className="row">
         <div className="col-sm">
-           <PanelNotableDates date={countryScores.firstCase} message="First case" />
+           <PanelNotableDates
+            data={countryScores.firstCase}
+            message="First case"
+          />
         </div>
         <div className="col-sm">
-          <PanelNotableDates date={countryScores.firstDeath} message="First death" />
+          <PanelNotableDates
+            data={countryScores.firstDeath}
+            message="First death"
+          />
         </div>
         <div className="col-sm">
-          <PanelNotableDates date={countryScores.highestCases} message="Most cases" />
+          <PanelNotableDates
+            data={countryScores.highestCases}
+            message="Most cases"
+          />
         </div>
         <div className="col-sm">
-          <PanelNotableDates date={countryScores.highestDeaths} message="Most deaths" />
+          <PanelNotableDates
+            data={countryScores.highestDeaths}
+            message="Most deaths"
+          />
         </div>
       </div>
     </>
