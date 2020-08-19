@@ -40,3 +40,8 @@ Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Thanks
+
+* To [Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19) for the hard work providing and collating the data.
+* To [Salomão Rodrigues](https://github.com/salomao-rodrigues) for teaching me React and helping me get started.
