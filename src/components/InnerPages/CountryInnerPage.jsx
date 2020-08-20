@@ -8,7 +8,7 @@ import ErrorInnerPage from './ErrorInnerPage'
 import LoadingInnerPage from './LoadingInnerPage'
 import { getCountryCasesByIdKey } from '../../modules/queries'
 import CountryNotFound from './CountryNotFound'
-import TimeSeries from '../Charts/TimeSeries'
+import PanelTimeSeries from '../Panels/MultiPanels/PanelTimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import ProvincesMenu from '../Nav/ProvincesMenu'
 import PanelCurrentCases from '../Panels/MultiPanels/PanelCurrentCases'
@@ -95,45 +95,11 @@ const InnerPage = () => {
         <ProvincesMenu countryName={getCasesByIdKey.country} idKey={idKey}/>
       }
 
-      {getCasesByIdKey.casesByDate &&
-        <div className="row">
-          <div className="col-sm">
-            <TimeSeries
-              chartTitle={ `Time series cases by day for ${pageTitle}` }
-              casesToHide={ {
-                confirmed: false,
-                deaths: false,
-                confirmedToday: false,
-                confirmedTodayMovingAverage: true,
-                deathsToday: false,
-                deathsTodayMovingAverage: true,
-              } }
-              data={getCasesByIdKey.casesByDate}
-              currentCases={currentCases}
-            />
-          </div>
-        </div>
-      }
-      <br/>
-      {getCasesByIdKey.casesByDate &&
-        <div className="row">
-          <div className="col-sm">
-            <TimeSeries
-              chartTitle={ `Time series daily cases by day for ${pageTitle}` }
-              casesToHide={ {
-                confirmed: true,
-                deaths: true,
-                confirmedToday: false,
-                confirmedTodayMovingAverage: false,
-                deathsToday: false,
-                deathsTodayMovingAverage: false,
-              } }
-              data={getCasesByIdKey.casesByDate}
-              currentCases={currentCases}
-            />
-          </div>
-        </div>
-      }
+      <PanelTimeSeries
+        cases={ getCasesByIdKey.casesByDate }
+        currentCases={ currentCases }
+        title={ pageTitle }
+      />
     </>
   )
 }
