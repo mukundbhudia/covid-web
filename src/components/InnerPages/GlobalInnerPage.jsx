@@ -5,15 +5,7 @@ import ErrorInnerPage from './ErrorInnerPage'
 import LoadingInnerPage from './LoadingInnerPage'
 import TimeSeries from '../Charts/TimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
-import PanelDeathsToday from '../Panels/PanelDeathsToday'
-import PanelConfirmedToday from '../Panels/PanelConfirmedToday'
-import PanelConfirmedCount from '../Panels/PanelConfirmedCount'
-import PanelActiveCount from '../Panels/PanelActiveCount'
-import PanelRecoveredCount from '../Panels/PanelRecoveredCount'
-import PanelDeathCount from '../Panels/PanelDeathCount'
-import MultiPanelNotableDates from '../Panels/MultiPanelNotableDates'
-import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
-import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
+import PanelCurrentCases from '../Panels/MultiPanels/PanelCurrentCases'
 import HeatMapRangeSlider from '../WorldHeatMap/HeatMapRangeSlider'
 import PanelTopX from '../Panels/PanelTopX'
 import { COVID_GLOBAL_PAGE } from '../../modules/queries'
@@ -72,43 +64,12 @@ const InnerPage = ({
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
 
-      <div className="row">
-        <div className="col-sm">
-          <PanelConfirmedCount caseCount={totalCases.confirmed}/>
-        </div>
-        <div className="col-sm">
-          <PanelActiveCount caseCount={totalCases.active}/>
-        </div>
-        <div className="col-sm">
-          <PanelRecoveredCount caseCount={totalCases.recovered}/>
-        </div>
-        <div className="col-sm">
-          <PanelDeathCount caseCount={totalCases.deaths}/>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col-sm">
-          <PanelConfirmedToday caseCount={totalCases.confirmedCasesToday}/>
-        </div>
-        <div className="col-sm">
-          <PanelDeathsToday caseCount={totalCases.deathsToday} />
-        </div>
-      </div>
-
-      <MultiPanelNotableDates
-        cases={ globalTimeSeries }
-        currentCases={ totalCases }
+      <PanelCurrentCases
+       cases= { globalTimeSeries }
+       currentCases = { totalCases }
+       confirmedVsActiveProgressBar = { confirmedVsActiveProgressBar }
+       recoveredVsDeathsProgressBar = { recoveredVsDeathsProgressBar }
       />
-
-      <div className="row">
-        <div className="col-sm">
-          <PanelConfirmedVsActive data={confirmedVsActiveProgressBar}/>
-        </div>
-        <div className="col-sm">
-          <PanelRecoveriesVsDeaths data={recoveredVsDeathsProgressBar}/>
-        </div>
-      </div>
 
       <div className="row">
         <div className="col-sm">

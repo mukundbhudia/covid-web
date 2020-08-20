@@ -1,7 +1,7 @@
 import React from 'react'
 import * as timeago from 'timeago.js'
 
-const PanelNotableDates = ({ data, message }) => {
+const PanelNotableDate = ({ data, message }) => {
   const notableDate = new Date(data.day)
   const timeAgoDate = timeago.format(data.day)
   let renderedDate = (
@@ -30,4 +30,4 @@ const PanelNotableDates = ({ data, message }) => {
   )
 }
 
-export default PanelNotableDates
+export default PanelNotableDate

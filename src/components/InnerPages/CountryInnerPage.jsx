@@ -11,15 +11,7 @@ import CountryNotFound from './CountryNotFound'
 import TimeSeries from '../Charts/TimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import ProvincesMenu from '../Nav/ProvincesMenu'
-import PanelConfirmedCount from '../Panels/PanelConfirmedCount'
-import PanelActiveCount from '../Panels/PanelActiveCount'
-import PanelRecoveredCount from '../Panels/PanelRecoveredCount'
-import PanelDeathCount from '../Panels/PanelDeathCount'
-import PanelDeathsToday from '../Panels/PanelDeathsToday'
-import PanelConfirmedToday from '../Panels/PanelConfirmedToday'
-import PanelConfirmedVsActive from '../Panels/PanelConfirmedVsActive'
-import PanelRecoveriesVsDeaths from '../Panels/PanelRecoveriesVsDeaths'
-import MultiPanelNotableDates from '../Panels/MultiPanelNotableDates'
+import PanelCurrentCases from '../Panels/MultiPanels/PanelCurrentCases'
 
 const InnerPage = () => {
   let { id } = useParams()
@@ -91,43 +83,12 @@ const InnerPage = () => {
         <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
       </div>
 
-      <div className="row">
-        <div className="col-sm">
-          <PanelConfirmedCount caseCount={currentCases.confirmed}/>
-        </div>
-        <div className="col-sm">
-          <PanelActiveCount caseCount={currentCases.active}/>
-        </div>
-        <div className="col-sm">
-          <PanelRecoveredCount caseCount={currentCases.recovered}/>
-        </div>
-        <div className="col-sm">
-          <PanelDeathCount caseCount={currentCases.deaths}/>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col-sm">
-          <PanelConfirmedToday caseCount={currentCases.confirmedCasesToday}/>
-        </div>
-        <div className="col-sm">
-          <PanelDeathsToday caseCount={currentCases.deathsToday}/>
-        </div>
-      </div>
-
-      <MultiPanelNotableDates
-        cases={ getCasesByIdKey.casesByDate }
-        currentCases={ currentCases }
+      <PanelCurrentCases
+        cases = { getCasesByIdKey.casesByDate }
+        currentCases = { currentCases }
+        confirmedVsActiveProgressBar = { confirmedVsActiveProgressBar }
+        recoveredVsDeathsProgressBar = { recoveredVsDeathsProgressBar }
       />
-
-      <div className="row">
-        <div className="col-sm">
-          <PanelConfirmedVsActive data={confirmedVsActiveProgressBar}/>
-        </div>
-        <div className="col-sm">
-          <PanelRecoveriesVsDeaths data={recoveredVsDeathsProgressBar}/>
-        </div>
-      </div>
 
       {
         (getCasesByIdKey.province || getCasesByIdKey.hasProvince) &&
