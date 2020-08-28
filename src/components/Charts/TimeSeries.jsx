@@ -49,7 +49,8 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   } else {
     if (currentCases.confirmedCasesToday < 0) {
       currentCases.confirmedCasesToday = 'N/A'
-    } else if (currentCases.deathsToday <0) {
+    }
+    if (currentCases.deathsToday < 0) {
       currentCases.deathsToday = 'N/A'
     }
     pushDataToCasesArray(today, currentCases)
