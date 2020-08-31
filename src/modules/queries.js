@@ -7,6 +7,10 @@ export const COVID_TOTALS = gql`
       idKey
       country
       province
+      confirmed
+      active
+      recovered
+      deaths
     }
   }
 `

@@ -1,31 +1,55 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { Typeahead, Highlighter } from 'react-bootstrap-typeahead'
 import {
   useHistory,
 } from "react-router-dom"
-import { Typeahead } from 'react-bootstrap-typeahead'
+
 import './InputSearch.css'
 
-const InputSearch = ({data}) => {
-const state = {
-  disabled: false,
-  dropup: false,
-  flip: false,
-  highlightOnlyResult: false,
-  minLength: 2,
-  open: undefined,
-  // selectHintOnEnter: false,
+const generateOptionLabel = (option) => {
+  let label = option.country
+  if (option.province !== null) {
+    label = label + ` - ${option.province}`
+  }
+  return label
 }
-let history = useHistory()
+
+const InputSearch = ({data}) => {
+  const state = {
+    disabled: false,
+    dropup: false,
+    flip: false,
+    highlightOnlyResult: true,
+    minLength: 2,
+    open: undefined,
+  }
+  let history = useHistory()
   return (
     <>
       <Typeahead
         {...state}
-        labelKey={(option) => {
-          let label = option.country
-          if (option.province !== null) {
-            label = label + ` - ${option.province}`
-          }
-          return label
+        labelKey={generateOptionLabel}
+        renderMenuItemChildren={(option, { text }) => {
+          const label = generateOptionLabel(option)
+          return(
+            <Fragment>
+                <Highlighter search={text}>
+                  { label }
+                </Highlighter>&nbsp;
+                <span className="inputSearchBadge badge badge-danger">
+                  { option.confirmed.toLocaleString() }
+                </span>
+                <span className="inputSearchBadge badge badge-primary">
+                  { option.active.toLocaleString() }
+                </span>
+                <span className="inputSearchBadge badge badge-success">
+                  { option.recovered.toLocaleString() }
+                </span>
+                <span className="inputSearchBadge badge badge-secondary">
+                  { option.deaths.toLocaleString() }
+                </span>
+            </Fragment>
+          )
         }}
         onChange={(selected) => {
           if (selected[0]) {

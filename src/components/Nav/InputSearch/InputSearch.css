@@ -29,6 +29,10 @@
   background-color: #525353;
 }
 
+.inputSearchBadge {
+  margin-left: 5px;
+}
+
 .form-control:focus {
   /* color: #495057;
   background-color: #fff;
