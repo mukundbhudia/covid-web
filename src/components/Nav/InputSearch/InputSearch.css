@@ -33,6 +33,24 @@
   margin-left: 5px;
 }
 
+.searchBadge-danger {
+  background-color: #9f474f;
+  color: #313030;
+}
+.searchBadge-primary {
+  background-color: #417fc1;
+  color: #313030;
+}
+.searchBadge-success {
+  background-color: #25aa43;
+  color: #313030;
+}
+.searchBadge-secondary {
+  background-color: #777;
+  color: #313030;
+}
+
+
 .form-control:focus {
   /* color: #495057;
   background-color: #fff;

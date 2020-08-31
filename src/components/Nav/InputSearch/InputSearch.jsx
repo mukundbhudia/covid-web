@@ -36,16 +36,16 @@ const InputSearch = ({data}) => {
                 <Highlighter search={text}>
                   { label }
                 </Highlighter>&nbsp;
-                <span className="inputSearchBadge badge badge-danger">
+                <span className="inputSearchBadge badge searchBadge-danger"> 
                   { option.confirmed.toLocaleString() }
                 </span>
-                <span className="inputSearchBadge badge badge-primary">
+                <span className="inputSearchBadge badge searchBadge-primary">
                   { option.active.toLocaleString() }
                 </span>
-                <span className="inputSearchBadge badge badge-success">
+                <span className="inputSearchBadge badge searchBadge-success">
                   { option.recovered.toLocaleString() }
                 </span>
-                <span className="inputSearchBadge badge badge-secondary">
+                <span className="inputSearchBadge badge searchBadge-secondary">
                   { option.deaths.toLocaleString() }
                 </span>
             </Fragment>
