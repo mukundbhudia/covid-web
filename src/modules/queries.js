@@ -144,6 +144,7 @@ query {
   }
   casesByLocationWithNoProvince {
     countryCode
+    idKey
     confirmedCasesToday
     deathsToday
   }
@@ -154,6 +155,7 @@ export const getHeatMapCases = gql`
   query {
     casesByLocationWithNoProvince {
       countryCode
+      idKey
       confirmed
       active
       recovered
@@ -212,6 +214,7 @@ export const getGlobalCasesGivenDate = gql`
 query GlobalCases($day: String!) {
   getGlobalCasesByDate(day: $day) {
     countryCode
+    idKey
     confirmed
     active
     recovered

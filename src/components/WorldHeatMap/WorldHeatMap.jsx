@@ -21,17 +21,19 @@ class WorldHeatMap extends Component {
         if (!showMoreThanOneDataItem) {
           return heatMapData.push([
             item.countryCode,
-            this.isValidCase(mainCaseNumberToShow) ? mainCaseNumberToShow : 0
+            this.isValidCase(mainCaseNumberToShow) ? mainCaseNumberToShow : 0,
+            item.idKey,
           ])
         } else if (showMoreThanOneDataItem) {
           return heatMapData.push([
-            item.countryCode, 
+            item.countryCode,
             mainCaseNumberToShow,
             parseInt(item.confirmedCasesToday), 
             parseInt(item.active) || 'N/A',
             parseInt(item.recovered) || 'N/A',
             parseInt(item.deaths), 
-            parseInt(item.deathsToday)
+            parseInt(item.deathsToday),
+            item.idKey,
           ])
         }
       }
@@ -45,7 +47,7 @@ class WorldHeatMap extends Component {
     // We need to colorize every country based on "numberOfWhatever"
     // colors should be uniq for every value.
     // For this purpose we create palette(using min/max this.props.data-value)
-    let onlyValues = heatMapData.map(function (obj) { return obj[1] })
+    let onlyValues = heatMapData.map((obj) => { return obj[1] })
     let minValue = Math.min.apply(null, onlyValues),
       maxValue = Math.max.apply(null, onlyValues)
 
@@ -56,16 +58,18 @@ class WorldHeatMap extends Component {
       .range([lightColour, darkColour])
 
     // fill dataset in appropriate format
-    heatMapData.forEach(function (item) { //
+    heatMapData.forEach((item) => { //
       // item example value ["USA", 70]
       let iso = item[0],
-      value = item[1]
+        value = item[1],
+        idKey = item[2]
       if (showMoreThanOneDataItem) {
         let confirmedCasesToday = item[2]
         let active = item[3]
         let recovered = item[4]
         let deaths = item[5]
         let deathsToday = item[6]
+        idKey = item[7]
         dataset[iso] = {
           caseCount: value,
           confirmedCasesToday,
@@ -73,10 +77,15 @@ class WorldHeatMap extends Component {
           recovered,
           deaths,
           deathsToday,
+          idKey,
           fillColor: paletteScale(value),
         }
       } else {
-        dataset[iso] = { caseCount: value, fillColor: paletteScale(value) }
+        dataset[iso] = {
+          caseCount: value,
+          idKey,
+          fillColor: paletteScale(value),
+        }
       }
     })
 
@@ -94,13 +103,13 @@ class WorldHeatMap extends Component {
         borderColor: '#DEDEDE',
         highlightBorderWidth: 2,
         // don't change color on mouse hover
-        highlightFillColor: function(geo) {
+        highlightFillColor: (geo) => {
           return geo['fillColor'] || '#F5F5F5'
         },
         // only change border
         highlightBorderColor: '#B7B7B7',
         // show desired information in tooltip
-        popupTemplate: function(geo, data) {
+        popupTemplate: (geo, data) => {
           // don't show tooltip if country don't present in dataset
           let tooltipHtml = `
           <div class="hoverinfo">
@@ -126,7 +135,12 @@ class WorldHeatMap extends Component {
             </div>`
           }
           return tooltipHtml
-        }
+        },
+      },
+      done: (datamap) => {
+        datamap.svg.selectAll('.datamaps-subunit').on('click', (geography) => {
+          window.location.href = `${process.env.PUBLIC_URL}/${dataset[geography.id].idKey}`
+        })
       }
     })
     return datamap
