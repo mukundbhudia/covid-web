@@ -30,11 +30,13 @@ const generateRandomColour = (max) => {
 }
 
 const chooseRandomColours = (listOfColours) => {
-  const randomNumberFromList = Math.floor(Math.random() * Math.floor(listOfColours.length))
+  const randomNumberFromList = Math.floor(
+    Math.random() * Math.floor(listOfColours.length)
+  )
   return Object.keys(listOfColours)[randomNumberFromList]
 }
 
-export { 
+export {
   chartColors,
   multiChartColours,
   generateRandomColour,

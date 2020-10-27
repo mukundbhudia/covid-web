@@ -52,27 +52,27 @@ export const COVID_GLOBAL_PAGE = gql`
 `
 
 export const getCasesByIdKey = gql`
-query GetCases($idKeys: [String]!) {
-  getManyCasesByIdKey(idKeys: $idKeys){
-    idKey
-    country
-    province
-    confirmed
-    active
-    recovered
-    deaths
-    confirmedCasesToday
-    deathsToday
-    lastUpdate
-    casesByDate {
+  query GetCases($idKeys: [String]!) {
+    getManyCasesByIdKey(idKeys: $idKeys) {
+      idKey
+      country
+      province
       confirmed
+      active
+      recovered
       deaths
       confirmedCasesToday
       deathsToday
-      day
+      lastUpdate
+      casesByDate {
+        confirmed
+        deaths
+        confirmedCasesToday
+        deathsToday
+        day
+      }
     }
   }
-}
 `
 export const getCountryWithNoProvince = gql`
   query {
@@ -84,23 +84,23 @@ export const getCountryWithNoProvince = gql`
 `
 
 export const getDataTableCases = gql`
-query {
-  casesByLocationWithNoProvince {
-    idKey
-    country
-    confirmed
-    confirmedCasesToday
-    active
-    recovered
-    deaths
-    deathsToday
-    lastUpdate
+  query {
+    casesByLocationWithNoProvince {
+      idKey
+      country
+      confirmed
+      confirmedCasesToday
+      active
+      recovered
+      deaths
+      deathsToday
+      lastUpdate
+    }
   }
-}
 `
 
 export const getTopCasesByLimit = gql`
-query TopCases($limit: Int!) {
+  query TopCases($limit: Int!) {
     topXconfirmedByCountry(limit: $limit) {
       country
       confirmed
@@ -129,26 +129,26 @@ query TopCases($limit: Int!) {
 `
 
 export const getTodayTopCases = gql`
-query {
-  totalCases {
-    confirmedCasesToday
-    deathsToday
+  query {
+    totalCases {
+      confirmedCasesToday
+      deathsToday
+    }
+    topXconfirmedTodayByCountry(limit: 10) {
+      country
+      confirmedCasesToday
+    }
+    topXdeathsTodayByCountry(limit: 10) {
+      country
+      deathsToday
+    }
+    casesByLocationWithNoProvince {
+      countryCode
+      idKey
+      confirmedCasesToday
+      deathsToday
+    }
   }
-  topXconfirmedTodayByCountry(limit: 10) {
-    country
-    confirmedCasesToday
-  }
-  topXdeathsTodayByCountry(limit: 10) {
-    country
-    deathsToday
-  }
-  casesByLocationWithNoProvince {
-    countryCode
-    idKey
-    confirmedCasesToday
-    deathsToday
-  }
-}
 `
 
 export const getHeatMapCases = gql`
@@ -167,33 +167,33 @@ export const getHeatMapCases = gql`
 `
 
 export const getCountryCasesByIdKey = gql`
-query GetCases($idKey: String!) {
-  getCasesByIdKey(idKey: $idKey){
-    country
-    province
-    confirmed
-    active
-    recovered
-    deaths
-    confirmedCasesToday
-    deathsToday
-    latitude
-    longitude
-    lastUpdate
-    casesByDate {
+  query GetCases($idKey: String!) {
+    getCasesByIdKey(idKey: $idKey) {
+      country
+      province
       confirmed
+      active
+      recovered
       deaths
       confirmedCasesToday
       deathsToday
-      day
+      latitude
+      longitude
+      lastUpdate
+      casesByDate {
+        confirmed
+        deaths
+        confirmedCasesToday
+        deathsToday
+        day
+      }
+      provincesList {
+        idKey
+        province
+      }
+      hasProvince
     }
-    provincesList {
-      idKey
-      province
-    }
-    hasProvince
   }
-}
 `
 export const getProvincesGivenCountryName = gql`
   query ProvincesGivenCountry($countryName: String!) {
@@ -211,16 +211,16 @@ export const getProvincesGivenCountryName = gql`
 `
 
 export const getGlobalCasesGivenDate = gql`
-query GlobalCases($day: String!) {
-  getGlobalCasesByDate(day: $day) {
-    countryCode
-    idKey
-    confirmed
-    active
-    recovered
-    deaths
-    confirmedCasesToday
-    deathsToday
+  query GlobalCases($day: String!) {
+    getGlobalCasesByDate(day: $day) {
+      countryCode
+      idKey
+      confirmed
+      active
+      recovered
+      deaths
+      confirmedCasesToday
+      deathsToday
+    }
   }
-}
 `
