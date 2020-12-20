@@ -15,7 +15,7 @@ Related projects: https://github.com/mukundbhudia/covid-api and https://github.c
 ## Prerequisites
 * Node v14.x.x
 * NPM v6.x.x
-* covid-web needs [covid-api](https://github.com/mukundbhudia/covid-api) to be running (which in turn also needs [covid-service](https://github.com/mukundbhudia/covid-service) to have run at least once).
+* covid-web needs [covid-api](https://github.com/mukundbhudia/covid-api) to be running (which in turn also needs [covid-service-rs](https://github.com/mukundbhudia/covid-service-rs) to have run at least once).
 
 ## Available Scripts
 
