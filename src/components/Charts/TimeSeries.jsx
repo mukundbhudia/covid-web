@@ -43,19 +43,6 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     }
   })
 
-  const today = new Date()
-  if (currentCases.confirmedCasesToday >= 0 && currentCases.deathsToday >= 0) {
-    pushDataToCasesArray(today, currentCases)
-  } else {
-    if (currentCases.confirmedCasesToday < 0) {
-      currentCases.confirmedCasesToday = 'N/A'
-    }
-    if (currentCases.deathsToday < 0) {
-      currentCases.deathsToday = 'N/A'
-    }
-    pushDataToCasesArray(today, currentCases)
-  }
-
   const confirmedTodayArray = data.map((element, i) => {
     return element.confirmedCasesToday
   })

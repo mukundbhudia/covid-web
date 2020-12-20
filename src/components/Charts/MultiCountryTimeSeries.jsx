@@ -38,12 +38,6 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
       pushDataToCasesArray(dateFromString, cases)
     })
   
-    const today = new Date()
-    if (allDates.length <= countryData.casesByDate.length ) {
-      allDates.push((today).toLocaleDateString())
-    }
-    pushDataToCasesArray(today, currentCases[j])
-  
     const confirmedTodayArray = countryData.casesByDate.map((element) => {
       return element.confirmedCasesToday
     })
