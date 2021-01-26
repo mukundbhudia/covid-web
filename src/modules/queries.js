@@ -23,6 +23,16 @@ export const COVID_GLOBAL_PAGE = gql`
       deaths
       confirmedCasesToday
       deathsToday
+      dateOfFirstCase
+      dateOfFirstDeath
+      highestDailyConfirmed {
+        count
+        date
+      }
+      highestDailyDeaths {
+        count
+        date
+      }
     }
     globalTimeSeries {
       confirmed
@@ -180,6 +190,16 @@ export const getCountryCasesByIdKey = gql`
       latitude
       longitude
       lastUpdate
+      dateOfFirstCase
+      dateOfFirstDeath
+      highestDailyConfirmed {
+        count
+        date
+      }
+      highestDailyDeaths {
+        count
+        date
+      }
       casesByDate {
         confirmed
         deaths

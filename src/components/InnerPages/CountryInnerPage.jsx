@@ -70,6 +70,10 @@ const InnerPage = () => {
     deaths: getCasesByIdKey.deaths,
     confirmedCasesToday: getCasesByIdKey.confirmedCasesToday,
     deathsToday: getCasesByIdKey.deathsToday,
+    dateOfFirstCase: getCasesByIdKey.dateOfFirstCase,
+    dateOfFirstDeath: getCasesByIdKey.dateOfFirstDeath,
+    highestDailyConfirmed: getCasesByIdKey.highestDailyConfirmed,
+    highestDailyDeaths: getCasesByIdKey.highestDailyDeaths,
   }
 
   const pageTitle = genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)
