@@ -1,14 +1,11 @@
 import React from 'react'
-import {
-  Link,
-  useHistory,
-} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import * as timeago from 'timeago.js'
 
 const setParams = (params) => {
   const searchParams = new URLSearchParams()
-  searchParams.set("sort", params.sortKey)
-  searchParams.set("order", params.order)
+  searchParams.set('sort', params.sortKey)
+  searchParams.set('order', params.order)
   return searchParams.toString()
 }
 
@@ -77,28 +74,96 @@ const DataTable = ({ sortConfig, tableData }) => {
         <table className="table table-sm table-hover sortable-data-table">
           <thead className="thead-light">
             <tr>
-              <th scope="col" className={applySelectedColumnHeaderStyle('country')} onClick={() => requestSort('country')}>Country {showLabel('country')}</th>
-              <th scope="col" className={applySelectedColumnHeaderStyle('confirmed')} onClick={() => requestSort('confirmed')}>Confirmed cases {showLabel('confirmed')}</th>
-              <th scope="col" className={applySelectedColumnHeaderStyle('confirmedCasesToday')} onClick={() => requestSort('confirmedCasesToday')}>Confrimed today {showLabel('confirmedCasesToday')}</th>
-              <th scope="col" className={applySelectedColumnHeaderStyle('active')} onClick={() => requestSort('active')}>Active {showLabel('active')}</th>
-              <th scope="col" className={applySelectedColumnHeaderStyle('recovered')} onClick={() => requestSort('recovered')}>Recovered {showLabel('recovered')}</th>
-              <th scope="col" className={applySelectedColumnHeaderStyle('deaths')} onClick={() => requestSort('deaths')}>Deaths {showLabel('deaths')}</th>
-              <th scope="col" className={applySelectedColumnHeaderStyle('deathsToday')} onClick={() => requestSort('deathsToday')}>Deaths today {showLabel('deathsToday')}</th>
-              <th scope="col" className={applySelectedColumnHeaderStyle('lastUpdate')} onClick={() => requestSort('lastUpdate')}>Last updated {showLabel('lastUpdate')}</th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle('country')}
+                onClick={() => requestSort('country')}
+              >
+                Country {showLabel('country')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle('confirmed')}
+                onClick={() => requestSort('confirmed')}
+              >
+                Confirmed cases {showLabel('confirmed')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle(
+                  'confirmedCasesToday'
+                )}
+                onClick={() => requestSort('confirmedCasesToday')}
+              >
+                Confrimed today {showLabel('confirmedCasesToday')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle('active')}
+                onClick={() => requestSort('active')}
+              >
+                Active {showLabel('active')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle('recovered')}
+                onClick={() => requestSort('recovered')}
+              >
+                Recovered {showLabel('recovered')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle('deaths')}
+                onClick={() => requestSort('deaths')}
+              >
+                Deaths {showLabel('deaths')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle('deathsToday')}
+                onClick={() => requestSort('deathsToday')}
+              >
+                Deaths today {showLabel('deathsToday')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle('lastUpdate')}
+                onClick={() => requestSort('lastUpdate')}
+              >
+                Last updated {showLabel('lastUpdate')}
+              </th>
             </tr>
           </thead>
           <tbody>
             {sortedTableData.map((tableRow) => {
               return (
                 <tr key={tableRow.idKey}>
-                  <td className={applySelectedColumnStyle('country')}><Link to={tableRow.idKey}>{tableRow.country}</Link></td>
-                  <td className={applySelectedColumnStyle('confirmed')}>{tableRow.confirmed.toLocaleString()}</td>
-                  <td className={applySelectedColumnStyle('confirmedCasesToday')}>{tableRow.confirmedCasesToday.toLocaleString()}</td>
-                  <td className={applySelectedColumnStyle('active')}>{tableRow.active.toLocaleString()}</td>
-                  <td className={applySelectedColumnStyle('recovered')}>{tableRow.recovered.toLocaleString()}</td>
-                  <td className={applySelectedColumnStyle('deaths')}>{tableRow.deaths.toLocaleString()}</td>
-                  <td className={applySelectedColumnStyle('deathsToday')}>{tableRow.deathsToday.toLocaleString()}</td>
-                  <td className={applySelectedColumnStyle('lastUpdate')}>{timeago.format(new Date(parseInt(tableRow.lastUpdate)))}</td>
+                  <td className={applySelectedColumnStyle('country')}>
+                    <Link to={tableRow.idKey}>{tableRow.country}</Link>
+                  </td>
+                  <td className={applySelectedColumnStyle('confirmed')}>
+                    {tableRow.confirmed.toLocaleString()}
+                  </td>
+                  <td
+                    className={applySelectedColumnStyle('confirmedCasesToday')}
+                  >
+                    {tableRow.confirmedCasesToday.toLocaleString()}
+                  </td>
+                  <td className={applySelectedColumnStyle('active')}>
+                    {tableRow.active.toLocaleString()}
+                  </td>
+                  <td className={applySelectedColumnStyle('recovered')}>
+                    {tableRow.recovered.toLocaleString()}
+                  </td>
+                  <td className={applySelectedColumnStyle('deaths')}>
+                    {tableRow.deaths.toLocaleString()}
+                  </td>
+                  <td className={applySelectedColumnStyle('deathsToday')}>
+                    {tableRow.deathsToday.toLocaleString()}
+                  </td>
+                  <td className={applySelectedColumnStyle('lastUpdate')}>
+                    {timeago.format(new Date(parseInt(tableRow.lastUpdate)))}
+                  </td>
                 </tr>
               )
             })}
