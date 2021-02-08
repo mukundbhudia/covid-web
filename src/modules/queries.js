@@ -42,22 +42,6 @@ export const COVID_GLOBAL_PAGE = gql`
       day
     }
     getAllDaysWithCases
-    topXconfirmedByCountry(limit: 5) {
-      country
-      confirmed
-  }
-    topXactiveByCountry(limit: 5) {
-      country
-      active
-    }
-    topXrecoveredByCountry(limit: 5) {
-      country
-      recovered
-    }
-    topXdeathsByCountry(limit: 5) {
-      country
-      deaths
-    }
   }
 `
 
