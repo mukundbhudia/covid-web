@@ -7,7 +7,6 @@ import PanelTimeSeries from '../Panels/MultiPanels/PanelTimeSeries'
 import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import PanelCurrentCases from '../Panels/MultiPanels/PanelCurrentCases'
 import HeatMapRangeSlider from '../WorldHeatMap/HeatMapRangeSlider'
-import PanelTopX from '../Panels/PanelTopX'
 import { COVID_GLOBAL_PAGE } from '../../modules/queries'
 
 const InnerPage = ({
@@ -21,12 +20,6 @@ const InnerPage = ({
   const totalCases = data.totalCases
   const globalTimeSeries = data.globalTimeSeries
   const getAllDaysWithCases = data.getAllDaysWithCases
-  const topXdata = {
-    topXconfirmedByCountry: {data: data.topXconfirmedByCountry, label: 'Top 5 confirmed by country'},
-    topXactiveByCountry: {data: data.topXactiveByCountry, label: 'Top 5 active by country'},
-    topXrecoveredByCountry: {data: data.topXrecoveredByCountry, label: 'Top 5 recovered by country'},
-    topXdeathsByCountry: {data: data.topXdeathsByCountry, label: 'Top 5 deaths by country'},
-  }
 
   const confirmedVsActiveProgressBar = [
     {
@@ -81,8 +74,6 @@ const InnerPage = ({
         cases={ globalTimeSeries }
         currentCases={ totalCases }
       />
-
-      <PanelTopX data={topXdata}/>
     </>
   )
 }

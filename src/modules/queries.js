@@ -45,7 +45,7 @@ export const COVID_GLOBAL_PAGE = gql`
     topXconfirmedByCountry(limit: 5) {
       country
       confirmed
-    }
+  }
     topXactiveByCountry(limit: 5) {
       country
       active
