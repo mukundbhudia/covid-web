@@ -148,9 +148,16 @@ class WorldHeatMap extends Component {
       },
       done: (datamap) => {
         datamap.svg.selectAll('.datamaps-subunit').on('click', (geography) => {
-          window.location.href = `${process.env.PUBLIC_URL}/${
+          if (
+            dataset &&
+            geography.id &&
+            dataset[geography.id] &&
             dataset[geography.id].idKey
-          }`
+          ) {
+            window.location.href = `${process.env.PUBLIC_URL}/${
+              dataset[geography.id].idKey
+            }`
+          }
         })
       },
     })
