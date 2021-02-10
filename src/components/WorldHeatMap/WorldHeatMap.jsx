@@ -4,7 +4,6 @@ import d3 from 'd3'
 import './WorldHeatMap.css'
 
 class WorldHeatMap extends Component {
-
   isValidCase(caseNumberToParse) {
     if (caseNumberToParse >= 0) {
       return true
@@ -13,7 +12,13 @@ class WorldHeatMap extends Component {
     }
   }
 
-  processMapData(casesByLocationWithNoProvince, lightColour, darkColour, caseType, showMoreThanOneDataItem) {
+  processMapData(
+    casesByLocationWithNoProvince,
+    lightColour,
+    darkColour,
+    caseType,
+    showMoreThanOneDataItem
+  ) {
     const heatMapData = []
     casesByLocationWithNoProvince.forEach((item, i) => {
       if (item.countryCode) {
@@ -28,17 +33,17 @@ class WorldHeatMap extends Component {
           return heatMapData.push([
             item.countryCode,
             mainCaseNumberToShow,
-            parseInt(item.confirmedCasesToday), 
+            parseInt(item.confirmedCasesToday),
             parseInt(item.active) || 'N/A',
             parseInt(item.recovered) || 'N/A',
-            parseInt(item.deaths), 
+            parseInt(item.deaths),
             parseInt(item.deathsToday),
             item.idKey,
           ])
         }
       }
     })
-    
+
     // Datamaps expect data in format:
     // { "USA": { "fillColor": "#42a844", numberOfWhatever: 75},
     //   "FRA": { "fillColor": "#8dc386", numberOfWhatever: 43 } }
@@ -47,18 +52,22 @@ class WorldHeatMap extends Component {
     // We need to colorize every country based on "numberOfWhatever"
     // colors should be uniq for every value.
     // For this purpose we create palette(using min/max this.props.data-value)
-    let onlyValues = heatMapData.map((obj) => { return obj[1] })
+    let onlyValues = heatMapData.map((obj) => {
+      return obj[1]
+    })
     let minValue = Math.min.apply(null, onlyValues),
       maxValue = Math.max.apply(null, onlyValues)
 
     // create color palette function
     // color can be whatever you wish
-    let paletteScale = d3.scale.linear()
+    let paletteScale = d3.scale
+      .linear()
       .domain([minValue, maxValue])
       .range([lightColour, darkColour])
 
     // fill dataset in appropriate format
-    heatMapData.forEach((item) => { //
+    heatMapData.forEach((item) => {
+      //
       // item example value ["USA", 70]
       let iso = item[0],
         value = item[1],
@@ -92,7 +101,7 @@ class WorldHeatMap extends Component {
     return dataset
   }
 
-  generateNewMap(dataset ,mapDataLabel, showMoreThanOneDataItem) {
+  generateNewMap(dataset, mapDataLabel, showMoreThanOneDataItem) {
     const datamap = new Datamap({
       element: document.getElementById(`choroplethMap-${mapDataLabel}`),
       projection: 'mercator', // big world map
@@ -139,9 +148,11 @@ class WorldHeatMap extends Component {
       },
       done: (datamap) => {
         datamap.svg.selectAll('.datamaps-subunit').on('click', (geography) => {
-          window.location.href = `${process.env.PUBLIC_URL}/${dataset[geography.id].idKey}`
+          window.location.href = `${process.env.PUBLIC_URL}/${
+            dataset[geography.id].idKey
+          }`
         })
-      }
+      },
     })
     return datamap
   }
@@ -152,8 +163,15 @@ class WorldHeatMap extends Component {
       const lightColour = this.props.lightColour
       const darkColour = this.props.darkColour
       const caseType = this.props.caseType
-      const showMoreThanOneDataItem = this.props.showMoreThanOneDataItem || false
-      const mapData = this.processMapData(casesByLocationWithNoProvince, lightColour, darkColour, caseType, showMoreThanOneDataItem)
+      const showMoreThanOneDataItem =
+        this.props.showMoreThanOneDataItem || false
+      const mapData = this.processMapData(
+        casesByLocationWithNoProvince,
+        lightColour,
+        darkColour,
+        caseType,
+        showMoreThanOneDataItem
+      )
       this.map.updateChoropleth(mapData)
     }
   }
@@ -165,15 +183,28 @@ class WorldHeatMap extends Component {
     const darkColour = this.props.darkColour
     const caseType = this.props.caseType
     const showMoreThanOneDataItem = this.props.showMoreThanOneDataItem || false
-    const mapData = this.processMapData(casesByLocationWithNoProvince, lightColour, darkColour, caseType, showMoreThanOneDataItem)
-    this.map = this.generateNewMap(mapData, mapDataLabel, showMoreThanOneDataItem)
+    const mapData = this.processMapData(
+      casesByLocationWithNoProvince,
+      lightColour,
+      darkColour,
+      caseType,
+      showMoreThanOneDataItem
+    )
+    this.map = this.generateNewMap(
+      mapData,
+      mapDataLabel,
+      showMoreThanOneDataItem
+    )
   }
 
   render() {
     const mapDataLabel = this.props.mapDataLabel
     return (
       <>
-        <div id={`choroplethMap-${mapDataLabel}`} className="choroplethMap"></div>
+        <div
+          id={`choroplethMap-${mapDataLabel}`}
+          className="choroplethMap"
+        ></div>
       </>
     )
   }
