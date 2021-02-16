@@ -8,7 +8,8 @@ const Footer = () => {
         <div className="container pull-left">
           <span className="text-muted">
             Data sources: <a target="_blank" rel="noopener noreferrer" href="https://github.com/CSSEGISandData/COVID-19">JHU CSSE</a>,&nbsp;
-            <a target="_blank" rel="noopener noreferrer" href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">John Hopkins University</a>.&nbsp;
+            <a target="_blank" rel="noopener noreferrer" href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">John Hopkins University</a>,&nbsp;
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/owid/covid-19-data/tree/master/public/data">OWID</a>.&nbsp;
           </span>
         </div>
         <div className="container pull-right">
