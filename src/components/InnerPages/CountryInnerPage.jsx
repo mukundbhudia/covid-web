@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-  useParams
-} from "react-router-dom";
+import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 
 import ErrorInnerPage from './ErrorInnerPage'
@@ -16,15 +14,15 @@ import PanelCurrentCases from '../Panels/MultiPanels/PanelCurrentCases'
 const InnerPage = () => {
   let { id } = useParams()
   const { loading, error, data } = useQuery(getCountryCasesByIdKey, {
-     variables: { idKey: id }
+    variables: { idKey: id },
   })
-  if (loading) return <LoadingInnerPage/>
+  if (loading) return <LoadingInnerPage />
   if (error) return <ErrorInnerPage errorData={error} />
 
   let getCasesByIdKey = data && data.getCasesByIdKey[0]
 
   if (!getCasesByIdKey) {
-    return ( <CountryNotFound /> )
+    return <CountryNotFound />
   }
   let lastUpdated = getCasesByIdKey.lastUpdate
   let idKey = id
@@ -81,7 +79,10 @@ const InnerPage = () => {
     population: getCasesByIdKey.population,
   }
 
-  const pageTitle = genPageTitle(getCasesByIdKey.country, getCasesByIdKey.province)
+  const pageTitle = genPageTitle(
+    getCasesByIdKey.country,
+    getCasesByIdKey.province
+  )
 
   return (
     <>
@@ -89,25 +90,24 @@ const InnerPage = () => {
         <h3>{pageTitle}</h3>
       </div>
       <div className="row">
-        <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
+        <DataUpdatedTimeStamp lastUpdated={lastUpdated} />
       </div>
 
       <PanelCurrentCases
-        cases = { getCasesByIdKey.casesByDate }
-        currentCases = { currentCases }
-        confirmedVsActiveProgressBar = { confirmedVsActiveProgressBar }
-        recoveredVsDeathsProgressBar = { recoveredVsDeathsProgressBar }
+        cases={getCasesByIdKey.casesByDate}
+        currentCases={currentCases}
+        confirmedVsActiveProgressBar={confirmedVsActiveProgressBar}
+        recoveredVsDeathsProgressBar={recoveredVsDeathsProgressBar}
       />
 
-      {
-        (getCasesByIdKey.province || getCasesByIdKey.hasProvince) &&
-        <ProvincesMenu countryName={getCasesByIdKey.country} idKey={idKey}/>
-      }
+      {(getCasesByIdKey.province || getCasesByIdKey.hasProvince) && (
+        <ProvincesMenu countryName={getCasesByIdKey.country} idKey={idKey} />
+      )}
 
       <PanelTimeSeries
-        cases={ getCasesByIdKey.casesByDate }
-        currentCases={ currentCases }
-        title={ pageTitle }
+        cases={getCasesByIdKey.casesByDate}
+        currentCases={currentCases}
+        title={pageTitle}
       />
     </>
   )

@@ -1,9 +1,9 @@
 body {
   margin-top: 20px;
-  font-size: .875rem;
+  font-size: 0.875rem;
 }
 
-canvas{
+canvas {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -25,11 +25,11 @@ nav.col-md-2.d-none.d-md-block.sidebar {
 .chart {
   position: relative;
   margin: auto;
-  width:100%;
+  width: 100%;
 }
 
 .chart.timeSeries {
-  height:60vh;
+  height: 60vh;
 }
 
 .chart.barGraph {
@@ -44,15 +44,15 @@ input.movingAverage {
   padding-top: 10px;
 }
 
-input.movingAverage[type=range]::-webkit-slider-thumb {
+input.movingAverage[type='range']::-webkit-slider-thumb {
   background: #919090;
 }
 
-input.movingAverage[type=range]::-moz-range-thumb {
+input.movingAverage[type='range']::-moz-range-thumb {
   background: #919090;
 }
 
-input.movingAverage[type=range]::-ms-thumb {
+input.movingAverage[type='range']::-ms-thumb {
   background: #919090;
 }
 
@@ -83,27 +83,27 @@ td.selectedForSortColumn {
 }
 
 /* Desktop size */
-@media (max-width: 575.98px) { 
+@media (max-width: 575.98px) {
   .chart.barGraph {
-    height:40vh;
+    height: 40vh;
   }
   .chart.barGraph.topx {
-    height:40vh;
+    height: 40vh;
   }
 }
 
 /* Mobile size */
-@media (max-width: 767.98px) { 
+@media (max-width: 767.98px) {
   .chart.barGraph {
-    height:40vh;
+    height: 40vh;
   }
 
   .chart.barGraph.topx {
-    height:40vh;
+    height: 40vh;
   }
 
   .chart.provinces.barGraph {
-    height:58vh;
+    height: 58vh;
   }
 
   .navbar-brand {
@@ -235,14 +235,14 @@ td.selectedForSortColumn {
   left: 0;
   z-index: 100; /* Behind the navbar */
   padding: 48px 0 0; /* Height of navbar */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-sticky {
   position: relative;
   top: 0;
   height: calc(100vh - 48px);
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
@@ -274,7 +274,7 @@ td.selectedForSortColumn {
 }
 
 .sidebar-heading {
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
 }
 
@@ -282,12 +282,12 @@ td.selectedForSortColumn {
  * Content
  */
 
-[role="main"] {
+[role='main'] {
   padding-top: 95px; /* Space for fixed navbar */
 }
 
 @media (min-width: 768px) {
-  [role="main"] {
+  [role='main'] {
     padding-top: 48px; /* Space for fixed navbar */
   }
 }
@@ -297,82 +297,82 @@ td.selectedForSortColumn {
  */
 
 .navbar-brand {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   margin-left: 20px;
   font-size: 1rem;
 }
 
 .navbar .form-control {
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   border-width: 0;
   border-radius: 0;
 }
 
 .form-control-dark {
   color: #fff;
-  background-color: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .1);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .form-control-dark:focus {
   border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
 
 [data-tip] {
-  position:relative;
+  position: relative;
   cursor: help;
 }
 
 [data-tip]:before {
-  content:'';
+  content: '';
   /* hides the tooltip when not hovered */
-  display:none;
-  content:'';
-  display:none;
+  display: none;
+  content: '';
+  display: none;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-bottom: 5px solid #1a1a1a;
-  position:absolute;
-  top:30px;
-  left:35px;
-  z-index:8;
-  font-size:0;
-  line-height:0;
-  width:0;
-  height:0;
-  position:absolute;
-  top:30px;
-  left:35px;
-  z-index:8;
-  font-size:0;
-  line-height:0;
-  width:0;
-  height:0;
+  position: absolute;
+  top: 30px;
+  left: 35px;
+  z-index: 8;
+  font-size: 0;
+  line-height: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 30px;
+  left: 35px;
+  z-index: 8;
+  font-size: 0;
+  line-height: 0;
+  width: 0;
+  height: 0;
 }
 
 [data-tip]:after {
-  display:none;
-  content:attr(data-tip);
-  position:absolute;
-  top:35px;
-  left:0px;
-  padding:0px 8px;
-  background:#1a1a1a;
-  color:#fff;
-  z-index:9;
+  display: none;
+  content: attr(data-tip);
+  position: absolute;
+  top: 35px;
+  left: 0px;
+  padding: 0px 8px;
+  background: #1a1a1a;
+  color: #fff;
+  z-index: 9;
   font-size: 11.5px;
-  height:18px;
-  line-height:18px;
+  height: 18px;
+  line-height: 18px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  white-space:nowrap;
-  word-wrap:normal;
+  white-space: nowrap;
+  word-wrap: normal;
 }
 
 [data-tip]:hover:before,
 [data-tip]:hover:after {
-  display:block;
+  display: block;
 }
