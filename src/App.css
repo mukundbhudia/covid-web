@@ -193,6 +193,26 @@ td.selectedForSortColumn {
   border-bottom: #304f77 dotted 1px;
 }
 
+.vaccine-badge {
+  color: #184a3b;
+  background-color: #a9f2da;
+  border-color: #94ddc5;
+}
+
+.text-vaccine {
+  color: #396c5c;
+}
+
+.test-badge {
+  color: #304f77;
+  background-color: #bcd5fd;
+  border-color: #a9c1e8;
+}
+
+.text-test {
+  color: #004085;
+}
+
 .footer {
   font-size: 11px;
   background-color: #e3e3e3;

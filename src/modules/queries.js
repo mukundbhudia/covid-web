@@ -25,6 +25,11 @@ export const COVID_GLOBAL_PAGE = gql`
       deathsToday
       dateOfFirstCase
       dateOfFirstDeath
+      population
+      peopleFullyVaccinated
+      totalVaccinations
+      totalTests
+      totalTestsPerThousand
       highestDailyConfirmed {
         count
         date
@@ -176,6 +181,11 @@ export const getCountryCasesByIdKey = gql`
       lastUpdate
       dateOfFirstCase
       dateOfFirstDeath
+      population
+      peopleFullyVaccinated
+      totalVaccinations
+      totalTests
+      totalTestsPerThousand
       highestDailyConfirmed {
         count
         date
