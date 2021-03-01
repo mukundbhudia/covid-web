@@ -1,8 +1,6 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import {
-  useLocation,
-} from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import ErrorInnerPage from '../ErrorInnerPage'
 import LoadingInnerPage from '../LoadingInnerPage'
@@ -13,7 +11,7 @@ import { getDataTableCases } from '../../../modules/queries'
 let sortParams = { sortKey: 'country', order: 'asc' }
 
 const useUrlQuery = (loc) => {
-  let urlParams = new URLSearchParams(loc.search);
+  let urlParams = new URLSearchParams(loc.search)
   return urlParams
 }
 
@@ -29,7 +27,7 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
   }
 
   const { loading, error, data } = useQuery(getDataTableCases)
-  if (loading) return <LoadingInnerPage/>
+  if (loading) return <LoadingInnerPage />
   if (error) return <ErrorInnerPage errorData={error} />
 
   return (
@@ -39,11 +37,14 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
       </div>
 
       <div className="row">
-        <DataUpdatedTimeStamp lastUpdated={lastUpdated}/>
+        <DataUpdatedTimeStamp lastUpdated={lastUpdated} />
       </div>
 
       <div className="row">
-        <DataTable sortConfig={sortParams} tableData={data.casesByLocationWithNoProvince}/>
+        <DataTable
+          sortConfig={sortParams}
+          tableData={data.casesByLocationWithNoProvince}
+        />
       </div>
     </>
   )

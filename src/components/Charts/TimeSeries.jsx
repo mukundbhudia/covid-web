@@ -7,9 +7,11 @@ const DEFAULT_MOVING_AVERAGE_PERIOD_IN_DAYS = 7
 
 const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   const chartRef = React.createRef()
-  const [ dataType, setDataType] = useState('linear')
-  const [ chartType, setChartType] = useState('line')
-  const [ movingAveragePeriod, setMovingAveragePeriod] = useState(DEFAULT_MOVING_AVERAGE_PERIOD_IN_DAYS)
+  const [dataType, setDataType] = useState('linear')
+  const [chartType, setChartType] = useState('line')
+  const [movingAveragePeriod, setMovingAveragePeriod] = useState(
+    DEFAULT_MOVING_AVERAGE_PERIOD_IN_DAYS
+  )
 
   const allDates = []
   let confirmed = []
@@ -18,11 +20,11 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
   let deathsToday = []
 
   const pushDataToCasesArray = (date, caseToPush) => {
-    allDates.push((date).toLocaleDateString())
-    confirmed.push({x: date, y: caseToPush.confirmed})
-    deaths.push({x: date, y: caseToPush.deaths})
-    confirmedToday.push({x: date, y: caseToPush.confirmedCasesToday})
-    deathsToday.push({x: date, y: caseToPush.deathsToday})
+    allDates.push(date.toLocaleDateString())
+    confirmed.push({ x: date, y: caseToPush.confirmed })
+    deaths.push({ x: date, y: caseToPush.deaths })
+    confirmedToday.push({ x: date, y: caseToPush.confirmedCasesToday })
+    deathsToday.push({ x: date, y: caseToPush.deathsToday })
   }
 
   let firstCaseAdded = false
@@ -31,7 +33,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     if (cases.confirmed > 0) {
       let dateFromString = new Date(cases.day)
       if (!firstCaseAdded && i > 0) {
-        const previousCase = data[i-1]
+        const previousCase = data[i - 1]
         dateFromString = new Date(previousCase.day)
         firstCaseAdded = true
         pushDataToCasesArray(dateFromString, previousCase)
@@ -51,8 +53,14 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     return element.deathsToday
   })
 
-  const movingAverageConfirmedToday = movingAverage(confirmedTodayArray, movingAveragePeriod)
-  const movingAverageDeathsToday = movingAverage(deathsTodayArray, movingAveragePeriod)
+  const movingAverageConfirmedToday = movingAverage(
+    confirmedTodayArray,
+    movingAveragePeriod
+  )
+  const movingAverageDeathsToday = movingAverage(
+    deathsTodayArray,
+    movingAveragePeriod
+  )
 
   const movingAverageConfirmedTodayChartData = allDates.map((element, i) => {
     const date = new Date(element)
@@ -65,7 +73,6 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     const average = movingAverageDeathsToday[i]
     return { x: date, y: average }
   })
-  
 
   const chartConfig = {
     type: chartType,
@@ -83,7 +90,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           hidden: casesToHide['confirmed'],
         },
         {
-          type : chartType,
+          type: chartType,
           label: 'Cumulative deaths',
           fill: false,
           backgroundColor: chartColors.grey,
@@ -93,7 +100,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           hidden: casesToHide['deaths'],
         },
         {
-          type : 'bar',
+          type: 'bar',
           label: 'Daily confirmed cases',
           fill: false,
           backgroundColor: chartColors.purple,
@@ -103,7 +110,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           hidden: casesToHide['confirmedToday'],
         },
         {
-          type : 'line',
+          type: 'line',
           label: `Daily confirmed ${movingAveragePeriod} day moving average`,
           fill: false,
           backgroundColor: chartColors.darkPurple,
@@ -113,7 +120,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           hidden: casesToHide['confirmedTodayMovingAverage'],
         },
         {
-          type : 'bar',
+          type: 'bar',
           label: 'Daily deaths',
           fill: false,
           backgroundColor: chartColors.yellow,
@@ -123,7 +130,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           hidden: casesToHide['deathsToday'],
         },
         {
-          type : 'line',
+          type: 'line',
           label: `Daily deaths ${movingAveragePeriod} day moving average`,
           fill: false,
           backgroundColor: chartColors.darkGrey,
@@ -132,21 +139,21 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           data: movingAverageDeathsTodayChartData.slice(3, -3),
           hidden: casesToHide['deathsTodayMovingAverage'],
         },
-      ]
+      ],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
         display: true,
-        position: 'top'
+        position: 'top',
       },
       animation: {
-        duration: 0
+        duration: 0,
       },
       title: {
         display: true,
-        text: chartTitle
+        text: chartTitle,
       },
       tooltips: {
         mode: 'index',
@@ -155,7 +162,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           label: (tooltipItem, data) => {
             let label = data.datasets[tooltipItem.datasetIndex].label || ''
             if (label) {
-                label += ': '
+              label += ': '
             }
             label += tooltipItem.yLabel.toFixed(0).toLocaleString()
             return label
@@ -164,85 +171,135 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
       },
       elements: {
         point: {
-            radius: 0
-        }
+          radius: 0,
+        },
       },
       hover: {
         mode: 'nearest',
-        intersect: true
+        intersect: true,
       },
       scales: {
-        xAxes: [{
-          display: true,
-          scaleLabel: {
+        xAxes: [
+          {
             display: true,
-            labelString: 'Date'
+            scaleLabel: {
+              display: true,
+              labelString: 'Date',
+            },
           },
-        }],
-        yAxes: [{
-          display: true,
-          type: dataType,
-          scaleLabel: {
+        ],
+        yAxes: [
+          {
             display: true,
-            labelString: 'Number of cases'
+            type: dataType,
+            scaleLabel: {
+              display: true,
+              labelString: 'Number of cases',
+            },
+            ticks: {
+              beginAtZero: true,
+              callback: (value) => value.toLocaleString(),
+            },
           },
-          ticks: {
-            beginAtZero: true,
-            callback: value => value.toLocaleString()
-          }
-        }]
-      }
-    }
+        ],
+      },
+    },
   }
 
   useEffect(() => {
-    const myChartRef = chartRef.current.getContext("2d")
+    const myChartRef = chartRef.current.getContext('2d')
     const chart = new Chart(myChartRef, chartConfig)
     return () => chart.destroy()
   }, [chartRef, chartConfig])
-  
+
   return (
     <>
-    <div className="chart timeSeries">
-      <canvas
-        className="canvas"
-        ref={chartRef}
-      ></canvas>
-    </div>
+      <div className="chart timeSeries">
+        <canvas className="canvas" ref={chartRef}></canvas>
+      </div>
 
-    <div className="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
-      <div className="btn-group btn-group-toggle mr-1" data-tip={`Moving average period in days (${movingAveragePeriod})`}>
-        <input
-          type="range"
-          className="movingAverage custom-range"
-          min="1"
-          max={30}
-          id="movingAverageSlider"
-          value={movingAveragePeriod}
-          onChange={changeEvent => { setMovingAveragePeriod(changeEvent.target.value) }}>
-        </input>
+      <div
+        className="btn-toolbar justify-content-end"
+        role="toolbar"
+        aria-label="Toolbar with button groups"
+      >
+        <div
+          className="btn-group btn-group-toggle mr-1"
+          data-tip={`Moving average period in days (${movingAveragePeriod})`}
+        >
+          <input
+            type="range"
+            className="movingAverage custom-range"
+            min="1"
+            max={30}
+            id="movingAverageSlider"
+            value={movingAveragePeriod}
+            onChange={(changeEvent) => {
+              setMovingAveragePeriod(changeEvent.target.value)
+            }}
+          ></input>
+        </div>
+        <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+          <label
+            className={`btn btn-sm btn-light ${
+              dataType === 'linear' ? 'active' : ''
+            }`}
+          >
+            <input
+              type="radio"
+              name="data-type"
+              onClick={() => {
+                setDataType('linear')
+              }}
+            />{' '}
+            Linear
+          </label>
+          <label
+            className={`btn btn-sm btn-light ${
+              dataType === 'logarithmic' ? 'active' : ''
+            }`}
+          >
+            <input
+              type="radio"
+              name="data-type"
+              onClick={() => {
+                setDataType('logarithmic')
+              }}
+            />{' '}
+            Logarithmic
+          </label>
+        </div>
+        <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
+          <label
+            className={`btn btn-sm btn-light ${
+              chartType === 'line' ? 'active' : ''
+            }`}
+          >
+            <input
+              type="radio"
+              name="chart-type"
+              onClick={() => {
+                setChartType('line')
+              }}
+            />{' '}
+            Line
+          </label>
+          <label
+            className={`btn btn-sm btn-light ${
+              chartType === 'bar' ? 'active' : ''
+            }`}
+          >
+            <input
+              type="radio"
+              name="chart-type"
+              onClick={() => {
+                setChartType('bar')
+              }}
+            />{' '}
+            Bar
+          </label>
+        </div>
       </div>
-      <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-        <label className={`btn btn-sm btn-light ${dataType === 'linear' ? 'active' : ''}`}>
-          <input type="radio" name="data-type" onClick={() => {
-            setDataType('linear')
-          }} /> Linear
-        </label>
-        <label className={`btn btn-sm btn-light ${dataType === 'logarithmic' ? 'active' : ''}`}>
-          <input type="radio" name="data-type" onClick={() => {
-            setDataType('logarithmic')
-          }}/> Logarithmic
-        </label>
-      </div>
-      <div className="btn-group btn-group-toggle mr-1" data-toggle="buttons">
-        <label className={`btn btn-sm btn-light ${chartType === 'line' ? 'active' : ''}`}>
-          <input type="radio" name="chart-type" onClick={() => {setChartType('line')}}/> Line
-        </label>
-        <label className={`btn btn-sm btn-light ${chartType === 'bar' ? 'active' : ''}`}>
-          <input type="radio" name="chart-type" onClick={() => {setChartType('bar')}}/> Bar
-        </label>
-      </div>
-    </div>
     </>
   )
 }
