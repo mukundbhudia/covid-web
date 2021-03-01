@@ -157,7 +157,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
             if (label) {
                 label += ': '
             }
-            label += tooltipItem.yLabel.toLocaleString()
+            label += tooltipItem.yLabel.toFixed(0).toLocaleString()
             return label
           },
         },
