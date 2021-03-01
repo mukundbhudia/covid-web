@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import * as timeago from 'timeago.js'
+import { shortenString } from '../../../modules/string'
 
 const setParams = (params) => {
   const searchParams = new URLSearchParams()
@@ -11,6 +12,17 @@ const setParams = (params) => {
 
 const DataTable = ({ sortConfig, tableData }) => {
   let history = useHistory()
+
+  // Calculate percentage of people vaccinated
+  tableData = tableData.map((data) => {
+    let percentage =
+      data.peopleFullyVaccinated && data.peopleFullyVaccinated >= 0
+        ? ((data.peopleFullyVaccinated / data.population) * 100).toFixed(2)
+        : 0
+    percentage = parseFloat(percentage)
+    data.percentOfPeopleFullyVaccinated = percentage
+    return data
+  })
 
   const sortedItems = () => {
     let sortableItems = [...tableData]
@@ -127,6 +139,31 @@ const DataTable = ({ sortConfig, tableData }) => {
               </th>
               <th
                 scope="col"
+                className={applySelectedColumnHeaderStyle('totalTests')}
+                onClick={() => requestSort('totalTests')}
+              >
+                Total tests {showLabel('totalTests')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle(
+                  'peopleFullyVaccinated'
+                )}
+                onClick={() => requestSort('peopleFullyVaccinated')}
+              >
+                Fully vaccinated {showLabel('peopleFullyVaccinated')}
+              </th>
+              <th
+                scope="col"
+                className={applySelectedColumnHeaderStyle(
+                  'percentOfPeopleFullyVaccinated'
+                )}
+                onClick={() => requestSort('percentOfPeopleFullyVaccinated')}
+              >
+                % fully vaccinated {showLabel('percentOfPeopleFullyVaccinated')}
+              </th>
+              <th
+                scope="col"
                 className={applySelectedColumnHeaderStyle('lastUpdate')}
                 onClick={() => requestSort('lastUpdate')}
               >
@@ -139,7 +176,9 @@ const DataTable = ({ sortConfig, tableData }) => {
               return (
                 <tr key={tableRow.idKey}>
                   <td className={applySelectedColumnStyle('country')}>
-                    <Link to={tableRow.idKey}>{tableRow.country}</Link>
+                    <Link title={tableRow.country} to={tableRow.idKey}>
+                      {shortenString(tableRow.country, 19)}
+                    </Link>
                   </td>
                   <td className={applySelectedColumnStyle('confirmed')}>
                     {tableRow.confirmed.toLocaleString()}
@@ -160,6 +199,29 @@ const DataTable = ({ sortConfig, tableData }) => {
                   </td>
                   <td className={applySelectedColumnStyle('deathsToday')}>
                     {tableRow.deathsToday.toLocaleString()}
+                  </td>
+                  <td className={applySelectedColumnStyle('totalTests')}>
+                    {tableRow.totalTests
+                      ? tableRow.totalTests.toLocaleString()
+                      : 0}
+                  </td>
+                  <td
+                    className={applySelectedColumnStyle(
+                      'peopleFullyVaccinated'
+                    )}
+                  >
+                    {tableRow.peopleFullyVaccinated
+                      ? tableRow.peopleFullyVaccinated.toLocaleString()
+                      : 0}
+                  </td>
+                  <td
+                    className={applySelectedColumnStyle(
+                      'percentOfPeopleFullyVaccinated'
+                    )}
+                  >
+                    {tableRow.percentOfPeopleFullyVaccinated
+                      ? `${tableRow.percentOfPeopleFullyVaccinated}%`
+                      : '0%'}
                   </td>
                   <td className={applySelectedColumnStyle('lastUpdate')}>
                     {timeago.format(new Date(parseInt(tableRow.lastUpdate)))}

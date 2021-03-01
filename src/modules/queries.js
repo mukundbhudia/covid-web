@@ -93,6 +93,9 @@ export const getDataTableCases = gql`
       recovered
       deaths
       deathsToday
+      totalTests
+      peopleFullyVaccinated
+      population
       lastUpdate
     }
   }
