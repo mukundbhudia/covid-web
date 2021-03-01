@@ -89,7 +89,6 @@ export const getDataTableCases = gql`
       country
       confirmed
       confirmedCasesToday
-      active
       recovered
       deaths
       deathsToday

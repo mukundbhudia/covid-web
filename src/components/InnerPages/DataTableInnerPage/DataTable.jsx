@@ -111,13 +111,6 @@ const DataTable = ({ sortConfig, tableData }) => {
               </th>
               <th
                 scope="col"
-                className={applySelectedColumnHeaderStyle('active')}
-                onClick={() => requestSort('active')}
-              >
-                Active {showLabel('active')}
-              </th>
-              <th
-                scope="col"
                 className={applySelectedColumnHeaderStyle('recovered')}
                 onClick={() => requestSort('recovered')}
               >
@@ -187,9 +180,6 @@ const DataTable = ({ sortConfig, tableData }) => {
                     className={applySelectedColumnStyle('confirmedCasesToday')}
                   >
                     {tableRow.confirmedCasesToday.toLocaleString()}
-                  </td>
-                  <td className={applySelectedColumnStyle('active')}>
-                    {tableRow.active.toLocaleString()}
                   </td>
                   <td className={applySelectedColumnStyle('recovered')}>
                     {tableRow.recovered.toLocaleString()}
