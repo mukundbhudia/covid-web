@@ -167,6 +167,33 @@ export const getHeatMapCases = gql`
   }
 `
 
+export const getVaccinationData = gql`
+  query {
+    totalCases {
+      population
+      totalVaccinations
+      peopleVaccinated
+      peopleFullyVaccinated
+      totalVaccinationsPerHundred
+      peopleVaccinatedPerHundred
+      peopleFullyVaccinatedPerHundred
+    }
+    casesByLocationWithNoProvince {
+      idKey
+      countryCode
+      country
+      continent
+      population
+      totalVaccinations
+      peopleVaccinated
+      peopleFullyVaccinated
+      totalVaccinationsPerHundred
+      peopleVaccinatedPerHundred
+      peopleFullyVaccinatedPerHundred
+    }
+  }
+`
+
 export const getCountryCasesByIdKey = gql`
   query GetCases($idKey: String!) {
     getCasesByIdKey(idKey: $idKey) {
