@@ -20,17 +20,19 @@ const RadarChart = ({
       labels: Array.from(data.keys()),
       datasets: [
         {
-          label: 'Total vaccinations',
+          label: 'Percent of people vaccinated',
           backgroundColor: Chart.helpers
             .color(chartLabelColor)
             .alpha(0.2)
             .rgbString(),
           borderColor: chartLabelColor,
           pointBackgroundColor: chartLabelColor,
-          data: Array.from(data.values()).map((item) => item.totalVaccinations),
+          data: Array.from(data.values()).map(
+            (item) => item.percentOfPeopleVaccinated
+          ),
         },
         {
-          label: 'People fully vaccinated',
+          label: 'Percent of people fully vaccinated',
           backgroundColor: Chart.helpers
             .color(chartColors['blue'])
             .alpha(0.2)
@@ -38,7 +40,7 @@ const RadarChart = ({
           borderColor: chartColors['blue'],
           pointBackgroundColor: chartColors['blue'],
           data: Array.from(data.values()).map(
-            (item) => item.peopleFullyVaccinated
+            (item) => item.percentOfPeopleFullyVaccinated
           ),
         },
       ],
@@ -60,7 +62,7 @@ const RadarChart = ({
             if (label) {
               label += ': '
             }
-            label += tooltipItem.yLabel.toLocaleString()
+            label += `${tooltipItem.yLabel.toLocaleString()}%`
             return label
           },
         },
@@ -68,7 +70,7 @@ const RadarChart = ({
       scale: {
         ticks: {
           beginAtZero: true,
-          callback: (value) => value.toLocaleString(),
+          callback: (value) => `${value.toLocaleString()}%`,
         },
       },
     },
