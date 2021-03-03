@@ -1,4 +1,5 @@
 import React from 'react'
+import { calculatePercentageWithDp } from '../../modules/numeric'
 
 const PanelPeopleFullyVaccinated = ({ title, data, population }) => {
   return (
@@ -16,7 +17,9 @@ const PanelPeopleFullyVaccinated = ({ title, data, population }) => {
             data-tip={`Total population: ${population.toLocaleString()}`}
           >
             (
-            {data && data >= 0 ? ((data / population) * 100).toFixed(2) : '0.0'}
+            {data && data >= 0
+              ? calculatePercentageWithDp(data, population, 2)
+              : '0.0'}
             %)
           </span>
         </div>

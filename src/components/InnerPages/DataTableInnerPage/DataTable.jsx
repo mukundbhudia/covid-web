@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import * as timeago from 'timeago.js'
 import { shortenString } from '../../../modules/string'
+import { calculatePercentageWithDp } from '../../../modules/numeric'
 
 const setParams = (params) => {
   const searchParams = new URLSearchParams()
@@ -17,7 +18,11 @@ const DataTable = ({ sortConfig, tableData }) => {
   tableData = tableData.map((data) => {
     let percentage =
       data.peopleFullyVaccinated && data.peopleFullyVaccinated >= 0
-        ? ((data.peopleFullyVaccinated / data.population) * 100).toFixed(2)
+        ? calculatePercentageWithDp(
+            data.peopleFullyVaccinated,
+            data.population,
+            2
+          )
         : 0
     percentage = parseFloat(percentage)
     data.percentOfPeopleFullyVaccinated = percentage
