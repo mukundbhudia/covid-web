@@ -59,19 +59,27 @@ const PanelCurrentCases = ({
       {showVaccineAndTotalPanel && (
         <div className="row">
           <div className="col-sm">
-            <PanelTotalVaccinations data={currentCases.totalVaccinations} />
+            <PanelTotalVaccinations
+              title="Total vaccinations"
+              data={currentCases.totalVaccinations}
+            />
           </div>
           <div className="col-sm">
             <PanelPeopleFullyVaccinated
+              title="Total fully vaccinated"
               data={currentCases.peopleFullyVaccinated}
               population={currentCases.population}
             />
           </div>
           <div className="col-sm">
-            <PanelTotalTests data={currentCases.totalTests} />
+            <PanelTotalTests
+              title="Total tests"
+              data={currentCases.totalTests}
+            />
           </div>
           <div className="col-sm">
             <PanelTotalTestsPerThousand
+              title="Tests per thousand"
               data={currentCases.totalTestsPerThousand}
             />
           </div>

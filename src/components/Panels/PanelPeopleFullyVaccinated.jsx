@@ -1,10 +1,10 @@
 import React from 'react'
 
-const PanelPeopleFullyVaccinated = ({ data, population }) => {
+const PanelPeopleFullyVaccinated = ({ title, data, population }) => {
   return (
     <>
       <div className="alert vaccine-badge" role="alert">
-        <h5>Total fully vaccinated</h5>
+        <h5>{title}</h5>
         <div
           id="peopleFullyVaccinatedCounter"
           className="total-fully-vaccinated text-vaccine"
