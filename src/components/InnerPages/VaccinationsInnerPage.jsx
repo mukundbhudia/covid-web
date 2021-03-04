@@ -7,11 +7,12 @@ import DataUpdatedTimeStamp from '../Nav/DataUpdatedTimeStamp'
 import { getVaccinationData } from '../../modules/queries'
 import { calculatePercentageWithDp } from '../../modules/numeric'
 import RadarChart from '../Charts/RadarChart'
-import TopXBarGraph from '../Charts/TopXBarGraph'
+import StackedCountryBarGraph from '../Charts/StackedCountryBarGraph'
 import PanelPeopleFullyVaccinated from '../Panels/PanelPeopleFullyVaccinated'
 import PanelTotalVaccinations from '../Panels/PanelTotalVaccinations'
+import { chartColors } from '../Charts/chartSettings'
 
-const MAX_COUNTRIES_TO_SHOW = 19
+const MAX_COUNTRIES_TO_SHOW = 10
 
 const VaccinationsInnerPage = ({ lastUpdated }) => {
   const { loading, error, data } = useQuery(getVaccinationData)
@@ -64,33 +65,93 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     }
   )
 
-  const percentOfPeopleFullyVaccinated = nonNullVaccinatedCountries
-    .map((country) => {
-      return {
-        country: country.country,
-        percentOfPeopleFullyVaccinated: calculatePercentageWithDp(
-          country.peopleFullyVaccinated,
-          country.population,
-          2
-        ),
-      }
-    })
-    .sort((a, b) => {
-      return b.percentOfPeopleFullyVaccinated - a.percentOfPeopleFullyVaccinated
-    })
-    .slice(0, MAX_COUNTRIES_TO_SHOW)
-
-  const totalVaccinations = nonNullVaccinatedCountries
-    .map((country) => {
-      return {
-        country: country.country,
-        totalVaccinations: country.totalVaccinations,
-      }
-    })
+  const sortedAndTrimmedVaccinationData = nonNullVaccinatedCountries
     .sort((a, b) => {
       return b.totalVaccinations - a.totalVaccinations
     })
-    .slice(0, MAX_COUNTRIES_TO_SHOW)
+    .slice(0, MAX_COUNTRIES_TO_SHOW + 1)
+
+  const xAxesLabel = sortedAndTrimmedVaccinationData.map(
+    (element) => element.country
+  )
+
+  const peopleVaccinatedDataArray = sortedAndTrimmedVaccinationData.map(
+    (element) => ({
+      x: element.country,
+      y: element['peopleVaccinated'],
+    })
+  )
+
+  const peopleFullyVaccinatedDataArray = sortedAndTrimmedVaccinationData.map(
+    (element) => ({
+      x: element.country,
+      y: element['peopleFullyVaccinated'],
+    })
+  )
+
+  const vaccineCountChartData = {
+    labels: xAxesLabel,
+    datasets: [
+      {
+        label: 'People vaccinated',
+        backgroundColor: chartColors.purple,
+        borderColor: chartColors.purple,
+        data: peopleVaccinatedDataArray,
+        fill: false,
+      },
+      {
+        label: 'People fully vaccinated',
+        backgroundColor: chartColors.yellow,
+        borderColor: chartColors.yellow,
+        data: peopleFullyVaccinatedDataArray,
+        fill: false,
+      },
+    ],
+  }
+
+  const sortedAndTrimmedVaccinationPerCentData = nonNullVaccinatedCountries
+    .sort((a, b) => {
+      return b.totalVaccinationsPerHundred - a.totalVaccinationsPerHundred
+    })
+    .slice(0, MAX_COUNTRIES_TO_SHOW + 1)
+
+  const perCentxAxesLabel = sortedAndTrimmedVaccinationPerCentData.map(
+    (element) => element.country
+  )
+
+  const perCentPeopleVaccinated = sortedAndTrimmedVaccinationPerCentData.map(
+    (element) => ({
+      x: element.country,
+      y: element['peopleVaccinatedPerHundred'],
+    })
+  )
+
+  const perCentPeopleFullyVaccinated = sortedAndTrimmedVaccinationPerCentData.map(
+    (element) => ({
+      x: element.country,
+      y: element['peopleFullyVaccinatedPerHundred'],
+    })
+  )
+
+  const percentVaccineCountChartData = {
+    labels: perCentxAxesLabel,
+    datasets: [
+      {
+        label: 'Percent of people vaccinated',
+        backgroundColor: chartColors.red,
+        borderColor: chartColors.red,
+        data: perCentPeopleVaccinated,
+        fill: false,
+      },
+      {
+        label: 'Percent of fully vaccinated',
+        backgroundColor: chartColors.blue,
+        borderColor: chartColors.blue,
+        data: perCentPeopleFullyVaccinated,
+        fill: false,
+      },
+    ],
+  }
 
   return (
     <>
@@ -106,7 +167,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         <div className="col-sm">
           <PanelTotalVaccinations
             title="Total global vaccinations"
-            data={data.totalCases.totalVaccinations}
+            data={data.totalCases.sortedAndTrimmedVaccinationData}
           />
           <PanelPeopleFullyVaccinated
             title="% of people vaccinated"
@@ -129,7 +190,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
           <RadarChart
             data={continents}
             id="vaccinationsContinent"
-            chartTitle="Vaccinations by Continent"
+            chartTitle="Percent of vaccinations by continent"
             chartLabel="Vaccinations"
             chartLabelKey="confirmed"
             labelColor="red"
@@ -139,26 +200,23 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
 
       <div className="row mb-4">
         <div className="col-sm">
-          <TopXBarGraph
-            data={totalVaccinations}
-            id="totalVaccinations"
-            chartTitle="Total vaccinations"
-            chartLabel="Total vaccinations"
-            chartLabelKey="totalVaccinations"
-            labelColor="purple"
+          <StackedCountryBarGraph
+            id="sortedAndTrimmedVaccinationData"
+            chartTitle="Percent of people vaccinated"
+            chartData={percentVaccineCountChartData}
+            isStacked={true}
+            showsPercentage={true}
           />
         </div>
       </div>
 
       <div className="row mb-4">
         <div className="col-sm">
-          <TopXBarGraph
-            data={percentOfPeopleFullyVaccinated}
-            id="percentOfPeopleFullyVaccinated"
-            chartTitle="Percentage of people fully vaccinated"
-            chartLabel="Percentage of people fully vaccinated"
-            chartLabelKey="percentOfPeopleFullyVaccinated"
-            labelColor="green"
+          <StackedCountryBarGraph
+            id="sortedAndTrimmedVaccinationData"
+            chartTitle="Total vaccinations"
+            chartData={vaccineCountChartData}
+            isStacked={true}
           />
         </div>
       </div>
