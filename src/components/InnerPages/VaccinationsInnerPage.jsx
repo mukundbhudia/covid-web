@@ -1,5 +1,6 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
+import { useLocation } from 'react-router-dom'
 
 import ErrorInnerPage from './ErrorInnerPage'
 import LoadingInnerPage from './LoadingInnerPage'
@@ -11,12 +12,30 @@ import StackedCountryBarGraph from '../Charts/StackedCountryBarGraph'
 import PanelVaccinatedWithPercent from '../Panels/PanelVaccinatedWithPercent'
 import PanelTotalVaccinations from '../Panels/PanelTotalVaccinations'
 import { chartColors } from '../Charts/chartSettings'
+import DataTable from './DataTableInnerPage/DataTable'
 
 const MAX_COUNTRIES_TO_SHOW = 10
 const PEOPLE_VACCINATED_COLOUR = chartColors.blue
 const PEOPLE_FULLLY_VACCINATED_COLOUR = chartColors.darkPurple
 
+let tableSortParams = { sortKey: 'totalVaccinationsPerHundred', order: 'desc' }
+
+const useUrlQuery = (loc) => {
+  let urlParams = new URLSearchParams(loc.search)
+  return urlParams
+}
+
 const VaccinationsInnerPage = ({ lastUpdated }) => {
+  let location = useLocation()
+  let query = useUrlQuery(location)
+
+  const sortQueryParam = query.get('sort')
+  const orderQueryParam = query.get('order')
+
+  if (sortQueryParam && orderQueryParam) {
+    tableSortParams = { sortKey: sortQueryParam, order: orderQueryParam }
+  }
+
   const { loading, error, data } = useQuery(getVaccinationData)
 
   if (loading) return <LoadingInnerPage />
@@ -175,6 +194,44 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     ],
   }
 
+  const columns = [
+    {
+      key: 'country',
+      name: 'Country',
+      type: 'link',
+    },
+    {
+      key: 'totalVaccinations',
+      name: 'Total vaccinated',
+      type: 'number',
+    },
+    {
+      key: 'totalVaccinationsPerHundred',
+      name: '% vaccinated',
+      type: 'percentage',
+    },
+    {
+      key: 'peopleVaccinated',
+      name: 'Partially vaccinated',
+      type: 'number',
+    },
+    {
+      key: 'peopleVaccinatedPerHundred',
+      name: '% partially vaccinated',
+      type: 'percentage',
+    },
+    {
+      key: 'peopleFullyVaccinated',
+      name: 'Fully vaccinated',
+      type: 'number',
+    },
+    {
+      key: 'peopleFullyVaccinatedPerHundred',
+      name: '% fully vaccinated',
+      type: 'percentage',
+    },
+  ]
+
   return (
     <>
       <div id="global-page" className="">
@@ -242,7 +299,13 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         </div>
       </div>
 
-      <div className="top-tab-container"></div>
+      <div className="row">
+        <DataTable
+          sortConfig={tableSortParams}
+          tableData={nonNullVaccinatedCountries}
+          columnSchema={columns}
+        />
+      </div>
     </>
   )
 }
