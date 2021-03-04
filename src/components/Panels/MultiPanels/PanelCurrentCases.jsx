@@ -9,8 +9,7 @@ import PanelDeathsToday from '../PanelDeathsToday'
 import PanelNotableDates from './PanelNotableDates'
 import PanelConfirmedVsActive from '../PanelConfirmedVsActive'
 import PanelRecoveriesVsDeaths from '../PanelRecoveriesVsDeaths'
-import PanelTotalVaccinations from '../PanelTotalVaccinations'
-import PanelPeopleFullyVaccinated from '../PanelPeopleFullyVaccinated'
+import PanelVaccinatedWithPercent from '../PanelVaccinatedWithPercent'
 import PanelTotalTests from '../PanelTotalTests'
 import PanelTotalTestsPerThousand from '../PanelTotalTestsPerThousand'
 
@@ -59,16 +58,17 @@ const PanelCurrentCases = ({
       {showVaccineAndTotalPanel && (
         <div className="row">
           <div className="col-sm">
-            <PanelTotalVaccinations
+            <PanelVaccinatedWithPercent
               title="Total vaccinations"
-              data={currentCases.totalVaccinations}
+              total={currentCases.totalVaccinations}
+              percentage={currentCases.totalVaccinationsPerHundred}
             />
           </div>
           <div className="col-sm">
-            <PanelPeopleFullyVaccinated
+            <PanelVaccinatedWithPercent
               title="Total fully vaccinated"
-              data={currentCases.peopleFullyVaccinated}
-              population={currentCases.population}
+              total={currentCases.peopleFullyVaccinated}
+              percentage={currentCases.peopleFullyVaccinatedPerHundred}
             />
           </div>
           <div className="col-sm">

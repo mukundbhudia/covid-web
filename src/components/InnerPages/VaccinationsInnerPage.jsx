@@ -8,7 +8,7 @@ import { getVaccinationData } from '../../modules/queries'
 import { calculatePercentageWithDp } from '../../modules/numeric'
 import RadarChart from '../Charts/RadarChart'
 import StackedCountryBarGraph from '../Charts/StackedCountryBarGraph'
-import PanelPeopleFullyVaccinated from '../Panels/PanelPeopleFullyVaccinated'
+import PanelVaccinatedWithPercent from '../Panels/PanelVaccinatedWithPercent'
 import PanelTotalVaccinations from '../Panels/PanelTotalVaccinations'
 import { chartColors } from '../Charts/chartSettings'
 
@@ -191,21 +191,22 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
             title="Total global vaccinations"
             data={data.totalCases.totalVaccinations}
           />
-          <PanelPeopleFullyVaccinated
+          <PanelVaccinatedWithPercent
             title="% of people vaccinated"
-            data={data.totalCases.peopleVaccinated}
-            population={data.totalCases.population}
+            total={data.totalCases.peopleVaccinated}
+            percentage={data.totalCases.peopleVaccinatedPerHundred}
           />
         </div>
         <div className="col-sm">
           <PanelTotalVaccinations
             title="% of total vaccinated"
             data={data.totalCases.totalVaccinationsPerHundred}
+            showsPercentage={true}
           />
-          <PanelPeopleFullyVaccinated
+          <PanelVaccinatedWithPercent
             title="% of people fully vaccinated"
-            data={data.totalCases.peopleFullyVaccinated}
-            population={data.totalCases.population}
+            total={data.totalCases.peopleFullyVaccinated}
+            percentage={data.totalCases.peopleFullyVaccinatedPerHundred}
           />
         </div>
         <div className="col-sm-7">

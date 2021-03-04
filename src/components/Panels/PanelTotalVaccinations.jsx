@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PanelTotalVaccinations = ({ title, data }) => {
+const PanelTotalVaccinations = ({ title, data, showsPercentage = false }) => {
   return (
     <>
       <div className="alert vaccine-badge" role="alert">
@@ -9,7 +9,9 @@ const PanelTotalVaccinations = ({ title, data }) => {
           id="totalVaccinationsCounter"
           className="total-vaccinations text-vaccine"
         >
-          {data && data >= 0 ? data.toLocaleString() : '0'}
+          {data && data >= 0
+            ? `${data.toLocaleString()}${showsPercentage ? '%' : ''}`
+            : '0'}
         </div>
       </div>
     </>

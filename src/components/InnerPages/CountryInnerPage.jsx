@@ -74,9 +74,11 @@ const InnerPage = () => {
     highestDailyDeaths: getCasesByIdKey.highestDailyDeaths,
     peopleFullyVaccinated: getCasesByIdKey.peopleFullyVaccinated,
     totalVaccinations: getCasesByIdKey.totalVaccinations,
+    totalVaccinationsPerHundred: getCasesByIdKey.totalVaccinationsPerHundred,
+    peopleFullyVaccinatedPerHundred:
+      getCasesByIdKey.peopleFullyVaccinatedPerHundred,
     totalTests: getCasesByIdKey.totalTests,
     totalTestsPerThousand: getCasesByIdKey.totalTestsPerThousand,
-    population: getCasesByIdKey.population,
   }
 
   const pageTitle = genPageTitle(

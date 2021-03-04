@@ -25,9 +25,10 @@ export const COVID_GLOBAL_PAGE = gql`
       deathsToday
       dateOfFirstCase
       dateOfFirstDeath
-      population
       peopleFullyVaccinated
       totalVaccinations
+      totalVaccinationsPerHundred
+      peopleFullyVaccinatedPerHundred
       totalTests
       totalTestsPerThousand
       highestDailyConfirmed {
@@ -94,7 +95,7 @@ export const getDataTableCases = gql`
       deathsToday
       totalTests
       peopleFullyVaccinated
-      population
+      peopleFullyVaccinatedPerHundred
       lastUpdate
     }
   }
@@ -210,9 +211,10 @@ export const getCountryCasesByIdKey = gql`
       lastUpdate
       dateOfFirstCase
       dateOfFirstDeath
-      population
       peopleFullyVaccinated
       totalVaccinations
+      totalVaccinationsPerHundred
+      peopleFullyVaccinatedPerHundred
       totalTests
       totalTestsPerThousand
       highestDailyConfirmed {
