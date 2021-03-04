@@ -8,7 +8,7 @@ import DataUpdatedTimeStamp from '../../Nav/DataUpdatedTimeStamp'
 import DataTable from './DataTable'
 import { getDataTableCases } from '../../../modules/queries'
 
-let sortParams = { sortKey: 'country', order: 'asc' }
+let tableSortParams = { sortKey: 'country', order: 'asc' }
 
 const useUrlQuery = (loc) => {
   let urlParams = new URLSearchParams(loc.search)
@@ -23,12 +23,65 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
   const orderQueryParam = query.get('order')
 
   if (sortQueryParam && orderQueryParam) {
-    sortParams = { sortKey: sortQueryParam, order: orderQueryParam }
+    tableSortParams = { sortKey: sortQueryParam, order: orderQueryParam }
   }
 
   const { loading, error, data } = useQuery(getDataTableCases)
   if (loading) return <LoadingInnerPage />
   if (error) return <ErrorInnerPage errorData={error} />
+
+  const columns = [
+    {
+      key: 'country',
+      name: 'Country',
+      type: 'link',
+    },
+    {
+      key: 'confirmed',
+      name: 'Confirmed cases',
+      type: 'number',
+    },
+    {
+      key: 'confirmedCasesToday',
+      name: 'Confirmed today',
+      type: 'number',
+    },
+    {
+      key: 'recovered',
+      name: 'Recovered',
+      type: 'number',
+    },
+    {
+      key: 'deaths',
+      name: 'Deaths',
+      type: 'number',
+    },
+    {
+      key: 'deathsToday',
+      name: 'Deaths today',
+      type: 'number',
+    },
+    {
+      key: 'totalTests',
+      name: 'Total tests',
+      type: 'number',
+    },
+    {
+      key: 'peopleFullyVaccinated',
+      name: 'Fully vaccinated',
+      type: 'number',
+    },
+    {
+      key: 'peopleFullyVaccinatedPerHundred',
+      name: '% fully vaccinated',
+      type: 'percentage',
+    },
+    {
+      key: 'lastUpdate',
+      name: 'Last updated',
+      type: 'date',
+    },
+  ]
 
   return (
     <>
@@ -42,8 +95,9 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
 
       <div className="row">
         <DataTable
-          sortConfig={sortParams}
+          sortConfig={tableSortParams}
           tableData={data.casesByLocationWithNoProvince}
+          columnSchema={columns}
         />
       </div>
     </>
