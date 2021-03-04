@@ -37,6 +37,14 @@ const StackedCountryBarGraph = ({
             }`
             return label
           },
+          footer: (tooltipItems, _data) => {
+            const sum = tooltipItems
+              .map((element) => element.yLabel)
+              .reduce((currentSum, current) => {
+                return currentSum + current
+              })
+            return `Total: ${sum.toLocaleString()}${showsPercentage ? '%' : ''}`
+          },
         },
       },
       hover: {
@@ -82,7 +90,7 @@ const StackedCountryBarGraph = ({
 
   return (
     <div className="col-sm">
-      <div className="chart barGraph topx" id={id}>
+      <div className="chart barGraph" id={id}>
         <canvas id={`canvas`} ref={chartRef}></canvas>
       </div>
     </div>
