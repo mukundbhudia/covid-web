@@ -13,6 +13,8 @@ import PanelTotalVaccinations from '../Panels/PanelTotalVaccinations'
 import { chartColors } from '../Charts/chartSettings'
 
 const MAX_COUNTRIES_TO_SHOW = 10
+const PEOPLE_VACCINATED_COLOUR = chartColors.blue
+const PEOPLE_FULLLY_VACCINATED_COLOUR = chartColors.darkPurple
 
 const VaccinationsInnerPage = ({ lastUpdated }) => {
   const { loading, error, data } = useQuery(getVaccinationData)
@@ -54,6 +56,26 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
       }
     }
   })
+
+  const radarChartData = {
+    labels: Array.from(continents.keys()),
+    datasets: [
+      {
+        label: 'Percent of people vaccinated',
+        mainColor: PEOPLE_VACCINATED_COLOUR,
+        data: Array.from(continents.values()).map(
+          (item) => item.percentOfPeopleVaccinated
+        ),
+      },
+      {
+        label: 'Percent of people fully vaccinated',
+        mainColor: PEOPLE_FULLLY_VACCINATED_COLOUR,
+        data: Array.from(continents.values()).map(
+          (item) => item.percentOfPeopleFullyVaccinated
+        ),
+      },
+    ],
+  }
 
   const nonNullVaccinatedCountries = data.casesByLocationWithNoProvince.filter(
     (country) => {
@@ -138,15 +160,15 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     datasets: [
       {
         label: 'Percent of people vaccinated',
-        backgroundColor: chartColors.red,
-        borderColor: chartColors.red,
+        backgroundColor: PEOPLE_VACCINATED_COLOUR,
+        borderColor: PEOPLE_VACCINATED_COLOUR,
         data: perCentPeopleVaccinated,
         fill: false,
       },
       {
         label: 'Percent of fully vaccinated',
-        backgroundColor: chartColors.blue,
-        borderColor: chartColors.blue,
+        backgroundColor: PEOPLE_FULLLY_VACCINATED_COLOUR,
+        borderColor: PEOPLE_FULLLY_VACCINATED_COLOUR,
         data: perCentPeopleFullyVaccinated,
         fill: false,
       },
@@ -167,7 +189,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         <div className="col-sm">
           <PanelTotalVaccinations
             title="Total global vaccinations"
-            data={data.totalCases.sortedAndTrimmedVaccinationData}
+            data={data.totalCases.totalVaccinations}
           />
           <PanelPeopleFullyVaccinated
             title="% of people vaccinated"
@@ -177,7 +199,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         </div>
         <div className="col-sm">
           <PanelTotalVaccinations
-            title="Total vaccinations per hundred"
+            title="% of total vaccinated"
             data={data.totalCases.totalVaccinationsPerHundred}
           />
           <PanelPeopleFullyVaccinated
@@ -188,12 +210,10 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         </div>
         <div className="col-sm-7">
           <RadarChart
-            data={continents}
             id="vaccinationsContinent"
             chartTitle="Percent of vaccinations by continent"
-            chartLabel="Vaccinations"
-            chartLabelKey="confirmed"
-            labelColor="red"
+            chartData={radarChartData}
+            showsPercentage={true}
           />
         </div>
       </div>

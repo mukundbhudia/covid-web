@@ -1,50 +1,22 @@
 import React, { useEffect } from 'react'
 import Chart from 'chart.js'
-import { chartColors } from './chartSettings'
 
-const RadarChart = ({
-  data,
-  id,
-  chartTitle,
-  chartLabel,
-  chartLabelKey,
-  labelColor,
-}) => {
+const RadarChart = ({ id, chartTitle, chartData, showsPercentage = false }) => {
   const chartRef = React.createRef()
 
-  const chartLabelColor = chartColors[labelColor]
-
+  chartData.datasets = chartData.datasets.map((dataset) => {
+    const mainColour = dataset.mainColor
+    dataset.backgroundColor = Chart.helpers
+      .color(mainColour)
+      .alpha(0.2)
+      .rgbString()
+    dataset.borderColor = mainColour
+    dataset.pointBackgroundColor = mainColour
+    return dataset
+  })
   const chartConfig = {
     type: 'radar',
-    data: {
-      labels: Array.from(data.keys()),
-      datasets: [
-        {
-          label: 'Percent of people vaccinated',
-          backgroundColor: Chart.helpers
-            .color(chartLabelColor)
-            .alpha(0.2)
-            .rgbString(),
-          borderColor: chartLabelColor,
-          pointBackgroundColor: chartLabelColor,
-          data: Array.from(data.values()).map(
-            (item) => item.percentOfPeopleVaccinated
-          ),
-        },
-        {
-          label: 'Percent of people fully vaccinated',
-          backgroundColor: Chart.helpers
-            .color(chartColors['blue'])
-            .alpha(0.2)
-            .rgbString(),
-          borderColor: chartColors['blue'],
-          pointBackgroundColor: chartColors['blue'],
-          data: Array.from(data.values()).map(
-            (item) => item.percentOfPeopleFullyVaccinated
-          ),
-        },
-      ],
-    },
+    data: chartData,
     options: {
       legend: {
         position: 'top',
@@ -62,7 +34,9 @@ const RadarChart = ({
             if (label) {
               label += ': '
             }
-            label += `${tooltipItem.yLabel.toLocaleString()}%`
+            label += `${tooltipItem.yLabel.toLocaleString()}${
+              showsPercentage ? '%' : ''
+            }`
             return label
           },
         },
@@ -70,7 +44,8 @@ const RadarChart = ({
       scale: {
         ticks: {
           beginAtZero: true,
-          callback: (value) => `${value.toLocaleString()}%`,
+          callback: (value) =>
+            `${value.toLocaleString()}${showsPercentage ? '%' : ''}`,
         },
       },
     },
