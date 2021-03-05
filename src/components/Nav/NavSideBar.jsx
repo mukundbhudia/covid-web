@@ -19,6 +19,9 @@ const NavSideBar = ({ casesByLocation }) => {
             <NavLink path="/today" label="Today" icon="chart"/>
           </li>
           <li className="nav-item">
+            <NavLink path="/vaccinations" label="Vaccinations" icon="chart"/>
+          </li>
+          <li className="nav-item">
             <NavLink path="/top-cases" label="Top&nbsp;cases" icon="chart"/>
           </li>
           <li className="nav-item">

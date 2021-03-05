@@ -16,6 +16,7 @@ import NavBar from '../Nav/NavBar'
 import NavSideBar from '../Nav/NavSideBar'
 import DataTableInnerPage from './DataTableInnerPage/DataTableInnerPage'
 import CompareInnerPage from './CompareInnerPage/CompareInnerPage'
+import VaccinationsInnerPage from './VaccinationsInnerPage'
 
 const HomeInnerPage = ({ casesByLocation, lastUpdated, }) => {
   return (
@@ -64,6 +65,12 @@ const HomeInnerPage = ({ casesByLocation, lastUpdated, }) => {
                 <Route path="/table" children={
                   <DataTableInnerPage
                     title="Data Table"
+                    lastUpdated={lastUpdated}
+                  />
+                } />
+                <Route path="/vaccinations" children={
+                  <VaccinationsInnerPage
+                    title="Vaccinations"
                     lastUpdated={lastUpdated}
                   />
                 } />

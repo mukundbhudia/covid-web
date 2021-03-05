@@ -1,22 +1,21 @@
 import React from 'react'
 
-const PanelPeopleFullyVaccinated = ({ data, population }) => {
+const PanelVaccinatedWithPercent = ({ title, total, percentage }) => {
   return (
     <>
       <div className="alert vaccine-badge" role="alert">
-        <h5>Total fully vaccinated</h5>
+        <h5>{title}</h5>
         <div
           id="peopleFullyVaccinatedCounter"
           className="total-fully-vaccinated text-vaccine"
         >
-          {data && data >= 0 ? data.toLocaleString() : '0'}
+          {total && total >= 0 ? total.toLocaleString() : '0'}
           &nbsp;
           <span
             className="notable-tooltip"
-            data-tip={`Total population: ${population.toLocaleString()}`}
+            data-tip="As a percentage of the population"
           >
-            (
-            {data && data >= 0 ? ((data / population) * 100).toFixed(2) : '0.0'}
+            ({total && total >= 0 ? percentage : '0.0'}
             %)
           </span>
         </div>
@@ -25,4 +24,4 @@ const PanelPeopleFullyVaccinated = ({ data, population }) => {
   )
 }
 
-export default PanelPeopleFullyVaccinated
+export default PanelVaccinatedWithPercent

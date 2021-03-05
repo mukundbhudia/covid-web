@@ -1,10 +1,10 @@
 import React from 'react'
 
-const PanelTotalTestsPerThousand = ({ data }) => {
+const PanelTotalTestsPerThousand = ({ title, data }) => {
   return (
     <>
       <div className="alert test-badge" role="alert">
-        <h5>Tests per thousand</h5>
+        <h5>{title}</h5>
         <div
           id="totalTestsPerThousandCounter"
           className="total-tests-per-thousand text-test"

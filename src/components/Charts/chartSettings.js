@@ -9,6 +9,10 @@ const chartColors = {
   grey: 'rgb(201, 203, 207)',
   darkGrey: 'rgb(160, 161, 164)',
   progressBadGrey: '#b0b0b0',
+  darkGreen: '#26a69a',
+  lightGreen: '#80cbc4',
+  darkIndigo: '#5c6bc0',
+  lightIndigo: '#9fa8da',
 }
 
 const multiChartColours = {

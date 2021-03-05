@@ -18,6 +18,15 @@ const getPercentageFromDataSet = (dataSet) => {
   })
 }
 
+const calculatePercentageWithDp = (numerator, denominator, decimalPoints) => {
+  let result = (numerator / denominator) * 100
+  if (decimalPoints >= 0 && decimalPoints <= 20) {
+    return result.toFixed(decimalPoints)
+  } else {
+    return result.toFixed(0)
+  }
+}
+
 /**
  * Moving average
  * --------------
@@ -62,4 +71,4 @@ const movingAverage = (data, size) => {
   return ret.slice(size - 1)
 }
 
-export { movingAverage, getPercentageFromDataSet }
+export { movingAverage, getPercentageFromDataSet, calculatePercentageWithDp }

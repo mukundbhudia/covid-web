@@ -25,9 +25,10 @@ export const COVID_GLOBAL_PAGE = gql`
       deathsToday
       dateOfFirstCase
       dateOfFirstDeath
-      population
       peopleFullyVaccinated
       totalVaccinations
+      totalVaccinationsPerHundred
+      peopleFullyVaccinatedPerHundred
       totalTests
       totalTestsPerThousand
       highestDailyConfirmed {
@@ -93,8 +94,8 @@ export const getDataTableCases = gql`
       deaths
       deathsToday
       totalTests
-      peopleFullyVaccinated
-      population
+      totalVaccinations
+      totalVaccinationsPerHundred
       lastUpdate
     }
   }
@@ -167,6 +168,33 @@ export const getHeatMapCases = gql`
   }
 `
 
+export const getVaccinationData = gql`
+  query {
+    totalCases {
+      population
+      totalVaccinations
+      peopleVaccinated
+      peopleFullyVaccinated
+      totalVaccinationsPerHundred
+      peopleVaccinatedPerHundred
+      peopleFullyVaccinatedPerHundred
+    }
+    casesByLocationWithNoProvince {
+      idKey
+      countryCode
+      country
+      continent
+      population
+      totalVaccinations
+      peopleVaccinated
+      peopleFullyVaccinated
+      totalVaccinationsPerHundred
+      peopleVaccinatedPerHundred
+      peopleFullyVaccinatedPerHundred
+    }
+  }
+`
+
 export const getCountryCasesByIdKey = gql`
   query GetCases($idKey: String!) {
     getCasesByIdKey(idKey: $idKey) {
@@ -183,9 +211,10 @@ export const getCountryCasesByIdKey = gql`
       lastUpdate
       dateOfFirstCase
       dateOfFirstDeath
-      population
       peopleFullyVaccinated
       totalVaccinations
+      totalVaccinationsPerHundred
+      peopleFullyVaccinatedPerHundred
       totalTests
       totalTestsPerThousand
       highestDailyConfirmed {
