@@ -35,6 +35,9 @@ const NavBar = ({ searchData }) => {
               <NavLink path="/today" label="Today"/>
             </li>
             <li className="nav-item">
+              <NavLink path="/vaccinations" label="Vaccinations"/>
+            </li>
+            <li className="nav-item">
               <NavLink path="/top-cases" label="Top&nbsp;cases"/>
             </li>
             <li className="nav-item">
