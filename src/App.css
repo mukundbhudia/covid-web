@@ -44,15 +44,15 @@ input.movingAverage {
   padding-top: 10px;
 }
 
-input.movingAverage[type='range']::-webkit-slider-thumb {
+input.custom-range[type='range']::-webkit-slider-thumb {
   background: #919090;
 }
 
-input.movingAverage[type='range']::-moz-range-thumb {
+input.custom-range[type='range']::-moz-range-thumb {
   background: #919090;
 }
 
-input.movingAverage[type='range']::-ms-thumb {
+input.custom-range[type='range']::-ms-thumb {
   background: #919090;
 }
 

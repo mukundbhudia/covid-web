@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useLocation } from 'react-router-dom'
 
@@ -14,9 +14,9 @@ import PanelTotalVaccinations from '../Panels/PanelTotalVaccinations'
 import { chartColors } from '../Charts/chartSettings'
 import DataTable from './DataTableInnerPage/DataTable'
 
-const MAX_COUNTRIES_TO_SHOW = 10
-const PEOPLE_VACCINATED_COLOUR = chartColors.blue
-const PEOPLE_FULLY_VACCINATED_COLOUR = chartColors.darkPurple
+const MAX_COUNTRIES_TO_SHOW_IN_BAR_CHARTS = 10
+const PEOPLE_VACCINATED_COLOUR = chartColors.lightIndigo
+const PEOPLE_FULLY_VACCINATED_COLOUR = chartColors.darkIndigo
 
 let tableSortParams = { sortKey: 'totalVaccinationsPerHundred', order: 'desc' }
 
@@ -40,6 +40,11 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
       rows: rowsQueryParam,
     }
   }
+
+  const [
+    numberOfBarChartCountriesToShow,
+    setNumberOfBarChartCountriesToShow,
+  ] = useState(MAX_COUNTRIES_TO_SHOW_IN_BAR_CHARTS)
 
   const { loading, error, data } = useQuery(getVaccinationData)
 
@@ -85,7 +90,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     labels: Array.from(continents.keys()),
     datasets: [
       {
-        label: 'Percent of people vaccinated',
+        label: 'Percent of people partially vaccinated',
         mainColor: PEOPLE_VACCINATED_COLOUR,
         data: Array.from(continents.values()).map(
           (item) => item.percentOfPeopleVaccinated
@@ -111,11 +116,13 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     }
   )
 
+  const nonNullVaccinatedCountriesLength = nonNullVaccinatedCountries.length
+
   const sortedAndTrimmedVaccinationData = nonNullVaccinatedCountries
     .sort((a, b) => {
       return b.totalVaccinations - a.totalVaccinations
     })
-    .slice(0, MAX_COUNTRIES_TO_SHOW + 1)
+    .slice(0, numberOfBarChartCountriesToShow)
 
   const xAxesLabel = sortedAndTrimmedVaccinationData.map(
     (element) => element.country
@@ -139,16 +146,16 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     labels: xAxesLabel,
     datasets: [
       {
-        label: 'People vaccinated',
-        backgroundColor: chartColors.purple,
-        borderColor: chartColors.purple,
+        label: 'People partially vaccinated',
+        backgroundColor: chartColors.lightGreen,
+        borderColor: chartColors.lightGreen,
         data: peopleVaccinatedDataArray,
         fill: false,
       },
       {
         label: 'People fully vaccinated',
-        backgroundColor: chartColors.yellow,
-        borderColor: chartColors.yellow,
+        backgroundColor: chartColors.darkGreen,
+        borderColor: chartColors.darkGreen,
         data: peopleFullyVaccinatedDataArray,
         fill: false,
       },
@@ -159,7 +166,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     .sort((a, b) => {
       return b.totalVaccinationsPerHundred - a.totalVaccinationsPerHundred
     })
-    .slice(0, MAX_COUNTRIES_TO_SHOW + 1)
+    .slice(0, numberOfBarChartCountriesToShow)
 
   const perCentxAxesLabel = sortedAndTrimmedVaccinationPerCentData.map(
     (element) => element.country
@@ -183,7 +190,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     labels: perCentxAxesLabel,
     datasets: [
       {
-        label: 'Percent of people vaccinated',
+        label: 'Percent of people partially vaccinated',
         backgroundColor: PEOPLE_VACCINATED_COLOUR,
         borderColor: PEOPLE_VACCINATED_COLOUR,
         data: perCentPeopleVaccinated,
@@ -199,6 +206,16 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     ],
   }
 
+  const percentVaccineCountChartAxesLabels = {
+    x: 'Country',
+    y: 'Percentage of population',
+  }
+
+  const vaccineCountChartAxesLabels = {
+    x: 'Country',
+    y: 'Number of vaccinations',
+  }
+
   const columns = [
     {
       key: 'country',
@@ -211,19 +228,9 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
       type: 'number',
     },
     {
-      key: 'totalVaccinationsPerHundred',
-      name: '% vaccinated',
-      type: 'percentage',
-    },
-    {
       key: 'peopleVaccinated',
       name: 'Partially vaccinated',
       type: 'number',
-    },
-    {
-      key: 'peopleVaccinatedPerHundred',
-      name: '% partially vaccinated',
-      type: 'percentage',
     },
     {
       key: 'peopleFullyVaccinated',
@@ -231,8 +238,18 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
       type: 'number',
     },
     {
+      key: 'totalVaccinationsPerHundred',
+      name: '% population vaccinated',
+      type: 'percentage',
+    },
+    {
+      key: 'peopleVaccinatedPerHundred',
+      name: '% population partially vaccinated',
+      type: 'percentage',
+    },
+    {
       key: 'peopleFullyVaccinatedPerHundred',
-      name: '% fully vaccinated',
+      name: '% population fully vaccinated',
       type: 'percentage',
     },
   ]
@@ -254,19 +271,19 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
             data={data.totalCases.totalVaccinations}
           />
           <PanelVaccinatedWithPercent
-            title="% of people vaccinated"
+            title="Global partial vaccinations"
             total={data.totalCases.peopleVaccinated}
             percentage={data.totalCases.peopleVaccinatedPerHundred}
           />
         </div>
         <div className="col-sm">
           <PanelTotalVaccinations
-            title="% of total vaccinated"
+            title="Global population vaccinated"
             data={data.totalCases.totalVaccinationsPerHundred}
             showsPercentage={true}
           />
           <PanelVaccinatedWithPercent
-            title="% of people fully vaccinated"
+            title="Global fully vaccinated"
             total={data.totalCases.peopleFullyVaccinated}
             percentage={data.totalCases.peopleFullyVaccinatedPerHundred}
           />
@@ -274,7 +291,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         <div className="col-sm-7">
           <RadarChart
             id="vaccinationsContinent"
-            chartTitle="Percent of vaccinations by continent"
+            chartTitle="Percent of population partially and fully vaccinated by continent"
             chartData={radarChartData}
             showsPercentage={true}
           />
@@ -285,7 +302,8 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         <div className="col-sm">
           <StackedCountryBarGraph
             id="sortedAndTrimmedVaccinationData"
-            chartTitle="Percent of people vaccinated"
+            chartTitle={`Top ${numberOfBarChartCountriesToShow} countries showing percent of population partially and fully vaccinated`}
+            axesLabels={percentVaccineCountChartAxesLabels}
             chartData={percentVaccineCountChartData}
             isStacked={true}
             showsPercentage={true}
@@ -294,15 +312,37 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         </div>
       </div>
 
-      <div className="row mb-4">
+      <div className="row">
         <div className="col-sm">
           <StackedCountryBarGraph
             id="sortedAndTrimmedVaccinationData"
-            chartTitle="Total vaccinations"
+            axesLabels={vaccineCountChartAxesLabels}
+            chartTitle={`Top ${numberOfBarChartCountriesToShow} countries showing number of partial and full vaccinations by country`}
             chartData={vaccineCountChartData}
             isStacked={true}
             animation={false}
           />
+        </div>
+      </div>
+
+      <div className="row mb-4">
+        <p className="pr-2">Number of countries to show in bar charts:</p>
+        <div
+          className="vaccinationChartSliderControls btn-group btn-group-toggle mr-1"
+          data-tip={`Showing ${numberOfBarChartCountriesToShow} countries in bar charts`}
+        >
+          <input
+            type="range"
+            className="custom-range"
+            min="5"
+            max={nonNullVaccinatedCountriesLength}
+            id="vaccinationCountryChartSlider"
+            value={numberOfBarChartCountriesToShow}
+            onChange={(changeEvent) => {
+              let numSelected = parseInt(changeEvent.target.value)
+              setNumberOfBarChartCountriesToShow(numSelected)
+            }}
+          ></input>
         </div>
       </div>
 

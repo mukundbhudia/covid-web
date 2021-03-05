@@ -5,6 +5,7 @@ const StackedCountryBarGraph = ({
   id,
   chartTitle,
   chartData,
+  axesLabels,
   isStacked = false,
   showsPercentage = false,
   animation = true,
@@ -62,7 +63,7 @@ const StackedCountryBarGraph = ({
             stacked: isStacked,
             scaleLabel: {
               display: true,
-              labelString: 'Country',
+              labelString: axesLabels.x,
             },
           },
         ],
@@ -73,7 +74,7 @@ const StackedCountryBarGraph = ({
             type: 'linear',
             scaleLabel: {
               display: true,
-              labelString: 'Number of cases',
+              labelString: axesLabels.y,
             },
             ticks: {
               beginAtZero: true,
