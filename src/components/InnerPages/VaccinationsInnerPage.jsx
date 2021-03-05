@@ -16,7 +16,7 @@ import DataTable from './DataTableInnerPage/DataTable'
 
 const MAX_COUNTRIES_TO_SHOW = 10
 const PEOPLE_VACCINATED_COLOUR = chartColors.blue
-const PEOPLE_FULLLY_VACCINATED_COLOUR = chartColors.darkPurple
+const PEOPLE_FULLY_VACCINATED_COLOUR = chartColors.darkPurple
 
 let tableSortParams = { sortKey: 'totalVaccinationsPerHundred', order: 'desc' }
 
@@ -93,7 +93,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
       },
       {
         label: 'Percent of people fully vaccinated',
-        mainColor: PEOPLE_FULLLY_VACCINATED_COLOUR,
+        mainColor: PEOPLE_FULLY_VACCINATED_COLOUR,
         data: Array.from(continents.values()).map(
           (item) => item.percentOfPeopleFullyVaccinated
         ),
@@ -191,8 +191,8 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
       },
       {
         label: 'Percent of fully vaccinated',
-        backgroundColor: PEOPLE_FULLLY_VACCINATED_COLOUR,
-        borderColor: PEOPLE_FULLLY_VACCINATED_COLOUR,
+        backgroundColor: PEOPLE_FULLY_VACCINATED_COLOUR,
+        borderColor: PEOPLE_FULLY_VACCINATED_COLOUR,
         data: perCentPeopleFullyVaccinated,
         fill: false,
       },
@@ -289,6 +289,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
             chartData={percentVaccineCountChartData}
             isStacked={true}
             showsPercentage={true}
+            animation={false}
           />
         </div>
       </div>
@@ -300,6 +301,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
             chartTitle="Total vaccinations"
             chartData={vaccineCountChartData}
             isStacked={true}
+            animation={false}
           />
         </div>
       </div>

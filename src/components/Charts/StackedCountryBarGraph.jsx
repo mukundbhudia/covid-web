@@ -7,6 +7,7 @@ const StackedCountryBarGraph = ({
   chartData,
   isStacked = false,
   showsPercentage = false,
+  animation = true,
 }) => {
   const chartRef = React.createRef()
 
@@ -16,6 +17,9 @@ const StackedCountryBarGraph = ({
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        duration: animation ? 1000 : 0,
+      },
       plugins: {
         labels: false,
       },
