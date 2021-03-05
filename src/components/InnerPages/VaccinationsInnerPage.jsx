@@ -108,11 +108,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
 
   const nonNullVaccinatedCountries = data.casesByLocationWithNoProvince.filter(
     (country) => {
-      return (
-        country.totalVaccinations &&
-        country.peopleVaccinated &&
-        country.peopleFullyVaccinated
-      )
+      return country.totalVaccinations && country.peopleVaccinated
     }
   )
 
