@@ -31,9 +31,14 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
 
   const sortQueryParam = query.get('sort')
   const orderQueryParam = query.get('order')
+  const rowsQueryParam = query.get('rows')
 
-  if (sortQueryParam && orderQueryParam) {
-    tableSortParams = { sortKey: sortQueryParam, order: orderQueryParam }
+  if (sortQueryParam && orderQueryParam && rowsQueryParam) {
+    tableSortParams = {
+      sortKey: sortQueryParam,
+      order: orderQueryParam,
+      rows: rowsQueryParam,
+    }
   }
 
   const { loading, error, data } = useQuery(getVaccinationData)
@@ -304,6 +309,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
           sortConfig={tableSortParams}
           tableData={nonNullVaccinatedCountries}
           columnSchema={columns}
+          initialRowsLimit={10}
         />
       </div>
     </>

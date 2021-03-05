@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import * as timeago from 'timeago.js'
 import { shortenString } from '../../../modules/string'
+
+const LINK_STRING_LENGTH = 19
+const ROWS_TO_SHOW_INCREMENT = 10
 
 const setParams = (params) => {
   const searchParams = new URLSearchParams()
   searchParams.set('sort', params.sortKey)
   searchParams.set('order', params.order)
+  searchParams.set('rows', params.rows)
   return searchParams.toString()
 }
 
@@ -28,6 +32,7 @@ const sortedItems = (tableData, sortConfig) => {
 
 const requestSort = (sortKey, history, sortConfig) => {
   let order = 'asc'
+  let rows = sortConfig.rows || 'all'
   if (
     sortConfig &&
     sortConfig.sortKey === sortKey &&
@@ -35,7 +40,7 @@ const requestSort = (sortKey, history, sortConfig) => {
   ) {
     order = 'desc'
   }
-  history.push(`?${setParams({ sortKey, order })}`)
+  history.push(`?${setParams({ sortKey, order, rows })}`)
 }
 
 const showLabel = (headerSortKey, sortConfig) => {
@@ -64,10 +69,41 @@ const applySelectedColumnHeaderStyle = (headerSortKey, sortConfig) => {
   return style
 }
 
-const DataTable = ({ sortConfig, tableData, columnSchema }) => {
+const DataTable = ({
+  sortConfig,
+  tableData,
+  columnSchema,
+  initialRowsLimit,
+}) => {
+  const tableRowsLength = tableData.length
+
+  if (sortConfig.rows > tableRowsLength) {
+    sortConfig.rows = tableRowsLength
+  } else if (sortConfig.rows <= 0) {
+    sortConfig.rows = initialRowsLimit
+  }
+
   let history = useHistory()
+  const [rowsToShow, setRowsToShow] = useState(
+    sortConfig.rows || initialRowsLimit || tableRowsLength
+  )
 
   let sortedTableData = sortedItems(tableData, sortConfig)
+
+  const showMoreRows = () => {
+    let nextRows = rowsToShow + ROWS_TO_SHOW_INCREMENT
+    if (nextRows > tableRowsLength) {
+      nextRows = tableRowsLength
+    }
+    setRowsToShow(nextRows)
+    sortConfig.rows = nextRows
+    history.push(`?${setParams(sortConfig)}`)
+  }
+
+  if (rowsToShow && rowsToShow > 0 && rowsToShow <= tableRowsLength) {
+    sortConfig.rows = rowsToShow
+    sortedTableData = sortedTableData.slice(0, rowsToShow)
+  }
 
   return (
     <>
@@ -114,7 +150,10 @@ const DataTable = ({ sortConfig, tableData, columnSchema }) => {
                     if (colData.type === 'link') {
                       innerData = (
                         <Link title={tableRow[colData.key]} to={tableRow.idKey}>
-                          {shortenString(tableRow[colData.key], 19)}
+                          {shortenString(
+                            tableRow[colData.key],
+                            LINK_STRING_LENGTH
+                          )}
                         </Link>
                       )
                     } else if (colData.type === 'date') {
@@ -143,6 +182,25 @@ const DataTable = ({ sortConfig, tableData, columnSchema }) => {
             })}
           </tbody>
         </table>
+        <p>
+          Showing {rowsToShow} of {tableRowsLength} rows.
+        </p>
+        {rowsToShow > 0 && rowsToShow < tableRowsLength && (
+          <div
+            className="btn-toolbar justify-content-center"
+            role="toolbar"
+            aria-label="Toolbar with button groups"
+          >
+            <div
+              className="btn btn-md btn-light"
+              onClick={() => {
+                showMoreRows()
+              }}
+            >
+              Click to show {ROWS_TO_SHOW_INCREMENT} more rows...
+            </div>
+          </div>
+        )}
       </div>
     </>
   )
