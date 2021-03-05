@@ -94,8 +94,8 @@ export const getDataTableCases = gql`
       deaths
       deathsToday
       totalTests
-      peopleFullyVaccinated
-      peopleFullyVaccinatedPerHundred
+      totalVaccinations
+      totalVaccinationsPerHundred
       lastUpdate
     }
   }

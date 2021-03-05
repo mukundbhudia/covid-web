@@ -67,13 +67,13 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
       type: 'number',
     },
     {
-      key: 'peopleFullyVaccinated',
-      name: 'Fully vaccinated',
+      key: 'totalVaccinations',
+      name: 'Total vaccinations',
       type: 'number',
     },
     {
-      key: 'peopleFullyVaccinatedPerHundred',
-      name: '% fully vaccinated',
+      key: 'totalVaccinationsPerHundred',
+      name: '% vaccinated',
       type: 'percentage',
     },
     {
