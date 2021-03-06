@@ -18,6 +18,8 @@ const RadarChart = ({ id, chartTitle, chartData, showsPercentage = false }) => {
     type: 'radar',
     data: chartData,
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       legend: {
         position: 'top',
       },

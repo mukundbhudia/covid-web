@@ -36,6 +36,10 @@ nav.col-md-2.d-none.d-md-block.sidebar {
   height: 40vh;
 }
 
+.chart.radarChart {
+  height: 40vh;
+}
+
 .multiTopBar > .col-sm > .chart.barGraph {
   height: 40vh;
 }
@@ -104,6 +108,10 @@ td.selectedForSortColumn {
 
   .chart.provinces.barGraph {
     height: 58vh;
+  }
+
+  .chart.radarChart {
+    height: 39vh;
   }
 
   .navbar-brand {
