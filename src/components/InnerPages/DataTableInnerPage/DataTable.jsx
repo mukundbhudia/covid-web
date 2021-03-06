@@ -111,6 +111,7 @@ const DataTable = ({
         <table className="table table-sm table-hover sortable-data-table">
           <thead className="thead-light">
             <tr>
+              <th scope="col">#</th>
               {columnSchema.map((colData) => {
                 return (
                   <th
@@ -131,15 +132,15 @@ const DataTable = ({
             </tr>
           </thead>
           <tbody>
-            {sortedTableData.map((tableRow) => {
+            {sortedTableData.map((tableRow, i) => {
               return (
                 <tr key={tableRow.idKey}>
+                  <td key={`numCol-${i}`}>{i + 1}</td>
                   {columnSchema.map((colData) => {
                     let percentageExtra =
                       colData.type === 'percentage' ? '%' : ''
                     let innerData = (
                       <>
-                        {' '}
                         {tableRow[colData.key]
                           ? `${tableRow[
                               colData.key
