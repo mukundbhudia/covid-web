@@ -15,6 +15,7 @@ const ErrorInnerPage = ({ errorData }) => {
             </div>
           </div>
         </div>
+        <p>Click <span className="btn btn-link span-link" onClick={() => window.location.reload()}>here</span> to re-load the page and try again.</p>
       </div>
     </>
   )

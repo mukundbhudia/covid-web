@@ -22,6 +22,13 @@ nav.col-md-2.d-none.d-md-block.sidebar {
   border-color: #d79ba0 !important;
 }
 
+.btn-link.span-link {
+  font-weight: normal;
+  vertical-align: initial;
+  font-size: initial;
+  padding: 0;
+}
+
 .chart {
   position: relative;
   margin: auto;
