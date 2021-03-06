@@ -15,8 +15,12 @@ import { chartColors } from '../Charts/chartSettings'
 import DataTable from './DataTableInnerPage/DataTable'
 
 const MAX_COUNTRIES_TO_SHOW_IN_BAR_CHARTS = 10
+
 const PEOPLE_VACCINATED_COLOUR = chartColors.lightIndigo
 const PEOPLE_FULLY_VACCINATED_COLOUR = chartColors.darkIndigo
+
+const TOTAL_VACCINATED_COLOUR = chartColors.lightGreen
+const TOTAL_FULLY_VACCINATED_COLOUR = chartColors.darkGreen
 
 let tableSortParams = { sortKey: 'totalVaccinationsPerHundred', order: 'desc' }
 
@@ -86,7 +90,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     }
   })
 
-  const radarChartData = {
+  const percentPartialVsFullyRadarChartData = {
     labels: Array.from(continents.keys()),
     datasets: [
       {
@@ -101,6 +105,26 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         mainColor: PEOPLE_FULLY_VACCINATED_COLOUR,
         data: Array.from(continents.values()).map(
           (item) => item.percentOfPeopleFullyVaccinated
+        ),
+      },
+    ],
+  }
+
+  const totalPartialVsFullyRadarChartData = {
+    labels: Array.from(continents.keys()),
+    datasets: [
+      {
+        label: 'Number of people partially vaccinated',
+        mainColor: TOTAL_VACCINATED_COLOUR,
+        data: Array.from(continents.values()).map(
+          (item) => item.peopleVaccinated
+        ),
+      },
+      {
+        label: 'Number of people fully vaccinated',
+        mainColor: TOTAL_FULLY_VACCINATED_COLOUR,
+        data: Array.from(continents.values()).map(
+          (item) => item.peopleFullyVaccinated
         ),
       },
     ],
@@ -143,15 +167,15 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     datasets: [
       {
         label: 'People partially vaccinated',
-        backgroundColor: chartColors.lightGreen,
-        borderColor: chartColors.lightGreen,
+        backgroundColor: TOTAL_VACCINATED_COLOUR,
+        borderColor: TOTAL_VACCINATED_COLOUR,
         data: peopleVaccinatedDataArray,
         fill: false,
       },
       {
         label: 'People fully vaccinated',
-        backgroundColor: chartColors.darkGreen,
-        borderColor: chartColors.darkGreen,
+        backgroundColor: TOTAL_FULLY_VACCINATED_COLOUR,
+        borderColor: TOTAL_FULLY_VACCINATED_COLOUR,
         data: peopleFullyVaccinatedDataArray,
         fill: false,
       },
@@ -284,12 +308,23 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
             percentage={data.totalCases.peopleFullyVaccinatedPerHundred}
           />
         </div>
-        <div className="col-sm-7">
+      </div>
+
+      <div className="row">
+        <div className="col-sm">
           <RadarChart
-            id="vaccinationsContinent"
+            id="vaccinationsContinentPercent"
             chartTitle="Percent of population partially and fully vaccinated by continent"
-            chartData={radarChartData}
+            chartData={percentPartialVsFullyRadarChartData}
             showsPercentage={true}
+          />
+        </div>
+        <div className="col-sm">
+          <RadarChart
+            id="vaccinationsContinentTotal"
+            chartTitle="Total partially and fully vaccinated by continent"
+            chartData={totalPartialVsFullyRadarChartData}
+            showsPercentage={false}
           />
         </div>
       </div>
