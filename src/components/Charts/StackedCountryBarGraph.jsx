@@ -12,6 +12,8 @@ const StackedCountryBarGraph = ({
 }) => {
   const chartRef = React.createRef()
 
+  const percentageString = showsPercentage ? '%' : ''
+
   const chartConfig = {
     type: 'bar',
     data: chartData,
@@ -37,20 +39,21 @@ const StackedCountryBarGraph = ({
             if (label) {
               label += ': '
             }
-            label += `${tooltipItem.yLabel.toLocaleString()}${
-              showsPercentage ? '%' : ''
-            }`
+            label += `${tooltipItem.yLabel.toLocaleString()}${percentageString}`
             return label
           },
           footer: (tooltipItems, _data) => {
-            const sum = tooltipItems
-              .map((element) => element.yLabel)
-              .reduce((currentSum, current) => {
-                return currentSum + current
-              })
-            return `Total: ${sum.toLocaleString()}${showsPercentage ? '%' : ''}`
+            if (tooltipItems.length > 1) {
+              const sum = tooltipItems
+                .map((element) => element.yLabel)
+                .reduce((currentSum, current) => {
+                  return currentSum + current
+                })
+              return `Total: ${sum.toLocaleString()}${percentageString}`
+            }
           },
         },
+        footerFontStyle: 'bold',
       },
       hover: {
         mode: 'nearest',
@@ -79,7 +82,7 @@ const StackedCountryBarGraph = ({
             ticks: {
               beginAtZero: true,
               callback: (value) =>
-                `${value.toLocaleString()}${showsPercentage ? '%' : ''}`,
+                `${value.toLocaleString()}${percentageString}`,
             },
           },
         ],

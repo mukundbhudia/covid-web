@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react'
 import Chart from 'chart.js'
 
-const RadarChart = ({ id, chartTitle, chartData, showsPercentage = false }) => {
+const RadarChart = ({
+  id,
+  chartTitle,
+  chartData,
+  showsPercentage = false,
+  animation = true,
+}) => {
   const chartRef = React.createRef()
+
+  const percentageString = showsPercentage ? '%' : ''
 
   chartData.datasets = chartData.datasets.map((dataset) => {
     const mainColour = dataset.mainColor
@@ -20,6 +28,9 @@ const RadarChart = ({ id, chartTitle, chartData, showsPercentage = false }) => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        duration: animation ? 1000 : 0,
+      },
       legend: {
         position: 'top',
       },
@@ -29,25 +40,37 @@ const RadarChart = ({ id, chartTitle, chartData, showsPercentage = false }) => {
       },
       tooltips: {
         mode: 'index',
-        // intersect: false,
+        intersect: true,
         callbacks: {
+          title: (tooltipItems, data) => {
+            const xAxesLabel = data.labels[tooltipItems[0].index]
+            return xAxesLabel
+          },
           label: (tooltipItem, data) => {
             let label = data.datasets[tooltipItem.datasetIndex].label || ''
             if (label) {
               label += ': '
             }
-            label += `${tooltipItem.yLabel.toLocaleString()}${
-              showsPercentage ? '%' : ''
-            }`
+            label += `${tooltipItem.yLabel.toLocaleString()}${percentageString}`
             return label
           },
+          footer: (tooltipItems, _data) => {
+            if (tooltipItems.length > 1) {
+              const total = tooltipItems
+                .map((element) => element.yLabel)
+                .reduce((currentSum, current) => {
+                  return currentSum + current
+                })
+              return `Total: ${total.toLocaleString()}${percentageString}`
+            }
+          },
         },
+        footerFontStyle: 'normal',
       },
       scale: {
         ticks: {
           beginAtZero: true,
-          callback: (value) =>
-            `${value.toLocaleString()}${showsPercentage ? '%' : ''}`,
+          callback: (value) => `${value.toLocaleString()}${percentageString}`,
         },
       },
     },
