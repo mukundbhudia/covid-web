@@ -90,9 +90,9 @@ const DataTable = ({
 
   let sortedTableData = sortedItems(tableData, sortConfig)
 
-  const showMoreRows = () => {
+  const showMoreRows = (toShow) => {
     let nextRows = rowsToShow + ROWS_TO_SHOW_INCREMENT
-    if (nextRows > tableRowsLength) {
+    if (nextRows > tableRowsLength || toShow === 'all') {
       nextRows = tableRowsLength
     }
     setRowsToShow(nextRows)
@@ -192,12 +192,20 @@ const DataTable = ({
             aria-label="Toolbar with button groups"
           >
             <div
-              className="btn btn-md btn-light"
+              className="btn btn-sm btn-light mr-1"
               onClick={() => {
                 showMoreRows()
               }}
             >
-              Click to show {ROWS_TO_SHOW_INCREMENT} more rows...
+              Show {ROWS_TO_SHOW_INCREMENT} more rows...
+            </div>
+            <div
+              className="btn btn-sm btn-light mr-1"
+              onClick={() => {
+                showMoreRows('all')
+              }}
+            >
+              Show all rows
             </div>
           </div>
         )}
