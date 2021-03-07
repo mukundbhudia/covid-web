@@ -167,6 +167,18 @@ td.selectedForSortColumn {
   color: #155724;
 }
 
+.text-success {
+  color: #25512f !important;
+}
+
+.text-primary {
+  color: #204a77 !important;
+}
+
+.text-danger {
+  color: #5e1e24 !important;
+}
+
 .deathsText {
   color: #1b1e21;
 }
