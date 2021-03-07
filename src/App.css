@@ -209,13 +209,13 @@ td.selectedForSortColumn {
 }
 
 .vaccine-badge {
-  color: #377361;
-  background-color: #d4fbee;
-  border-color: #acf4dd;
+  color: #353e6f;
+  background-color: #bdc7ff;
+  border-color: #a5afe8;
 }
 
 .text-vaccine {
-  color: #396c5c;
+  color: #3d4679;
 }
 
 .test-badge {
