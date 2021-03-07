@@ -44,9 +44,6 @@ const PanelCurrentCases = ({
         <div className="col-sm">
           <PanelDeathCount caseCount={currentCases.deaths} />
         </div>
-      </div>
-
-      <div className="row">
         <div className="col-sm">
           <PanelConfirmedToday caseCount={currentCases.confirmedCasesToday} />
         </div>

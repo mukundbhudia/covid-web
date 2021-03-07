@@ -4,7 +4,7 @@ const PanelActiveCount = ({ caseCount }) => {
   return (
     <>
       <div className="alert alert-primary" role="alert">
-        <h5>Total active</h5>
+        <h5>Active</h5>
         <div id="activeCounter" className="total-cases text-primary">
           { caseCount >= 0 ? caseCount.toLocaleString() : 'N/A' }
         </div>
