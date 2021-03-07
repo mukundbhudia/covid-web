@@ -67,8 +67,13 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
       type: 'number',
     },
     {
+      key: 'totalTestsPerThousand',
+      name: 'Tests per 1000',
+      type: 'number',
+    },
+    {
       key: 'totalVaccinations',
-      name: 'Total vaccinations',
+      name: 'Vaccinations',
       type: 'number',
     },
     {

@@ -94,6 +94,7 @@ export const getDataTableCases = gql`
       deaths
       deathsToday
       totalTests
+      totalTestsPerThousand
       totalVaccinations
       totalVaccinationsPerHundred
       lastUpdate
