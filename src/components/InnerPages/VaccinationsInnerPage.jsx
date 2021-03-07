@@ -10,7 +10,6 @@ import { calculatePercentageWithDp } from '../../modules/numeric'
 import RadarChart from '../Charts/RadarChart'
 import StackedCountryBarGraph from '../Charts/StackedCountryBarGraph'
 import PanelVaccinatedWithPercent from '../Panels/PanelVaccinatedWithPercent'
-import PanelTotalVaccinations from '../Panels/PanelTotalVaccinations'
 import { chartColors } from '../Charts/chartSettings'
 import DataTable from './DataTableInnerPage/DataTable'
 
@@ -284,12 +283,15 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         <DataUpdatedTimeStamp lastUpdated={lastUpdated} />
       </div>
 
-      <div className="row mb-4">
+      <div className="row mb-1">
         <div className="col-sm">
-          <PanelTotalVaccinations
+          <PanelVaccinatedWithPercent
             title="Total global vaccinations"
-            data={data.totalCases.totalVaccinations}
+            total={data.totalCases.totalVaccinations}
+            percentage={data.totalCases.totalVaccinationsPerHundred}
           />
+        </div>
+        <div className="col-sm">
           <PanelVaccinatedWithPercent
             title="Global partial vaccinations"
             total={data.totalCases.peopleVaccinated}
@@ -297,11 +299,6 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
           />
         </div>
         <div className="col-sm">
-          <PanelTotalVaccinations
-            title="Global population vaccinated"
-            data={data.totalCases.totalVaccinationsPerHundred}
-            showsPercentage={true}
-          />
           <PanelVaccinatedWithPercent
             title="Global fully vaccinated"
             total={data.totalCases.peopleFullyVaccinated}
@@ -310,7 +307,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row mb-4">
         <div className="col-sm">
           <RadarChart
             id="vaccinationsContinentPercent"
@@ -356,7 +353,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
         </div>
       </div>
 
-      <div className="row mb-4">
+      <div className="row mb-3">
         <p className="pr-2">Number of countries to show in bar charts:</p>
         <div
           className="vaccinationChartSliderControls btn-group btn-group-toggle mr-1"
