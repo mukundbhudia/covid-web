@@ -43,7 +43,7 @@ const DataTableInnerPage = ({ title, lastUpdated }) => {
     },
     {
       key: 'confirmedCasesToday',
-      name: 'Confirmed today',
+      name: 'Cases today',
       type: 'number',
     },
     {

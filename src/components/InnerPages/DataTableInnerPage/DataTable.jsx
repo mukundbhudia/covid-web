@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import * as timeago from 'timeago.js'
 import { shortenString } from '../../../modules/string'
 
-const LINK_STRING_LENGTH = 19
+const LINK_STRING_LENGTH = 18
 const ROWS_TO_SHOW_INCREMENT = 10
 
 const setParams = (params) => {
@@ -160,9 +160,9 @@ const DataTable = ({
                     } else if (colData.type === 'date') {
                       innerData = (
                         <>
-                          {timeago.format(
-                            new Date(parseInt(tableRow[colData.key]))
-                          )}
+                          {timeago
+                            .format(new Date(parseInt(tableRow[colData.key])))
+                            .replace('minutes', 'mins')}
                         </>
                       )
                     }
