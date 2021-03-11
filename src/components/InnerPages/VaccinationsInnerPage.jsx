@@ -166,14 +166,14 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
   const peopleVaccinatedDataArray = sortedAndTrimmedVaccinationData.map(
     (element) => ({
       x: element.country,
-      y: element['peopleVaccinated'],
+      y: element.peopleVaccinated,
     })
   )
 
   const peopleFullyVaccinatedDataArray = sortedAndTrimmedVaccinationData.map(
     (element) => ({
       x: element.country,
-      y: element['peopleFullyVaccinated'],
+      y: element.peopleFullyVaccinated,
     })
   )
 
@@ -212,14 +212,14 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
   const perCentPeopleVaccinated = sortedAndTrimmedVaccinationPerCentData.map(
     (element) => ({
       x: element.country,
-      y: element['peopleVaccinatedPerHundred'],
+      y: element.peopleVaccinatedPerHundred,
     })
   )
 
   const perCentPeopleFullyVaccinated = sortedAndTrimmedVaccinationPerCentData.map(
     (element) => ({
       x: element.country,
-      y: element['peopleFullyVaccinatedPerHundred'],
+      y: element.peopleFullyVaccinatedPerHundred,
     })
   )
 
