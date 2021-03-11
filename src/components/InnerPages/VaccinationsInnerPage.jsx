@@ -28,6 +28,19 @@ const useUrlQuery = (loc) => {
   return urlParams
 }
 
+// Assuming that if partial and full vaccination data is not available then it is asserted to be partial
+const applyVaccinationAssumption = (country) => {
+  if (
+    !country.peopleVaccinated &&
+    !country.peopleFullyVaccinated &&
+    country.totalVaccinations
+  ) {
+    country.peopleVaccinated = country.totalVaccinations
+    country.peopleVaccinatedPerHundred = country.totalVaccinationsPerHundred
+  }
+  return country
+}
+
 const VaccinationsInnerPage = ({ lastUpdated }) => {
   let location = useLocation()
   let query = useUrlQuery(location)
@@ -57,6 +70,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
   const continents = new Map()
 
   data.casesByLocationWithNoProvince.forEach((country) => {
+    applyVaccinationAssumption(country)
     let continent = country.continent
     let foundContinent = continents.get(continent)
     if (continent) {
@@ -129,11 +143,13 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     ],
   }
 
-  const nonNullVaccinatedCountries = data.casesByLocationWithNoProvince.filter(
-    (country) => {
-      return country.totalVaccinations && country.peopleVaccinated
-    }
-  )
+  const nonNullVaccinatedCountries = data.casesByLocationWithNoProvince
+    .filter((country) => {
+      return country.totalVaccinations && country.totalVaccinations > 0
+    })
+    .map((country) => {
+      return applyVaccinationAssumption(country)
+    })
 
   const nonNullVaccinatedCountriesLength = nonNullVaccinatedCountries.length
 
@@ -166,6 +182,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
     datasets: [
       {
         label: 'People partially vaccinated',
+        stack: 'Stack 0',
         backgroundColor: TOTAL_VACCINATED_COLOUR,
         borderColor: TOTAL_VACCINATED_COLOUR,
         data: peopleVaccinatedDataArray,
@@ -173,6 +190,7 @@ const VaccinationsInnerPage = ({ lastUpdated }) => {
       },
       {
         label: 'People fully vaccinated',
+        stack: 'Stack 0',
         backgroundColor: TOTAL_FULLY_VACCINATED_COLOUR,
         borderColor: TOTAL_FULLY_VACCINATED_COLOUR,
         data: peopleFullyVaccinatedDataArray,
