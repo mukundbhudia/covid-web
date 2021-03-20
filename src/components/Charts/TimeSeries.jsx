@@ -27,22 +27,20 @@ const TimeSeries = ({ chartTitle, casesToHide, data }) => {
     deathsToday.push({ x: date, y: caseToPush.deathsToday })
   }
 
-  let firstCaseAdded = false
-  data.forEach((element, i) => {
-    const cases = element
-    if (cases.confirmed > 0) {
-      let dateFromString = new Date(cases.day)
-      if (!firstCaseAdded && i > 0) {
-        const previousCase = data[i - 1]
-        dateFromString = new Date(previousCase.day)
-        firstCaseAdded = true
-        pushDataToCasesArray(dateFromString, previousCase)
-        dateFromString = new Date(cases.day)
-        pushDataToCasesArray(dateFromString, cases)
-      } else {
-        pushDataToCasesArray(dateFromString, cases)
-      }
-    }
+  let firstConfirmedIndex = data.findIndex((item) => {
+    return item.confirmed > 0
+  })
+
+  let slicedData = data.slice(firstConfirmedIndex)
+
+  const previousDataBeforeFirstCase = data[firstConfirmedIndex - 1]
+  if (previousDataBeforeFirstCase) {
+    slicedData.unshift(previousDataBeforeFirstCase)
+  }
+
+  slicedData.forEach((cases) => {
+    let dateFromString = new Date(cases.day)
+    pushDataToCasesArray(dateFromString, cases)
   })
 
   const confirmedTodayArray = confirmedToday.map((element) => {
