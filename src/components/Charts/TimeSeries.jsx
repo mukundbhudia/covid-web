@@ -45,12 +45,12 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
     }
   })
 
-  const confirmedTodayArray = data.map((element, i) => {
-    return element.confirmedCasesToday
+  const confirmedTodayArray = confirmedToday.map((element) => {
+    return element.y
   })
 
-  const deathsTodayArray = data.map((element, i) => {
-    return element.deathsToday
+  const deathsTodayArray = deathsToday.map((element) => {
+    return element.y
   })
 
   const movingAverageConfirmedToday = movingAverage(
@@ -116,7 +116,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           backgroundColor: chartColors.darkPurple,
           borderColor: chartColors.darkPurple,
           order: 2,
-          data: movingAverageConfirmedTodayChartData.slice(3, -3),
+          data: movingAverageConfirmedTodayChartData,
           hidden: casesToHide['confirmedTodayMovingAverage'],
         },
         {
@@ -136,7 +136,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
           backgroundColor: chartColors.darkGrey,
           borderColor: chartColors.darkGrey,
           order: 4,
-          data: movingAverageDeathsTodayChartData.slice(3, -3),
+          data: movingAverageDeathsTodayChartData,
           hidden: casesToHide['deathsTodayMovingAverage'],
         },
       ],
