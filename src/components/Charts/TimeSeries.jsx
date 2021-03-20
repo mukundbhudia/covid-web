@@ -5,7 +5,7 @@ import { chartColors } from './chartSettings'
 
 const DEFAULT_MOVING_AVERAGE_PERIOD_IN_DAYS = 7
 
-const TimeSeries = ({ chartTitle, casesToHide, data, currentCases }) => {
+const TimeSeries = ({ chartTitle, casesToHide, data }) => {
   const chartRef = React.createRef()
   const [dataType, setDataType] = useState('linear')
   const [chartType, setChartType] = useState('line')
