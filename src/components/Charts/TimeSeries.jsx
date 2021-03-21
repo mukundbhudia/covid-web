@@ -162,7 +162,7 @@ const TimeSeries = ({ chartTitle, casesToHide, data }) => {
             if (label) {
               label += ': '
             }
-            label += tooltipItem.yLabel.toFixed(0).toLocaleString()
+            label += Number(tooltipItem.yLabel.toFixed(0)).toLocaleString()
             return label
           },
         },
