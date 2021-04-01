@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^13.0.6",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^13.1.1",
     "apollo-boost": "^0.4.9",
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.4",
