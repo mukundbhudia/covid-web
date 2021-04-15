@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Chart from 'chart.js'
+import Chart from 'chart.js/auto'
 import { movingAverage } from '../../modules/numeric'
 import { multiChartColours } from './chartSettings'
 
