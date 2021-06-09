@@ -25,7 +25,7 @@
     "build": "react-scripts build && cp build/index.html build/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "REACT_APP_GQL_URI=https://covid19-dash-api.herokuapp.com GENERATE_SOURCEMAP=false npm run build",
+    "predeploy": "REACT_APP_GQL_URI=https://covid19-dash-api2.herokuapp.com GENERATE_SOURCEMAP=false npm run build",
     "ghpagesdeploy": "gh-pages -d build",
     "webdeploy": "webdeploy/deploy.sh"
   },
