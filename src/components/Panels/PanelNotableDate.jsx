@@ -28,7 +28,7 @@ const PanelNotableDate = ({ data, message }) => {
           className="notable-tooltip"
           data-tip={notableDate.toLocaleDateString()}
         >
-          ({timeAgoDate})
+          {data.count ? `(${timeAgoDate})` : ''}
         </span>
       </>
     )
