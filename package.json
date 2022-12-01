@@ -12,7 +12,7 @@
     "chart.js": "^2.9.4",
     "chartjs-plugin-labels": "^1.1.0",
     "datamaps": "^0.5.9",
-    "graphql": "^15.5.0",
+    "graphql": "^16.6.0",
     "react": "^16.13.1",
     "react-bootstrap-typeahead": "^5.1.4",
     "react-dom": "^16.13.1",
